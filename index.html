@@ -747,6 +747,58 @@
     .action-btns { flex-direction: column; }
     .action-btns .btn-sm { width: 100%; }
   }
+
+  /* --- TOMBOL & PESAN (Akun Saya) --- */
+  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+  .akun-msg { font-size: 13.5px; line-height: 1.45; padding: 11px 14px; border-radius: 8px; margin-bottom: 14px; }
+  .akun-msg.error { background: rgba(193,84,58,0.1); color: var(--danger); border: 1px solid rgba(193,84,58,0.3); }
+  .akun-msg.success { background: rgba(58,139,92,0.1); color: #2f734b; border: 1px solid rgba(58,139,92,0.3); font-weight: 600; }
+  .akun-email-now { font-size: 13px; color: var(--ink-soft); margin: -8px 0 16px; }
+
+  /* --- TOAST --- */
+  .toast {
+    position: fixed; left: 50%; bottom: 28px; transform: translate(-50%, 20px);
+    background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 10px;
+    font-size: 14px; font-weight: 500; box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    opacity: 0; pointer-events: none; z-index: 100; max-width: calc(100vw - 32px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .toast.show { opacity: 1; transform: translate(-50%, 0); }
+  .toast.success { background: #2f734b; }
+  .toast.error { background: #a5452f; }
+
+  /* --- TOMBOL GEAR (kanan atas, semua role) --- */
+  .gear-wrap { position: fixed; top: 20px; right: 28px; z-index: 47; }
+  .gear-btn {
+    width: 42px; height: 42px; border-radius: 50%;
+    border: 1.5px solid rgba(31,59,50,0.18); background: #fff; color: var(--ink);
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    box-shadow: 0 4px 14px rgba(31,59,50,0.1);
+    transition: background 0.2s ease, transform 0.3s ease, border-color 0.2s ease;
+  }
+  .gear-btn:hover { background: rgba(31,59,50,0.05); border-color: rgba(31,59,50,0.3); }
+  .gear-btn[aria-expanded="true"] { transform: rotate(60deg); border-color: var(--chalk-gold-dim); }
+  .gear-btn svg { width: 20px; height: 20px; }
+  .gear-menu {
+    display: none; position: absolute; top: 50px; right: 0; min-width: 210px;
+    background: #fff; border: 1px solid var(--paper-line); border-radius: 12px;
+    box-shadow: 0 12px 32px rgba(31,59,50,0.18); padding: 6px;
+  }
+  .gear-menu.show { display: block; animation: fadeIn 0.18s ease forwards; }
+  .gear-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px;
+    font-size: 14px; font-weight: 500; color: var(--ink); cursor: pointer;
+  }
+  .gear-item svg { width: 17px; height: 17px; flex-shrink: 0; color: var(--ink-soft); }
+  .gear-item:hover { background: rgba(31,59,50,0.06); }
+  .gear-item.active { background: rgba(232,185,78,0.18); }
+  .page-header { padding-right: 60px; }
+  @media (max-width: 900px) {
+    .gear-wrap { top: 8px; right: 12px; }
+    .gear-btn { width: 38px; height: 38px; background: rgba(255,255,255,0.08); color: var(--chalk-white); border-color: rgba(244,241,230,0.25); }
+    .gear-btn:hover { background: rgba(255,255,255,0.15); }
+    .page-header { padding-right: 0; }
+  }
 </style>
 </head>
 <body>
@@ -759,6 +811,23 @@
     <div class="mobile-topbar-brand">CAKRAWALA</div>
   </div>
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- GEAR (pengaturan) -->
+  <div class="gear-wrap" id="gearWrap">
+    <button type="button" class="gear-btn" id="gearBtn" aria-label="Pengaturan" aria-haspopup="true" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    </button>
+    <div class="gear-menu" id="gearMenu" role="menu">
+      <div class="gear-item" id="btnAkun" role="menuitem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Akun Saya
+      </div>
+      <div class="gear-item" id="btnLog" role="menuitem" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg>
+        Log Aktivitas
+      </div>
+    </div>
+  </div>
 
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
@@ -777,8 +846,6 @@
     <nav class="nav-menu">
       <div class="nav-item active" id="btnDashboard">Dashboard Ruang AVR</div>
       <div class="nav-item" id="btnKalender">Kalender Kegiatan</div>
-      <div class="nav-item" id="btnAkun">Akun Saya</div>
-      <div class="nav-item" id="btnLog" style="display:none;">Log Aktivitas</div>
       <div class="nav-item">Panduan Penggunaan</div>
     </nav>
     <button class="logout-btn" id="logoutBtn">Keluar / Ganti Akun</button>
@@ -798,9 +865,9 @@
       <div class="grid-layout" style="grid-template-columns: 1fr; max-width: 480px;">
         <div class="card">
           <h2>Akun Saya</h2>
-          <p style="font-size:13px; color: var(--ink-soft); margin-top:-8px; margin-bottom:16px;">Email saat ini: <strong id="akunEmailSaatIni">-</strong></p>
-          <div class="error-msg" id="akunError" style="display:none; color:var(--danger); font-size:13px; margin-bottom:12px;"></div>
-          <div class="info-msg" id="akunInfo" style="display:none; color:var(--success); font-size:13px; margin-bottom:12px;"></div>
+          <p class="akun-email-now">Email saat ini: <strong id="akunEmailSaatIni">-</strong></p>
+          <div class="akun-msg error" id="akunError" role="alert" style="display:none;"></div>
+          <div class="akun-msg success" id="akunInfo" role="status" style="display:none;"></div>
           <form id="akunForm" style="display:flex; flex-direction:column; gap:14px;">
             <div class="form-group">
               <label>Kata sandi saat ini (wajib, untuk konfirmasi)</label>
@@ -818,7 +885,7 @@
               <label>Ulangi kata sandi baru</label>
               <input type="password" id="akunNewPass2" placeholder="Ketik ulang" autocomplete="new-password">
             </div>
-            <button type="button" class="submit-btn" id="akunSubmitBtn" style="margin-top:4px;">Simpan Perubahan</button>
+            <button type="button" class="btn-submit" id="akunSubmitBtn">Simpan Perubahan</button>
           </form>
         </div>
       </div>
@@ -1637,6 +1704,24 @@
       // Begitu salah satu menu di sidebar dipencet (khusus tampilan mobile), otomatis tutup drawer-nya.
       navItems.forEach(item => item.addEventListener('click', closeMobileSidebar));
 
+      // ================== MENU GEAR (kanan atas) ==================
+      const gearWrap = document.getElementById('gearWrap');
+      const gearBtn = document.getElementById('gearBtn');
+      const gearMenu = document.getElementById('gearMenu');
+      const gearItems = document.querySelectorAll('.gear-item');
+      function closeGearMenu(){
+        gearMenu.classList.remove('show');
+        gearBtn.setAttribute('aria-expanded', 'false');
+      }
+      gearBtn.addEventListener('click', function(e){
+        e.stopPropagation();
+        const open = gearMenu.classList.toggle('show');
+        gearBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      document.addEventListener('click', function(e){ if (!gearWrap.contains(e.target)) closeGearMenu(); });
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeGearMenu(); });
+      gearItems.forEach(item => item.addEventListener('click', closeGearMenu));
+
 
       const isAdmin = savedRole.toLowerCase() === 'admin';
       const btnAddEvent = document.getElementById('btnAddEvent');
@@ -1661,6 +1746,7 @@
         akunPanel.classList.remove('active');
         logPanel.classList.remove('active');
         navItems.forEach(item => item.classList.remove('active'));
+        document.querySelectorAll('.gear-item').forEach(item => item.classList.remove('active'));
       }
 
       btnDashboard.addEventListener('click', function() {
@@ -1685,7 +1771,7 @@
         pageTitle.textContent = "Akun Saya";
         pageSubtitle.textContent = "Ganti email dan/atau kata sandi akunmu.";
         akunPanel.classList.add('active');
-        document.getElementById('akunEmailSaatIni').textContent = savedEmail || '(belum diisi)';
+        document.getElementById('akunEmailSaatIni').textContent = localStorage.getItem('userEmail') || '(belum diisi)';
         document.getElementById('akunCurrentPass').value = '';
         document.getElementById('akunNewEmail').value = '';
         document.getElementById('akunNewPass').value = '';
@@ -2765,113 +2851,109 @@
 
 
 
+      // ================== TOAST (notifikasi kecil di bawah layar) ==================
+      let toastTimer = null;
+      function showToast(message, type) {
+        let el = document.getElementById('appToast');
+        if (!el) {
+          el = document.createElement('div');
+          el.id = 'appToast';
+          el.className = 'toast';
+          el.setAttribute('role', 'status');
+          document.body.appendChild(el);
+        }
+        el.textContent = message;
+        el.className = 'toast ' + (type || 'success');
+        void el.offsetWidth; // restart transisi kalau toast dipanggil beruntun
+        el.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function() { el.classList.remove('show'); }, 4000);
+      }
+
       // ================== AKUN SAYA (ganti email & kata sandi sendiri) ==================
-
       document.getElementById('akunSubmitBtn').addEventListener('click', async function() {
-
+        const btn = this;
         const akunError = document.getElementById('akunError');
-
         const akunInfo = document.getElementById('akunInfo');
-
         akunError.style.display = 'none';
-
         akunInfo.style.display = 'none';
 
-
-
         const currentPassword = document.getElementById('akunCurrentPass').value.trim();
-
         const newEmail = document.getElementById('akunNewEmail').value.trim();
-
         const newPass = document.getElementById('akunNewPass').value.trim();
-
         const newPass2 = document.getElementById('akunNewPass2').value.trim();
-
         const showAkunError = (msg) => { akunError.textContent = msg; akunError.style.display = 'block'; };
 
-
-
         if (!currentPassword) { showAkunError('Kata sandi saat ini wajib diisi untuk konfirmasi.'); return; }
-
         if (!newEmail && !newPass) { showAkunError('Isi email baru dan/atau kata sandi baru -- tidak ada yang diubah.'); return; }
-
         if (newEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) { showAkunError('Format email baru tidak valid.'); return; }
-
         if (newPass && newPass.length < 6) { showAkunError('Kata sandi baru minimal 6 karakter.'); return; }
-
         if (newPass && newPass !== newPass2) { showAkunError('Kata sandi baru dan ulangannya tidak sama.'); return; }
 
-
-
-        const btn = document.getElementById('akunSubmitBtn');
-
+        const labelAsli = btn.textContent;
         btn.disabled = true;
+        btn.textContent = 'Menyimpan...';
 
+        // Tahap 1: kirim ke server & baca balasannya. Error di tahap ini baru boleh disebut "gagal terhubung".
+        let result = null;
         try {
-
           const response = await fetch(APPS_SCRIPT_URL, {
-
             method: 'POST',
-
             headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-
             body: JSON.stringify({
-
               action: 'updateAccount',
-
               nisn: localStorage.getItem('userLoginId') || '',
-
               role: savedRole.toLowerCase(),
-
               currentPassword: currentPassword,
-
               newEmail: newEmail,
-
               newPassword: newPass
-
             })
-
           });
-
-          const result = await response.json();
-
-          if (result.status === 'success') {
-
-            if (newEmail) { localStorage.setItem('userEmail', newEmail); document.getElementById('akunEmailSaatIni').textContent = newEmail; }
-
-            akunInfo.textContent = 'Perubahan berhasil disimpan.';
-
-            akunInfo.style.display = 'block';
-
-            document.getElementById('akunCurrentPass').value = '';
-
-            document.getElementById('akunNewEmail').value = '';
-
-            document.getElementById('akunNewPass').value = '';
-
-            document.getElementById('akunNewPass2').value = '';
-
-          } else {
-
-            showAkunError(result.message || 'Gagal menyimpan perubahan.');
-
-          }
-
-        } catch (err) {
-
-          console.error('Gagal update akun:', err);
-
-          showAkunError('Gagal terhubung ke server. Periksa koneksi internet.');
-
-        } finally {
-
+          const raw = await response.text();
+          try { result = JSON.parse(raw); }
+          catch (parseErr) { console.error('[akun] Balasan Apps Script bukan JSON:', raw.slice(0, 300)); }
+        } catch (netErr) {
+          console.error('[akun] Gagal terhubung ke Apps Script:', netErr);
           btn.disabled = false;
-
+          btn.textContent = labelAsli;
+          showAkunError('Gagal terhubung ke server. Periksa koneksi internet.');
+          return;
         }
 
+        btn.disabled = false;
+        btn.textContent = labelAsli;
+
+        if (!result) {
+          showAkunError('Balasan server tidak terbaca. Perubahan mungkin sudah tersimpan -- muat ulang halaman lalu cek email di atas.');
+          return;
+        }
+        if (result.status !== 'success') {
+          showAkunError(result.message || 'Gagal menyimpan perubahan.');
+          return;
+        }
+
+        // Tahap 2: sukses. Update tampilan; error kecil di sini TIDAK boleh dilaporkan sebagai gagal.
+        let pesan;
+        if (newEmail && newPass) pesan = 'Email dan kata sandi berhasil diperbarui.';
+        else if (newEmail) pesan = 'Email berhasil diperbarui menjadi ' + newEmail + '.';
+        else pesan = 'Kata sandi berhasil diperbarui.';
+
+        try {
+          if (newEmail) {
+            localStorage.setItem('userEmail', newEmail);
+            document.getElementById('akunEmailSaatIni').textContent = newEmail;
+          }
+          document.getElementById('akunCurrentPass').value = '';
+          document.getElementById('akunNewEmail').value = '';
+          document.getElementById('akunNewPass').value = '';
+          document.getElementById('akunNewPass2').value = '';
+        } catch (uiErr) {
+          console.warn('[akun] Perubahan tersimpan, tapi tampilan gagal diperbarui:', uiErr);
+        }
+        akunInfo.textContent = pesan;
+        akunInfo.style.display = 'block';
+        showToast(pesan, 'success');
       });
-
-
 
       // ================== LOGIKA KALENDER DARI FIRESTORE ==================
       const monthNames = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
