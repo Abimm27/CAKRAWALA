@@ -761,6 +761,9 @@
         const formattedRole = roleFromServer.charAt(0).toUpperCase() + roleFromServer.slice(1).toLowerCase();
 
         localStorage.setItem('userRole', formattedRole);
+        // ID yang DIKETIK saat login (bukan hasil pencarian server) -- dipakai nanti di menu
+        // "Akun Saya" untuk memberi tahu server akun mana yang mau diubah emailnya/passwordnya.
+        localStorage.setItem('userLoginId', enteredId);
         localStorage.setItem('userName', result.nama || '');
         localStorage.setItem('userKelas', result.kelas || '');
         localStorage.setItem('userEmail', result.email || '');
@@ -786,6 +789,8 @@
         showError('Kata sandi salah. Periksa kembali dan coba lagi.');
       } else if(result.status === 'inactive'){
         showError('Akun ini sudah tidak aktif / sudah lulus.');
+      } else if(result.status === 'locked' || result.status === 'cooldown'){
+        showError(result.message || 'Terlalu banyak percobaan. Coba lagi sebentar lagi.');
       } else {
         showError('NIS/ID Guru/ID tidak terdaftar di database sekolah.');
       }
