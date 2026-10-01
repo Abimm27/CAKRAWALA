@@ -777,6 +777,8 @@
     <nav class="nav-menu">
       <div class="nav-item active" id="btnDashboard">Dashboard Ruang AVR</div>
       <div class="nav-item" id="btnKalender">Kalender Kegiatan</div>
+      <div class="nav-item" id="btnAkun">Akun Saya</div>
+      <div class="nav-item" id="btnLog" style="display:none;">Log Aktivitas</div>
       <div class="nav-item">Panduan Penggunaan</div>
     </nav>
     <button class="logout-btn" id="logoutBtn">Keluar / Ganti Akun</button>
@@ -792,6 +794,36 @@
     </header>
 
     <!-- PANEL 1: SISWA / GURU (DASHBOARD) -->
+    <div id="akunPanel" class="panel">
+      <div class="grid-layout" style="grid-template-columns: 1fr; max-width: 480px;">
+        <div class="card">
+          <h2>Akun Saya</h2>
+          <p style="font-size:13px; color: var(--ink-soft); margin-top:-8px; margin-bottom:16px;">Email saat ini: <strong id="akunEmailSaatIni">-</strong></p>
+          <div class="error-msg" id="akunError" style="display:none; color:var(--danger); font-size:13px; margin-bottom:12px;"></div>
+          <div class="info-msg" id="akunInfo" style="display:none; color:var(--success); font-size:13px; margin-bottom:12px;"></div>
+          <form id="akunForm" style="display:flex; flex-direction:column; gap:14px;">
+            <div class="form-group">
+              <label>Kata sandi saat ini (wajib, untuk konfirmasi)</label>
+              <input type="password" id="akunCurrentPass" placeholder="Masukkan kata sandi yang sedang dipakai" autocomplete="current-password">
+            </div>
+            <div class="form-group">
+              <label>Email baru (opsional, kosongkan kalau tidak diubah)</label>
+              <input type="email" id="akunNewEmail" placeholder="nama@email.com" autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label>Kata sandi baru (opsional, kosongkan kalau tidak diubah)</label>
+              <input type="password" id="akunNewPass" placeholder="Minimal 6 karakter" autocomplete="new-password">
+            </div>
+            <div class="form-group">
+              <label>Ulangi kata sandi baru</label>
+              <input type="password" id="akunNewPass2" placeholder="Ketik ulang" autocomplete="new-password">
+            </div>
+            <button type="button" class="submit-btn" id="akunSubmitBtn" style="margin-top:4px;">Simpan Perubahan</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
     <div id="userPanel" class="panel">
       <div class="grid-layout">
         <div class="card">
@@ -987,6 +1019,22 @@
     </div>
 
     <!-- PANEL 3: KALENDER -->
+    <div id="logPanel" class="panel">
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+          <h2 style="border:none; margin-bottom:0; padding-bottom:0;">Log Aktivitas</h2>
+          <button type="button" class="btn-sm" id="logRefreshBtn" style="background: rgba(31,59,50,0.08); color: var(--ink);">Muat Ulang</button>
+        </div>
+        <p style="font-size:13px; color: var(--ink-soft); margin-top:4px; margin-bottom:16px;">Riwayat siapa menyetujui, menolak, atau membatalkan reservasi, dan kapan. Menampilkan 100 catatan terbaru.</p>
+        <table class="data-table">
+          <thead><tr><th>Waktu</th><th>Aksi</th><th>Kegiatan</th><th>Oleh</th></tr></thead>
+          <tbody id="logAktivitasContainer">
+            <tr><td colspan="4" style="text-align:center; color: var(--ink-soft);">Memuat log...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <div id="kalenderPanel" class="panel">
       <div class="card" style="max-width: 980px; margin: 0 auto;">
         <div class="cal-head">
@@ -1523,6 +1571,7 @@
         if (!user) {
           alert("Sesi login kamu tidak valid atau sudah habis. Mengarahkan ke halaman login...");
           localStorage.removeItem('userRole');
+          localStorage.removeItem('userLoginId');
           localStorage.removeItem('userName');
           localStorage.removeItem('userKelas');
           localStorage.removeItem('userEmail');
@@ -1553,6 +1602,10 @@
       
       const userPanel = document.getElementById('userPanel');
       const adminPanel = document.getElementById('adminPanel');
+      const akunPanel = document.getElementById('akunPanel');
+      const logPanel = document.getElementById('logPanel');
+      const btnAkun = document.getElementById('btnAkun');
+      const btnLog = document.getElementById('btnLog');
       const kalenderPanel = document.getElementById('kalenderPanel');
       
       const pageTitle = document.getElementById('pageTitle');
@@ -1589,6 +1642,7 @@
       const btnAddEvent = document.getElementById('btnAddEvent');
       if (isAdmin) {
         btnAddEvent.style.display = 'inline-flex';
+        btnLog.style.display = '';
       }
 
       if (isAdmin) {
@@ -1604,6 +1658,8 @@
         userPanel.classList.remove('active');
         adminPanel.classList.remove('active');
         kalenderPanel.classList.remove('active');
+        akunPanel.classList.remove('active');
+        logPanel.classList.remove('active');
         navItems.forEach(item => item.classList.remove('active'));
       }
 
@@ -1623,6 +1679,33 @@
         }
       });
 
+      btnAkun.addEventListener('click', function() {
+        hideAllPanels();
+        btnAkun.classList.add('active');
+        pageTitle.textContent = "Akun Saya";
+        pageSubtitle.textContent = "Ganti email dan/atau kata sandi akunmu.";
+        akunPanel.classList.add('active');
+        document.getElementById('akunEmailSaatIni').textContent = savedEmail || '(belum diisi)';
+        document.getElementById('akunCurrentPass').value = '';
+        document.getElementById('akunNewEmail').value = '';
+        document.getElementById('akunNewPass').value = '';
+        document.getElementById('akunNewPass2').value = '';
+        document.getElementById('akunError').style.display = 'none';
+        document.getElementById('akunInfo').style.display = 'none';
+      });
+
+      if (isAdmin) {
+        btnLog.addEventListener('click', function() {
+          hideAllPanels();
+          btnLog.classList.add('active');
+          pageTitle.textContent = "Log Aktivitas";
+          pageSubtitle.textContent = "Riwayat persetujuan, penolakan, dan pembatalan reservasi.";
+          logPanel.classList.add('active');
+          loadLogAktivitas();
+        });
+        document.getElementById('logRefreshBtn').addEventListener('click', loadLogAktivitas);
+      }
+
       btnKalender.addEventListener('click', function() {
         hideAllPanels();
         btnKalender.classList.add('active');
@@ -1637,6 +1720,7 @@
         document.documentElement.classList.add('auth-pending');
         stopRealtime();
         localStorage.removeItem('userRole');
+        localStorage.removeItem('userLoginId');
         localStorage.removeItem('userName');
         localStorage.removeItem('userKelas');
         localStorage.removeItem('userEmail');
@@ -2311,6 +2395,23 @@
         }
       }
 
+      // Dipanggil setiap kali admin menyetujui/menolak/membatalkan, atau mengusulkan pindah jadwal --
+      // supaya ada riwayat yang bisa dibuka lewat panel "Log Aktivitas" (siapa melakukan apa, kapan).
+      // Koleksi 'logAktivitas' terpisah dari 'reservasi' -- kalau Firestore Rules Anda membatasi per
+      // koleksi, tambahkan rule baca/tulis untuk koleksi ini juga (baca panduan di bawah chat).
+      function writeLog(aksi, data, oleh, keterangan) {
+        db.collection('logAktivitas').add({
+          aksi: aksi,
+          oleh: oleh || savedName || savedRole,
+          keperluan: (data && data.keperluan) || '-',
+          tanggal: (data && data.tanggal) || '',
+          jamMulai: (data && data.jamMulai) || '',
+          jamSelesai: (data && data.jamSelesai) || '',
+          keterangan: keterangan || '',
+          waktu: firebase.firestore.FieldValue.serverTimestamp()
+        }).catch(function(err) { console.warn('[log aktivitas] Gagal mencatat:', err); });
+      }
+
       // Fungsi Global Aksi Admin (Setujui / Tolak)
       // extra.alasan dipakai saat menolak (wajib lewat modal alasan penolakan).
       // Saat menyetujui, otomatis dicatat nama admin (akun yang sedang login) yang menyetujui.
@@ -2324,6 +2425,7 @@
             payload.alasanDitolak = (extra && extra.alasan) ? extra.alasan : '';
           }
           await db.collection('reservasi').doc(docId).update(payload);
+          writeLog(newStatus === 'approved' ? 'disetujui' : 'ditolak', pendingRequestsCache[docId], savedName || savedRole, payload.alasanDitolak);
           alert(`Reservasi berhasil ${newStatus === 'approved' ? 'disetujui' : 'ditolak'}!`);
           closePendingDetailModal();
           loadAdminRequests(); // Refresh tabel admin
@@ -2571,6 +2673,7 @@
             alasanDibatalkan: alasan,
             dibatalkanOleh: dibatalkanOleh
           });
+          writeLog('dibatalkan', data, dibatalkanOleh, alasan);
           alert("Jadwal berhasil dibatalkan.");
           closeCancelReasonModal();
           loadAdminApprovedSchedules();
@@ -2587,6 +2690,188 @@
           alert("Gagal membatalkan jadwal.");
         }
       });
+
+
+
+      // ================== LOG AKTIVITAS (admin) ==================
+
+      const aksiLabelMap = { disetujui: 'Disetujui', ditolak: 'Ditolak', dibatalkan: 'Dibatalkan' };
+
+      const aksiColorMap = { disetujui: 'var(--success)', ditolak: 'var(--danger)', dibatalkan: 'var(--ink-soft)' };
+
+      async function loadLogAktivitas() {
+
+        const container = document.getElementById('logAktivitasContainer');
+
+        if (!container) return;
+
+        container.innerHTML = '<tr><td colspan="4" style="text-align:center; color: var(--ink-soft);">Memuat log...</td></tr>';
+
+        try {
+
+          const snapshot = await db.collection('logAktivitas').orderBy('waktu', 'desc').limit(100).get();
+
+          if (snapshot.empty) {
+
+            container.innerHTML = '<tr><td colspan="4" style="text-align:center; color: var(--ink-soft);">Belum ada aktivitas tercatat.</td></tr>';
+
+            return;
+
+          }
+
+          let html = '';
+
+          snapshot.forEach(docSnap => {
+
+            const d = docSnap.data();
+
+            const waktu = d.waktu && d.waktu.toDate ? d.waktu.toDate().toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) : '-';
+
+            const label = aksiLabelMap[d.aksi] || d.aksi || '-';
+
+            const color = aksiColorMap[d.aksi] || 'var(--ink-soft)';
+
+            const jadwal = d.tanggal ? `${escapeHtml(d.tanggal)} ${escapeHtml(d.jamMulai || '')}-${escapeHtml(d.jamSelesai || '')}` : '';
+
+            html += `
+
+              <tr>
+
+                ${statusBarCell(color, `<small style="color:#5c675f;">${escapeHtml(waktu)}</small>`)}
+
+                <td><span class="status" style="background:${color}22; color:${color};">${escapeHtml(label)}</span></td>
+
+                <td>${escapeHtml(d.keperluan || '-')}${jadwal ? `<br><small style="color:#5c675f;">${jadwal}</small>` : ''}${d.keterangan ? `<br><small style="color:#5c675f;">${escapeHtml(d.keterangan)}</small>` : ''}</td>
+
+                <td>${escapeHtml(d.oleh || '-')}</td>
+
+              </tr>
+
+            `;
+
+          });
+
+          container.innerHTML = html;
+
+        } catch (err) {
+
+          console.error('Gagal memuat log aktivitas:', err);
+
+          container.innerHTML = '<tr><td colspan="4" style="text-align:center; color: var(--danger);">Gagal memuat log (cek console / Firestore Rules untuk koleksi \'logAktivitas\').</td></tr>';
+
+        }
+
+      }
+
+
+
+      // ================== AKUN SAYA (ganti email & kata sandi sendiri) ==================
+
+      document.getElementById('akunSubmitBtn').addEventListener('click', async function() {
+
+        const akunError = document.getElementById('akunError');
+
+        const akunInfo = document.getElementById('akunInfo');
+
+        akunError.style.display = 'none';
+
+        akunInfo.style.display = 'none';
+
+
+
+        const currentPassword = document.getElementById('akunCurrentPass').value.trim();
+
+        const newEmail = document.getElementById('akunNewEmail').value.trim();
+
+        const newPass = document.getElementById('akunNewPass').value.trim();
+
+        const newPass2 = document.getElementById('akunNewPass2').value.trim();
+
+        const showAkunError = (msg) => { akunError.textContent = msg; akunError.style.display = 'block'; };
+
+
+
+        if (!currentPassword) { showAkunError('Kata sandi saat ini wajib diisi untuk konfirmasi.'); return; }
+
+        if (!newEmail && !newPass) { showAkunError('Isi email baru dan/atau kata sandi baru -- tidak ada yang diubah.'); return; }
+
+        if (newEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) { showAkunError('Format email baru tidak valid.'); return; }
+
+        if (newPass && newPass.length < 6) { showAkunError('Kata sandi baru minimal 6 karakter.'); return; }
+
+        if (newPass && newPass !== newPass2) { showAkunError('Kata sandi baru dan ulangannya tidak sama.'); return; }
+
+
+
+        const btn = document.getElementById('akunSubmitBtn');
+
+        btn.disabled = true;
+
+        try {
+
+          const response = await fetch(APPS_SCRIPT_URL, {
+
+            method: 'POST',
+
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+
+            body: JSON.stringify({
+
+              action: 'updateAccount',
+
+              nisn: localStorage.getItem('userLoginId') || '',
+
+              role: savedRole.toLowerCase(),
+
+              currentPassword: currentPassword,
+
+              newEmail: newEmail,
+
+              newPassword: newPass
+
+            })
+
+          });
+
+          const result = await response.json();
+
+          if (result.status === 'success') {
+
+            if (newEmail) { localStorage.setItem('userEmail', newEmail); document.getElementById('akunEmailSaatIni').textContent = newEmail; }
+
+            akunInfo.textContent = 'Perubahan berhasil disimpan.';
+
+            akunInfo.style.display = 'block';
+
+            document.getElementById('akunCurrentPass').value = '';
+
+            document.getElementById('akunNewEmail').value = '';
+
+            document.getElementById('akunNewPass').value = '';
+
+            document.getElementById('akunNewPass2').value = '';
+
+          } else {
+
+            showAkunError(result.message || 'Gagal menyimpan perubahan.');
+
+          }
+
+        } catch (err) {
+
+          console.error('Gagal update akun:', err);
+
+          showAkunError('Gagal terhubung ke server. Periksa koneksi internet.');
+
+        } finally {
+
+          btn.disabled = false;
+
+        }
+
+      });
+
+
 
       // ================== LOGIKA KALENDER DARI FIRESTORE ==================
       const monthNames = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
