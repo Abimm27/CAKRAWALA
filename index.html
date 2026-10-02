@@ -748,7 +748,7 @@
     .action-btns .btn-sm { width: 100%; }
   }
 
-  /* --- TOMBOL & PESAN (Akun Saya) --- */
+  /* --- TOMBOL & PESAN (Profil) --- */
   .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
   .akun-msg { font-size: 13.5px; line-height: 1.45; padding: 11px 14px; border-radius: 8px; margin-bottom: 14px; }
   .akun-msg.error { background: rgba(193,84,58,0.1); color: var(--danger); border: 1px solid rgba(193,84,58,0.3); }
@@ -799,6 +799,44 @@
     .gear-btn:hover { background: rgba(255,255,255,0.15); }
     .page-header { padding-right: 0; }
   }
+
+  /* --- PROFIL (gaya daftar menu) --- */
+  .profil-wrap { max-width: 480px; }
+  .profil-hero { text-align: center; padding: 28px 20px; }
+  .profil-avatar {
+    width: 84px; height: 84px; border-radius: 50%; margin: 0 auto 14px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(232,185,78,0.18); border: 2px solid var(--chalk-gold-dim);
+    font-family: 'Fraunces', serif; font-size: 34px; font-weight: 600; color: var(--chalk-gold-dim);
+  }
+  .profil-name { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 600; line-height: 1.25; }
+  .profil-email { font-size: 14px; color: var(--ink-soft); margin-top: 6px; word-break: break-all; }
+  .profil-role {
+    display: inline-block; margin-top: 12px; padding: 4px 12px; border-radius: 999px;
+    font-size: 11.5px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    background: rgba(31,59,50,0.07); color: var(--ink-soft);
+  }
+  .profil-section-title {
+    font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600;
+    color: var(--chalk-gold-dim); margin: 24px 4px 10px;
+  }
+  .profil-list { padding: 0; overflow: hidden; }
+  .profil-row {
+    display: flex; align-items: center; gap: 14px; padding: 16px 20px; cursor: pointer;
+    font-size: 15.5px; font-weight: 500; transition: background 0.15s ease;
+  }
+  .profil-row + .profil-row { border-top: 1px solid var(--paper-line); }
+  .profil-row:hover { background: rgba(31,59,50,0.04); }
+  .profil-row .ico { width: 22px; height: 22px; color: var(--ink-soft); flex-shrink: 0; }
+  .profil-row .label { flex: 1; }
+  .profil-row .chev { width: 18px; height: 18px; color: var(--ink-soft); flex-shrink: 0; }
+  .profil-back {
+    display: inline-flex; align-items: center; gap: 6px; background: none; border: none; cursor: pointer;
+    font-size: 14px; font-weight: 600; color: var(--ink-soft); padding: 4px 0; margin-bottom: 14px;
+  }
+  .profil-back:hover { color: var(--ink); }
+  .profil-back svg { width: 16px; height: 16px; }
+  .profil-sub { font-size: 13.5px; color: var(--ink-soft); margin: -8px 0 18px; }
 </style>
 </head>
 <body>
@@ -820,7 +858,7 @@
     <div class="gear-menu" id="gearMenu" role="menu">
       <div class="gear-item" id="btnAkun" role="menuitem">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        Akun Saya
+        Profil
       </div>
       <div class="gear-item" id="btnLog" role="menuitem" style="display:none;">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h8"/></svg>
@@ -862,32 +900,76 @@
 
     <!-- PANEL 1: SISWA / GURU (DASHBOARD) -->
     <div id="akunPanel" class="panel">
-      <div class="grid-layout" style="grid-template-columns: 1fr; max-width: 480px;">
-        <div class="card">
-          <h2>Akun Saya</h2>
-          <p class="akun-email-now">Email saat ini: <strong id="akunEmailSaatIni">-</strong></p>
-          <div class="akun-msg error" id="akunError" role="alert" style="display:none;"></div>
-          <div class="akun-msg success" id="akunInfo" role="status" style="display:none;"></div>
-          <form id="akunForm" style="display:flex; flex-direction:column; gap:14px;">
-            <div class="form-group">
-              <label>Kata sandi saat ini (wajib, untuk konfirmasi)</label>
-              <input type="password" id="akunCurrentPass" placeholder="Masukkan kata sandi yang sedang dipakai" autocomplete="current-password">
+      <div class="profil-wrap">
+
+        <!-- TAMPILAN UTAMA PROFIL -->
+        <div id="profilMain">
+          <div class="card profil-hero">
+            <div class="profil-avatar" id="profilAvatar">?</div>
+            <div class="profil-name" id="profilName">-</div>
+            <div class="profil-email" id="akunEmailSaatIni">-</div>
+            <span class="profil-role" id="profilRole">-</span>
+          </div>
+
+          <div class="profil-section-title">Akun</div>
+          <div class="card profil-list">
+            <div class="profil-row" id="rowUbahEmail" role="button" tabindex="0">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+              <span class="label">Ubah Email</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
             </div>
-            <div class="form-group">
-              <label>Email baru (opsional, kosongkan kalau tidak diubah)</label>
-              <input type="email" id="akunNewEmail" placeholder="nama@email.com" autocomplete="email">
+            <div class="profil-row" id="rowUbahPass" role="button" tabindex="0">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              <span class="label">Ubah Kata Sandi</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
             </div>
-            <div class="form-group">
-              <label>Kata sandi baru (opsional, kosongkan kalau tidak diubah)</label>
-              <input type="password" id="akunNewPass" placeholder="Minimal 6 karakter" autocomplete="new-password">
-            </div>
-            <div class="form-group">
-              <label>Ulangi kata sandi baru</label>
-              <input type="password" id="akunNewPass2" placeholder="Ketik ulang" autocomplete="new-password">
-            </div>
-            <button type="button" class="btn-submit" id="akunSubmitBtn">Simpan Perubahan</button>
-          </form>
+          </div>
         </div>
+
+        <!-- FORM UBAH EMAIL -->
+        <div id="profilEmailView" style="display:none;">
+          <button type="button" class="profil-back" data-profil-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg> Kembali</button>
+          <div class="card">
+            <h2>Ubah Email</h2>
+            <p class="profil-sub">Masukkan kata sandi saat ini untuk konfirmasi.</p>
+            <div class="akun-msg error" id="emailError" role="alert" style="display:none;"></div>
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <div class="form-group">
+                <label>Kata Sandi Saat Ini</label>
+                <input type="password" id="emailCurrentPass" placeholder="Kata sandi yang sedang dipakai" autocomplete="current-password">
+              </div>
+              <div class="form-group">
+                <label>Email Baru</label>
+                <input type="email" id="emailNew" placeholder="nama@email.com" autocomplete="email">
+              </div>
+              <button type="button" class="btn-submit" id="emailSubmitBtn">Simpan Email</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FORM UBAH KATA SANDI -->
+        <div id="profilPassView" style="display:none;">
+          <button type="button" class="profil-back" data-profil-back><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg> Kembali</button>
+          <div class="card">
+            <h2>Ubah Kata Sandi</h2>
+            <p class="profil-sub">Gunakan minimal 6 karakter untuk menjaga keamanan akun Anda.</p>
+            <div class="akun-msg error" id="passError" role="alert" style="display:none;"></div>
+            <div style="display:flex; flex-direction:column; gap:14px;">
+              <div class="form-group">
+                <label>Kata Sandi Saat Ini</label>
+                <input type="password" id="passCurrent" placeholder="Kata sandi yang sedang dipakai" autocomplete="current-password">
+              </div>
+              <div class="form-group">
+                <label>Kata Sandi Baru</label>
+                <input type="password" id="passNew" placeholder="Minimal 6 karakter" autocomplete="new-password">
+              </div>
+              <div class="form-group">
+                <label>Konfirmasi Kata Sandi Baru</label>
+                <input type="password" id="passNew2" placeholder="Ketik ulang" autocomplete="new-password">
+              </div>
+              <button type="button" class="btn-submit" id="passSubmitBtn">Simpan Kata Sandi</button>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -1765,20 +1847,44 @@
         }
       });
 
+      // ---- Profil: tampilan utama + sub-halaman (Ubah Email / Ubah Kata Sandi) ----
+      const profilViews = { main: 'profilMain', email: 'profilEmailView', pass: 'profilPassView' };
+      function showProfilView(name) {
+        Object.keys(profilViews).forEach(k => {
+          document.getElementById(profilViews[k]).style.display = (k === name) ? '' : 'none';
+        });
+        window.scrollTo(0, 0);
+      }
+      function refreshProfilInfo() {
+        const nama = localStorage.getItem('userName') || savedRole || '-';
+        document.getElementById('profilName').textContent = nama;
+        document.getElementById('profilAvatar').textContent = (nama.trim().charAt(0) || '?').toUpperCase();
+        document.getElementById('profilRole').textContent = savedRole || '-';
+        document.getElementById('akunEmailSaatIni').textContent = localStorage.getItem('userEmail') || '(email belum diisi)';
+      }
+      function resetProfilForms() {
+        ['emailCurrentPass','emailNew','passCurrent','passNew','passNew2'].forEach(id => { document.getElementById(id).value = ''; });
+        document.getElementById('emailError').style.display = 'none';
+        document.getElementById('passError').style.display = 'none';
+      }
       btnAkun.addEventListener('click', function() {
         hideAllPanels();
         btnAkun.classList.add('active');
-        pageTitle.textContent = "Akun Saya";
-        pageSubtitle.textContent = "Ganti email dan/atau kata sandi akunmu.";
+        pageTitle.textContent = "Profil";
+        pageSubtitle.textContent = "Kelola email dan kata sandi akunmu.";
         akunPanel.classList.add('active');
-        document.getElementById('akunEmailSaatIni').textContent = localStorage.getItem('userEmail') || '(belum diisi)';
-        document.getElementById('akunCurrentPass').value = '';
-        document.getElementById('akunNewEmail').value = '';
-        document.getElementById('akunNewPass').value = '';
-        document.getElementById('akunNewPass2').value = '';
-        document.getElementById('akunError').style.display = 'none';
-        document.getElementById('akunInfo').style.display = 'none';
+        refreshProfilInfo();
+        resetProfilForms();
+        showProfilView('main');
       });
+      function bindRow(id, view) {
+        const el = document.getElementById(id);
+        el.addEventListener('click', function() { resetProfilForms(); showProfilView(view); });
+        el.addEventListener('keydown', function(e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); } });
+      }
+      bindRow('rowUbahEmail', 'email');
+      bindRow('rowUbahPass', 'pass');
+      document.querySelectorAll('[data-profil-back]').forEach(b => b.addEventListener('click', function() { showProfilView('main'); }));
 
       if (isAdmin) {
         btnLog.addEventListener('click', function() {
@@ -2870,31 +2976,16 @@
         toastTimer = setTimeout(function() { el.classList.remove('show'); }, 4000);
       }
 
-      // ================== AKUN SAYA (ganti email & kata sandi sendiri) ==================
-      document.getElementById('akunSubmitBtn').addEventListener('click', async function() {
-        const btn = this;
-        const akunError = document.getElementById('akunError');
-        const akunInfo = document.getElementById('akunInfo');
-        akunError.style.display = 'none';
-        akunInfo.style.display = 'none';
-
-        const currentPassword = document.getElementById('akunCurrentPass').value.trim();
-        const newEmail = document.getElementById('akunNewEmail').value.trim();
-        const newPass = document.getElementById('akunNewPass').value.trim();
-        const newPass2 = document.getElementById('akunNewPass2').value.trim();
-        const showAkunError = (msg) => { akunError.textContent = msg; akunError.style.display = 'block'; };
-
-        if (!currentPassword) { showAkunError('Kata sandi saat ini wajib diisi untuk konfirmasi.'); return; }
-        if (!newEmail && !newPass) { showAkunError('Isi email baru dan/atau kata sandi baru -- tidak ada yang diubah.'); return; }
-        if (newEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) { showAkunError('Format email baru tidak valid.'); return; }
-        if (newPass && newPass.length < 6) { showAkunError('Kata sandi baru minimal 6 karakter.'); return; }
-        if (newPass && newPass !== newPass2) { showAkunError('Kata sandi baru dan ulangannya tidak sama.'); return; }
-
+      // ================== PROFIL: ubah email / kata sandi (mekanisme sama: konfirmasi kata sandi saat ini) ==================
+      // Dipakai bersama oleh form Ubah Email dan Ubah Kata Sandi.
+      async function kirimUpdateAkun(opts) {
+        const { currentPassword, newEmail, newPassword, btn, errorEl, pesanSukses, onSuccess } = opts;
         const labelAsli = btn.textContent;
+        errorEl.style.display = 'none';
         btn.disabled = true;
         btn.textContent = 'Menyimpan...';
+        const showErr = (msg) => { errorEl.textContent = msg; errorEl.style.display = 'block'; };
 
-        // Tahap 1: kirim ke server & baca balasannya. Error di tahap ini baru boleh disebut "gagal terhubung".
         let result = null;
         try {
           const response = await fetch(APPS_SCRIPT_URL, {
@@ -2905,54 +2996,67 @@
               nisn: localStorage.getItem('userLoginId') || '',
               role: savedRole.toLowerCase(),
               currentPassword: currentPassword,
-              newEmail: newEmail,
-              newPassword: newPass
+              newEmail: newEmail || '',
+              newPassword: newPassword || ''
             })
           });
           const raw = await response.text();
           try { result = JSON.parse(raw); }
-          catch (parseErr) { console.error('[akun] Balasan Apps Script bukan JSON:', raw.slice(0, 300)); }
+          catch (parseErr) { console.error('[profil] Balasan Apps Script bukan JSON:', raw.slice(0, 300)); }
         } catch (netErr) {
-          console.error('[akun] Gagal terhubung ke Apps Script:', netErr);
-          btn.disabled = false;
-          btn.textContent = labelAsli;
-          showAkunError('Gagal terhubung ke server. Periksa koneksi internet.');
+          console.error('[profil] Gagal terhubung ke Apps Script:', netErr);
+          btn.disabled = false; btn.textContent = labelAsli;
+          showErr('Gagal terhubung ke server. Periksa koneksi internet.');
           return;
         }
+        btn.disabled = false; btn.textContent = labelAsli;
 
-        btn.disabled = false;
-        btn.textContent = labelAsli;
-
-        if (!result) {
-          showAkunError('Balasan server tidak terbaca. Perubahan mungkin sudah tersimpan -- muat ulang halaman lalu cek email di atas.');
-          return;
-        }
-        if (result.status !== 'success') {
-          showAkunError(result.message || 'Gagal menyimpan perubahan.');
-          return;
-        }
-
-        // Tahap 2: sukses. Update tampilan; error kecil di sini TIDAK boleh dilaporkan sebagai gagal.
-        let pesan;
-        if (newEmail && newPass) pesan = 'Email dan kata sandi berhasil diperbarui.';
-        else if (newEmail) pesan = 'Email berhasil diperbarui menjadi ' + newEmail + '.';
-        else pesan = 'Kata sandi berhasil diperbarui.';
+        if (!result) { showErr('Balasan server tidak terbaca. Perubahan mungkin sudah tersimpan -- muat ulang halaman lalu cek kembali.'); return; }
+        if (result.status !== 'success') { showErr(result.message || 'Gagal menyimpan perubahan.'); return; }
 
         try {
-          if (newEmail) {
-            localStorage.setItem('userEmail', newEmail);
-            document.getElementById('akunEmailSaatIni').textContent = newEmail;
-          }
-          document.getElementById('akunCurrentPass').value = '';
-          document.getElementById('akunNewEmail').value = '';
-          document.getElementById('akunNewPass').value = '';
-          document.getElementById('akunNewPass2').value = '';
+          if (newEmail) localStorage.setItem('userEmail', newEmail);
+          resetProfilForms();
+          refreshProfilInfo();
+          showProfilView('main');
         } catch (uiErr) {
-          console.warn('[akun] Perubahan tersimpan, tapi tampilan gagal diperbarui:', uiErr);
+          console.warn('[profil] Tersimpan, tapi tampilan gagal diperbarui:', uiErr);
         }
-        akunInfo.textContent = pesan;
-        akunInfo.style.display = 'block';
-        showToast(pesan, 'success');
+        showToast(pesanSukses, 'success');
+      }
+
+      document.getElementById('emailSubmitBtn').addEventListener('click', function() {
+        const errorEl = document.getElementById('emailError');
+        const currentPassword = document.getElementById('emailCurrentPass').value.trim();
+        const newEmail = document.getElementById('emailNew').value.trim();
+        const showErr = (msg) => { errorEl.textContent = msg; errorEl.style.display = 'block'; };
+        errorEl.style.display = 'none';
+        if (!currentPassword) { showErr('Kata sandi saat ini wajib diisi untuk konfirmasi.'); return; }
+        if (!newEmail) { showErr('Email baru wajib diisi.'); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) { showErr('Format email baru tidak valid.'); return; }
+        kirimUpdateAkun({
+          currentPassword, newEmail, newPassword: '',
+          btn: this, errorEl,
+          pesanSukses: 'Email berhasil diperbarui menjadi ' + newEmail + '.'
+        });
+      });
+
+      document.getElementById('passSubmitBtn').addEventListener('click', function() {
+        const errorEl = document.getElementById('passError');
+        const currentPassword = document.getElementById('passCurrent').value.trim();
+        const newPass = document.getElementById('passNew').value.trim();
+        const newPass2 = document.getElementById('passNew2').value.trim();
+        const showErr = (msg) => { errorEl.textContent = msg; errorEl.style.display = 'block'; };
+        errorEl.style.display = 'none';
+        if (!currentPassword) { showErr('Kata sandi saat ini wajib diisi untuk konfirmasi.'); return; }
+        if (!newPass) { showErr('Kata sandi baru wajib diisi.'); return; }
+        if (newPass.length < 6) { showErr('Kata sandi baru minimal 6 karakter.'); return; }
+        if (newPass !== newPass2) { showErr('Kata sandi baru dan konfirmasinya tidak sama.'); return; }
+        kirimUpdateAkun({
+          currentPassword, newEmail: '', newPassword: newPass,
+          btn: this, errorEl,
+          pesanSukses: 'Kata sandi berhasil diperbarui.'
+        });
       });
 
       // ================== LOGIKA KALENDER DARI FIRESTORE ==================
