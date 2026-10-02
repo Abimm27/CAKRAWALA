@@ -840,29 +840,35 @@
 
   /* --- KALENDER MOBILE (strip tanggal + popup bulan). Desktop tidak berubah. --- */
   .cal-mobile { display: none; }
-  .cal-pick-box { max-width: 400px; padding: 22px 18px 18px; }
-  .cal-pick-box h3 { font-family: 'Fraunces', serif; font-size: 21px; }
-  .cal-pick-sub { font-size: 13px; color: var(--ink-soft); margin: 4px 0 16px; }
-  .cp-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+  .cal-pick-box { max-width: 350px; padding: 16px 16px 12px; overflow: hidden; }
+  .cp-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
   .cp-nav button {
-    width: 36px; height: 36px; border-radius: 10px; border: 1.5px solid rgba(31,59,50,0.16);
+    width: 32px; height: 32px; border-radius: 8px; border: 1.5px solid rgba(31,59,50,0.16);
     background: #fff; color: var(--ink); cursor: pointer; display: flex; align-items: center; justify-content: center;
   }
-  .cp-nav button svg { width: 16px; height: 16px; }
-  .cp-label { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 600; }
-  .cp-weekdays, .cp-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
-  .cp-weekdays span { text-align: center; font-size: 11px; font-weight: 600; color: var(--ink-soft); padding: 4px 0 8px; }
+  .cp-nav button:active { background: rgba(31,59,50,0.08); }
+  .cp-nav button svg { width: 15px; height: 15px; }
+  .cp-label { font-family: 'Fraunces', serif; font-size: 17px; font-weight: 600; }
+  .cp-weekdays { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 4px; }
+  .cp-weekdays span { text-align: center; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 700; color: var(--ink-soft); padding: 4px 0 6px; }
+  .cp-viewport { position: relative; overflow: hidden; height: 264px; touch-action: pan-y; } /* 6 baris x 44px: tinggi tetap supaya tidak melompat */
+  .cp-page { position: absolute; inset: 0; will-change: transform, opacity; }
+  .cp-grid { display: grid; grid-template-columns: repeat(7, 1fr); grid-auto-rows: 44px; }
   .cp-cell {
-    height: 46px; border: none; background: none; cursor: pointer; border-radius: 50%;
+    width: 40px; height: 42px; margin: 1px auto; border: 1.5px solid transparent; background: none; cursor: pointer; border-radius: 9px;
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
-    font-size: 14px; font-weight: 500; color: var(--ink); font-family: inherit;
+    font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 500; color: var(--ink);
+    transition: background 0.15s ease;
   }
+  .cp-cell:active { background: rgba(31,59,50,0.1); }
   .cp-cell.blank { visibility: hidden; cursor: default; }
-  .cp-cell.sel { background: rgba(232,185,78,0.3); box-shadow: inset 0 0 0 2px var(--chalk-gold-dim); }
-  .cp-cell.today:not(.sel) { color: var(--chalk-gold-dim); font-weight: 700; }
+  .cp-cell.today { border-color: var(--chalk-gold-dim); }
+  .cp-cell.sel { background: var(--ink); color: #fff; font-weight: 700; border-color: var(--ink); }
   .cp-loading { grid-column: 1 / -1; text-align: center; padding: 40px 0; font-size: 13px; color: var(--ink-soft); }
-  .cp-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--paper-line); font-size: 12px; color: var(--ink-soft); }
+  .cp-legend { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 8px; padding-top: 10px; border-top: 1px dashed var(--paper-line); font-size: 11.5px; color: var(--ink-soft); }
   .cp-legend span { display: flex; align-items: center; gap: 6px; }
+  .cp-foot { display: flex; justify-content: space-between; margin-top: 6px; }
+  .cp-foot button { background: none; border: none; cursor: pointer; padding: 10px 6px; font-size: 14px; font-weight: 700; color: var(--chalk-gold-dim); font-family: inherit; }
   .dot-s { width: 7px; height: 7px; border-radius: 50%; display: inline-block; background: transparent; }
   .dot-s.s-approved { background: var(--success); }
   .dot-s.s-pending { background: var(--chalk-gold-dim); }
@@ -1323,22 +1329,21 @@
   <!-- POPUP PILIH TANGGAL (mobile) -->
   <div class="modal-overlay" id="calPickModal">
     <div class="modal-box cal-pick-box">
-      <button class="modal-close" id="calPickClose" aria-label="Tutup" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M18 6 6 18M6 6l12 12"/></svg>
-      </button>
-      <h3>Pilih Tanggal</h3>
-      <p class="cal-pick-sub">Ketuk tanggal untuk melihat jadwalnya.</p>
       <div class="cp-nav">
         <button type="button" id="cpPrev" aria-label="Bulan sebelumnya"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M15 6l-6 6 6 6"/></svg></button>
         <span class="cp-label" id="cpLabel">—</span>
         <button type="button" id="cpNext" aria-label="Bulan berikutnya"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M9 6l6 6-6 6"/></svg></button>
       </div>
       <div class="cp-weekdays"><span>Min</span><span>Sen</span><span>Sel</span><span>Rab</span><span>Kam</span><span>Jum</span><span>Sab</span></div>
-      <div class="cp-grid" id="cpGrid"></div>
+      <div class="cp-viewport" id="cpViewport"></div>
       <div class="cp-legend">
         <span><span class="dot-s s-approved"></span>Approved</span>
         <span><span class="dot-s s-pending"></span>Pending</span>
         <span><span class="dot-s s-ongoing"></span>Ongoing</span>
+      </div>
+      <div class="cp-foot">
+        <button type="button" id="cpClose">Tutup</button>
+        <button type="button" id="cpToday">Hari ini</button>
       </div>
     </div>
   </div>
@@ -3883,51 +3888,97 @@
         document.getElementById('btnAddEventForDay').click();
       });
 
-      // ---- Popup Pilih Tanggal ----
+      // ---- Popup Pilih Tanggal (gaya date-picker, ganti bulan bergulir) ----
       let cpYear = 0, cpMonth = 0, cpToken = 0;
-      async function renderPickGrid(){
-        const grid = document.getElementById('cpGrid');
-        document.getElementById('cpLabel').textContent = `${monthNames[cpMonth]} ${cpYear}`;
-        grid.innerHTML = '<div class="cp-loading">Memuat...</div>';
-        const token = ++cpToken;
-        const data = (cpYear === currentYear && cpMonth === currentMonth && Object.keys(currentMonthData).length)
-          ? currentMonthData : await fetchCalendarDataFromFirestore(cpYear, cpMonth);
-        if (token !== cpToken) return; // user sudah pindah bulan lagi
-        const first = new Date(cpYear, cpMonth, 1).getDay();
-        const days = new Date(cpYear, cpMonth + 1, 0).getDate();
+      let cpCache = {};   // data per bulan, hanya selama popup terbuka (biar geser bulan terasa instan)
+      let cpBusyUntil = 0;
+
+      async function getPickData(y, m){
+        if (y === currentYear && m === currentMonth && Object.keys(currentMonthData).length) return currentMonthData;
+        const key = y + '-' + m;
+        if (!cpCache[key]) cpCache[key] = await fetchCalendarDataFromFirestore(y, m);
+        return cpCache[key];
+      }
+
+      function buildPickPage(y, m, data){
+        const first = new Date(y, m, 1).getDay();
+        const days = new Date(y, m + 1, 0).getDate();
         const tk = todayKey();
         let html = '';
-        for (let i = 0; i < first; i++) html += '<button type="button" class="cp-cell blank" tabindex="-1"></button>';
+        for (let i = 0; i < first; i++) html += '<button type="button" class="cp-cell blank" tabindex="-1" aria-hidden="true"></button>';
         for (let d = 1; d <= days; d++) {
-          const ds = formatDateKey(cpYear, cpMonth, d);
+          const ds = formatDateKey(y, m, d);
           const st = effStatus(ds, data[ds]);
           html += `<button type="button" class="cp-cell${ds === mobSelDate ? ' sel' : ''}${ds === tk ? ' today' : ''}" data-date="${ds}">${d}<span class="dot-s s-${st}"></span></button>`;
         }
-        grid.innerHTML = html;
+        const page = document.createElement('div');
+        page.className = 'cp-page cp-grid';
+        page.innerHTML = html;
+        return page;
       }
+
+      // dir: 0 = tampil langsung (saat dibuka), 1 = bulan berikutnya (geser ke kiri), -1 = bulan sebelumnya (geser ke kanan)
+      async function showPickMonth(dir){
+        const vp = document.getElementById('cpViewport');
+        document.getElementById('cpLabel').textContent = `${monthNames[cpMonth]} ${cpYear}`;
+        const token = ++cpToken;
+        if (dir === 0) vp.innerHTML = '<div class="cp-loading">Memuat...</div>';
+        const data = await getPickData(cpYear, cpMonth);
+        if (token !== cpToken) return; // user sudah pindah bulan lagi
+        const page = buildPickPage(cpYear, cpMonth, data);
+        const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const pages = vp.querySelectorAll('.cp-page');
+        if (dir === 0 || reduce || pages.length === 0 || !page.animate) {
+          vp.innerHTML = '';
+          vp.appendChild(page);
+          return;
+        }
+        // buang halaman lama yang animasinya belum selesai, sisakan yang paling atas untuk digulirkan keluar
+        for (let i = 0; i < pages.length - 1; i++) pages[i].remove();
+        const old = pages[pages.length - 1];
+        vp.appendChild(page);
+        const opt = { duration: 280, easing: 'cubic-bezier(0.32, 0.72, 0, 1)', fill: 'forwards' };
+        old.animate([{ transform: 'translateX(0)', opacity: 1 }, { transform: `translateX(${-dir * 100}%)`, opacity: 0 }], opt)
+           .onfinish = () => old.remove();
+        page.animate([{ transform: `translateX(${dir * 100}%)`, opacity: 0 }, { transform: 'translateX(0)', opacity: 1 }], opt);
+      }
+
+      function shiftPickMonth(dir){
+        cpMonth += dir;
+        if (cpMonth < 0) { cpMonth = 11; cpYear--; }
+        if (cpMonth > 11) { cpMonth = 0; cpYear++; }
+        showPickMonth(dir);
+      }
+
       function openPickModal(){
-        cpYear = currentYear; cpMonth = currentMonth;
+        cpYear = currentYear; cpMonth = currentMonth; cpCache = {};
         document.getElementById('calPickModal').classList.add('show');
-        renderPickGrid();
+        showPickMonth(0);
       }
       function closePickModal(){ document.getElementById('calPickModal').classList.remove('show'); }
+
       document.getElementById('cmPick').addEventListener('click', openPickModal);
-      document.getElementById('calPickClose').addEventListener('click', closePickModal);
+      document.getElementById('cpClose').addEventListener('click', closePickModal);
+      document.getElementById('cpToday').addEventListener('click', function(){ closePickModal(); goToMobileDate(todayKey()); });
       document.getElementById('calPickModal').addEventListener('click', function(e){ if (e.target.id === 'calPickModal') closePickModal(); });
-      document.getElementById('cpPrev').addEventListener('click', function(){
-        cpMonth--; if (cpMonth < 0) { cpMonth = 11; cpYear--; }
-        renderPickGrid();
-      });
-      document.getElementById('cpNext').addEventListener('click', function(){
-        cpMonth++; if (cpMonth > 11) { cpMonth = 0; cpYear++; }
-        renderPickGrid();
-      });
-      document.getElementById('cpGrid').addEventListener('click', function(e){
+      document.getElementById('cpPrev').addEventListener('click', function(){ shiftPickMonth(-1); });
+      document.getElementById('cpNext').addEventListener('click', function(){ shiftPickMonth(1); });
+      document.getElementById('cpViewport').addEventListener('click', function(e){
         const b = e.target.closest('.cp-cell[data-date]');
         if (!b) return;
         closePickModal();
         goToMobileDate(b.dataset.date);
       });
+      // Geser jari kiri/kanan di kalender untuk ganti bulan
+      (function(){
+        const vp = document.getElementById('cpViewport');
+        let sx = 0, sy = 0;
+        vp.addEventListener('touchstart', function(e){ sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+        vp.addEventListener('touchend', function(e){
+          const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+          if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) shiftPickMonth(dx < 0 ? 1 : -1);
+        }, { passive: true });
+      })();
 
       // ================== REALTIME: DATA UPDATE OTOMATIS TANPA REFRESH ==================
       // Query di bawah sama persis dengan query yang sudah dipakai fungsi load*() (jadi lolos Firestore
