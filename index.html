@@ -127,16 +127,21 @@
 
   .logout-btn {
     margin-top: auto;
-    background: transparent;
-    border: 1px solid rgba(244,241,230,0.2);
-    color: var(--chalk-white);
-    padding: 10px;
-    border-radius: 8px;
+    display: flex; align-items: center; gap: 14px;
+    width: 100%; text-align: left;
+    background: rgba(193,84,58,0.18);
+    border: none;
+    color: #ff9f8a;
+    padding: 14px 18px;
+    border-radius: 14px;
     cursor: pointer;
     font-family: 'IBM Plex Sans', sans-serif;
-    transition: all 0.2s ease;
+    font-size: 16px; font-weight: 500;
+    transition: background 0.2s ease, color 0.2s ease;
   }
-  .logout-btn:hover { background: rgba(193,84,58,0.2); border-color: var(--danger); color: #ffd4cc; }
+  .logout-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+  .logout-btn:hover { background: rgba(193,84,58,0.3); color: #ffb9a9; }
+  .logout-btn:active { background: rgba(193,84,58,0.38); }
 
   /* --- MAIN CONTENT --- */
   .main-content {
@@ -838,6 +843,32 @@
   .profil-back svg { width: 16px; height: 16px; }
   .profil-sub { font-size: 13.5px; color: var(--ink-soft); margin: -8px 0 18px; }
 
+  
+  /* --- LOG AKTIVITAS: di HP tabel diubah jadi daftar kartu (tidak ada kolom terpotong) --- */
+  @media (max-width: 900px) {
+    .log-table { min-width: 0 !important; width: 100%; display: block; }
+    .log-table thead { display: none; }
+    .log-table tbody { display: block; }
+    .log-table tr {
+      display: grid; grid-template-columns: auto 1fr;
+      grid-template-areas: "aksi waktu" "keg keg" "oleh oleh";
+      gap: 8px 10px; align-items: center;
+      padding: 12px 14px; margin-bottom: 10px;
+      background: #fff; border: 1px solid var(--paper-line);
+      border-left: 4px solid var(--bar, transparent); border-radius: 10px;
+    }
+    .log-table td { display: block; padding: 0 !important; border: none !important; min-width: 0; overflow-wrap: anywhere; }
+    .log-table td:nth-child(1) { grid-area: waktu; text-align: right; }
+    .log-table td:nth-child(1) > div { border-left: none !important; margin: 0 !important; padding: 0 !important; }
+    .log-table td:nth-child(2) { grid-area: aksi; }
+    .log-table td:nth-child(3) { grid-area: keg; font-size: 14px; }
+    .log-table td:nth-child(4) { grid-area: oleh; font-size: 12.5px; color: var(--ink-soft); }
+    .log-table td:nth-child(4)::before { content: 'Oleh: '; font-weight: 600; }
+    .log-table td[colspan] { grid-area: auto; grid-column: 1 / -1; text-align: center; }
+    .log-table td[colspan]::before { content: none; }
+    .log-table tr:has(td[colspan]) { display: block; border: none; background: none; padding: 16px 0; }
+  }
+
   /* --- TRANSISI GESER BULAN (kalender desktop & date picker form) --- */
   .slide-wrap { position: relative; }
   .slide-wrap.sliding { overflow: hidden; }
@@ -974,7 +1005,7 @@
       <div class="nav-item" id="btnKalender">Kalender Kegiatan</div>
       <div class="nav-item">Panduan Penggunaan</div>
     </nav>
-    <button class="logout-btn" id="logoutBtn">Keluar / Ganti Akun</button>
+    <button class="logout-btn" id="logoutBtn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg><span>Keluar</span></button>
   </aside>
 
   <!-- MAIN CONTENT -->
@@ -1263,12 +1294,14 @@
           <button type="button" class="btn-sm" id="logRefreshBtn" style="background: rgba(31,59,50,0.08); color: var(--ink);">Muat Ulang</button>
         </div>
         <p style="font-size:13px; color: var(--ink-soft); margin-top:4px; margin-bottom:16px;">Riwayat siapa menyetujui, menolak, atau membatalkan reservasi, dan kapan. Menampilkan 100 catatan terbaru.</p>
-        <table class="data-table">
+        <div class="table-scroll">
+        <table class="data-table log-table">
           <thead><tr><th>Waktu</th><th>Aksi</th><th>Kegiatan</th><th>Oleh</th></tr></thead>
           <tbody id="logAktivitasContainer">
             <tr><td colspan="4" style="text-align:center; color: var(--ink-soft);">Memuat log...</td></tr>
           </tbody>
         </table>
+        </div>
       </div>
     </div>
 
@@ -3060,7 +3093,7 @@
 
             html += `
 
-              <tr>
+              <tr style="--bar:${color};">
 
                 ${statusBarCell(color, `<small style="color:#5c675f;">${escapeHtml(waktu)}</small>`)}
 
