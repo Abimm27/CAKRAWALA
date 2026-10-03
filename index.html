@@ -1013,6 +1013,39 @@
     .bn-item { height: 42px; min-width: 42px; padding: 0 12px; gap: 8px; font-size: 13.5px; border-radius: 21px; }
     .bn-item svg { width: 21px; height: 21px; }
   }
+
+  /* --- SAPAAN + JAM DI SAMPING GEAR --- */
+  .gear-wrap { display: flex; align-items: center; gap: 10px; }
+  .gear-clock {
+    display: flex; align-items: center; gap: 9px; height: 42px; padding: 0 14px; border-radius: 12px;
+    background: #fff; border: 1.5px solid rgba(31,59,50,0.12); box-shadow: 0 4px 14px rgba(31,59,50,0.07);
+    font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--ink-soft); white-space: nowrap;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+  }
+  .gc-live { width: 6px; height: 6px; border-radius: 50%; background: #3a8b5c; box-shadow: 0 0 0 3px rgba(58,139,92,0.16); flex-shrink: 0; }
+  .gc-time { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+  .desk-greet { font-size: 15px; color: var(--ink-soft); margin-bottom: 8px; }
+  .desk-greet strong { color: var(--ink); font-weight: 600; }
+  @media (min-width: 901px) { .page-header { padding-right: 330px; } }
+  @media (max-width: 900px) {
+    .desk-greet { display: none; }
+    .mobile-topbar { padding: 12px 18px 16px; }
+    .mobile-topbar-brand { height: 38px; display: flex; align-items: center; }
+    .gear-wrap { gap: 8px; }
+    .gear-clock {
+      height: 38px; padding: 0 11px; gap: 7px; font-size: 11.5px; border-radius: 12px; box-shadow: none;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(244,241,230,0.25); color: rgba(244,241,230,0.8);
+    }
+    .gc-year { display: none; }
+    .gc-time { color: var(--chalk-white); }
+    .gc-live { background: #6fcf97; box-shadow: 0 0 0 3px rgba(111,207,151,0.18); }
+    .gear-wrap.on-light .gear-clock {
+      background: rgba(222,234,226,0.94); border-color: rgba(31,59,50,0.14); color: #4a6a5c;
+      box-shadow: 0 2px 10px rgba(31,59,50,0.12); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    }
+    .gear-wrap.on-light .gc-time { color: #1f3b32; }
+    .gear-wrap.on-light .gc-live { background: #3a8b5c; box-shadow: 0 0 0 3px rgba(58,139,92,0.16); }
+  }
 </style>
 </head>
 <body>
@@ -1025,7 +1058,6 @@
     <div class="mt-info">
       <div class="mobile-topbar-brand">CAKRAWALA</div>
       <div class="mt-greet" id="mtGreet"></div>
-      <div class="mt-time"><span class="mt-live"></span><span id="mtTime"></span></div>
     </div>
   </div>
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
@@ -1047,6 +1079,11 @@
 
   <!-- GEAR (pengaturan) -->
   <div class="gear-wrap" id="gearWrap">
+    <div class="gear-clock" id="gearClock" aria-live="off">
+      <span class="gc-live"></span>
+      <span class="gc-date"><span id="gcDate">—</span><span class="gc-year" id="gcYear"></span></span>
+      <span class="gc-time" id="gcTime">--.--.--</span>
+    </div>
     <button type="button" class="gear-btn" id="gearBtn" aria-label="Pengaturan" aria-haspopup="true" aria-expanded="false">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     </button>
@@ -1089,6 +1126,7 @@
     
     <!-- HEADER -->
     <header class="page-header">
+      <div class="desk-greet" id="deskGreet"></div>
       <h1 id="pageTitle">Portal Reservasi Audio Visual</h1>
       <p id="pageSubtitle">Cek ketersediaan jadwal dan ajukan permohonan pemakaian ruang AVR.</p>
     </header>
@@ -1984,7 +2022,7 @@
       // Email si pengaju — dipakai untuk mengirim notifikasi email otomatis saat admin Setujui/Tolak.
       const savedEmail = localStorage.getItem('userEmail');
       if (savedName) {
-        document.getElementById('displayRole').textContent = `${savedName} (${savedRole})`;
+        document.getElementById('displayRole').textContent = savedName;
       }
 
       // 2. Navigasi Sidebar dan Panel
@@ -3349,33 +3387,69 @@
       });
 
 
-      // ================== SAPAAN + JAM REAL-TIME (topbar mobile) & WARNA GEAR ==================
+      // ================== SAPAAN ACAK (per login) + JAM REAL-TIME + WARNA GEAR ==================
       (function(){
-        const greet = document.getElementById('mtGreet');
-        const nama = savedName || '';
-        if (greet) {
-          greet.textContent = '';
-          if (nama) {
-            greet.append('Halo, ');
-            const b = document.createElement('strong'); b.textContent = nama; greet.appendChild(b);
-            const r = document.createElement('span'); r.textContent = ' (' + savedRole + ')'; greet.appendChild(r);
-          } else {
-            greet.append('Selamat datang, ');
-            const b = document.createElement('strong'); b.textContent = savedRole; greet.appendChild(b);
-          }
+        const nama = savedName || savedRole;
+        // {n} = nama, {id} = pagi/siang/sore/malam, {en} = morning/afternoon/evening
+        const GREETS = [
+          'Halo, {n}',
+          'Selamat {id}, {n}',
+          'Good {en}, {n}',
+          'Kayapa habar, {n}?',            // Banjar
+          'Salamat datang, {n}',           // Banjar
+          'Welcome back, {n}',
+          'Selamat datang kembali, {n}',
+          'Apa kabar, {n}?',
+          'Senang melihatmu kembali, {n}',
+          'Hello, {n}'
+        ];
+        // Pilihan sapaan dikunci selama satu sesi login; logout menghapusnya sehingga login berikutnya acak lagi.
+        let idx = -1;
+        try { idx = parseInt(sessionStorage.getItem('greetIdx'), 10); } catch (e) {}
+        if (!(idx >= 0 && idx < GREETS.length)) {
+          idx = Math.floor(Math.random() * GREETS.length);
+          try { sessionStorage.setItem('greetIdx', String(idx)); } catch (e) {}
         }
+        document.getElementById('logoutBtn').addEventListener('click', function(){
+          try { sessionStorage.removeItem('greetIdx'); } catch (e) {}
+        });
+
+        function period(h){
+          if (h >= 4 && h < 11) return { id: 'pagi', en: 'morning' };
+          if (h >= 11 && h < 15) return { id: 'siang', en: 'afternoon' };
+          if (h >= 15 && h < 18) return { id: 'sore', en: 'afternoon' };
+          return { id: 'malam', en: 'evening' };
+        }
+        let lastPeriod = '';
+        function renderGreeting(h){
+          const p = period(h);
+          if (p.id === lastPeriod) return;
+          lastPeriod = p.id;
+          const parts = GREETS[idx].replace('{id}', p.id).replace('{en}', p.en).split('{n}');
+          ['mtGreet', 'deskGreet'].forEach(function(id){
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = '';
+            el.append(parts[0]);
+            const b = document.createElement('strong'); b.textContent = nama; el.appendChild(b);
+            el.append(parts[1] || '');
+          });
+        }
+
         const hari = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
         const bln = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
-        const timeEl = document.getElementById('mtTime');
-        function tickClock(){
-          if (!timeEl) return;
-          const n = new Date(), p = v => String(v).padStart(2, '0');
-          timeEl.textContent = hari[n.getDay()] + ', ' + n.getDate() + ' ' + bln[n.getMonth()] + ' ' + n.getFullYear() + ' · ' + p(n.getHours()) + '.' + p(n.getMinutes());
+        const elDate = document.getElementById('gcDate'), elYear = document.getElementById('gcYear'), elTime = document.getElementById('gcTime');
+        function tick(){
+          const n = new Date(), p2 = v => String(v).padStart(2, '0');
+          elDate.textContent = hari[n.getDay()] + ', ' + n.getDate() + ' ' + bln[n.getMonth()];
+          elYear.textContent = ' ' + n.getFullYear();
+          elTime.textContent = p2(n.getHours()) + '.' + p2(n.getMinutes()) + '.' + p2(n.getSeconds());
+          renderGreeting(n.getHours());
         }
-        tickClock();
-        setInterval(tickClock, 15000);
+        tick();
+        setInterval(tick, 1000);
 
-        // Gear ikut scroll (fixed): di atas topbar gelap pakai gaya transparan, di atas konten terang pakai hijau tipis.
+        // Gear + jam ikut scroll (fixed): di atas topbar gelap transparan, di atas konten terang hijau tipis.
         const topbar = document.querySelector('.mobile-topbar');
         const gearWrapEl = document.getElementById('gearWrap');
         function updateGearTone(){
