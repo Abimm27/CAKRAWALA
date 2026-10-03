@@ -989,6 +989,30 @@
     .bn-item.active { flex: 1 1 auto; background: #eadfc1; color: #4b443a; }
     .bn-item.active span { max-width: 140px; opacity: 1; transition-delay: 0s, 0.1s; }
   }
+
+  /* --- TOPBAR MOBILE: sapaan + jam; BOTTOM NAV lebih ringkas; GEAR terlihat di latar terang --- */
+  @media (max-width: 900px) {
+    .mobile-topbar { position: relative; padding: 16px 64px 16px 18px; align-items: flex-start; }
+    .mt-info { min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+    .mt-greet { font-size: 15px; color: var(--chalk-white); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mt-greet strong { font-weight: 600; }
+    .mt-greet span { color: rgba(244,241,230,0.65); font-size: 13px; }
+    .mt-time { display: flex; align-items: center; gap: 7px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 0.04em; color: rgba(244,241,230,0.6); }
+    .mt-live { width: 6px; height: 6px; border-radius: 50%; background: #6fcf97; box-shadow: 0 0 0 3px rgba(111,207,151,0.18); }
+
+    .gear-wrap { top: 12px; }
+    .gear-btn { transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, transform 0.3s ease; }
+    .gear-wrap.on-light .gear-btn {
+      background: rgba(222,234,226,0.94); color: #2c5445; border-color: rgba(31,59,50,0.14);
+      box-shadow: 0 2px 10px rgba(31,59,50,0.12); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    }
+
+    .main-content { padding-bottom: 96px; }
+    .toast { bottom: 86px; }
+    .bottom-nav { left: 20px; right: 20px; max-width: 340px; margin: 0 auto; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); padding: 6px; border-radius: 26px; }
+    .bn-item { height: 42px; min-width: 42px; padding: 0 12px; gap: 8px; font-size: 13.5px; border-radius: 21px; }
+    .bn-item svg { width: 21px; height: 21px; }
+  }
 </style>
 </head>
 <body>
@@ -998,7 +1022,11 @@
     <button class="hamburger-btn" id="hamburgerBtn" aria-label="Buka menu" type="button">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
     </button>
-    <div class="mobile-topbar-brand">CAKRAWALA</div>
+    <div class="mt-info">
+      <div class="mobile-topbar-brand">CAKRAWALA</div>
+      <div class="mt-greet" id="mtGreet"></div>
+      <div class="mt-time"><span class="mt-live"></span><span id="mtTime"></span></div>
+    </div>
   </div>
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
@@ -1146,14 +1174,14 @@
           <h2>Formulir Peminjaman</h2>
           <form id="reservationForm">
             <div class="form-group">
-              <label>Atas Nama Kegiatan / Organisasi / Kelompok (opsional)</label>
-              <input type="text" id="penyelenggaraInput" placeholder="Contoh: OSIS, Pramuka, Panitia Class Meeting">
-              <p id="identitasHint" style="font-size:12px; color: var(--ink-soft); margin-top:4px;">Identitas pengaju tercatat otomatis dari akun kamu yang sedang login. Isi kolom ini hanya kalau reservasi diajukan atas nama sebuah kegiatan/organisasi.</p>
+              <label>Atas Nama Kegiatan / Organisasi (opsional)</label>
+              <input type="text" id="penyelenggaraInput" placeholder="Contoh: OSIS, Pramuka">
+              <p id="identitasHint" style="font-size:12px; color: var(--ink-soft); margin-top:4px;">Isi hanya jika atas nama kegiatan/organisasi.</p>
             </div>
             <div class="form-group">
               <label>Email Notifikasi Organisasi (opsional)</label>
               <input type="email" id="emailNotifikasiInput" placeholder="Contoh: osis@sekolah.sch.id">
-              <p style="font-size:12px; color: var(--ink-soft); margin-top:4px;">Isi kalau ini reservasi atas nama organisasi dan pemberitahuan (disetujui/ditolak) ingin dikirim ke email organisasi itu, bukan email akunmu. Kosongkan kalau tidak perlu.</p>
+              <p style="font-size:12px; color: var(--ink-soft); margin-top:4px;">Notifikasi disetujui/ditolak dikirim ke sini, bukan ke email akunmu.</p>
             </div>
             <div class="form-group">
               <label>Penanggung Jawab Kegiatan</label>
@@ -2143,7 +2171,7 @@
         const identitasHint = document.getElementById('identitasHint');
         const identitasAkun = savedName ? `${savedName} (${savedRole})` : savedRole;
         if(identitasHint){
-          identitasHint.textContent = `Identitas pengaju tercatat otomatis sebagai "${identitasAkun}" dari akun kamu yang sedang login. Isi kolom di atas hanya kalau reservasi diajukan atas nama sebuah kegiatan/organisasi.`;
+          identitasHint.textContent = `Tercatat sebagai "${identitasAkun}". Isi hanya jika atas nama kegiatan/organisasi.`;
         }
 
         // Selalu mulai dengan satu baris bubble kosong (Nama Barang + Qty).
@@ -3319,6 +3347,45 @@
           history.pushState({ nav: currentNav, app: 1 }, '');
         }
       });
+
+
+      // ================== SAPAAN + JAM REAL-TIME (topbar mobile) & WARNA GEAR ==================
+      (function(){
+        const greet = document.getElementById('mtGreet');
+        const nama = savedName || '';
+        if (greet) {
+          greet.textContent = '';
+          if (nama) {
+            greet.append('Halo, ');
+            const b = document.createElement('strong'); b.textContent = nama; greet.appendChild(b);
+            const r = document.createElement('span'); r.textContent = ' (' + savedRole + ')'; greet.appendChild(r);
+          } else {
+            greet.append('Selamat datang, ');
+            const b = document.createElement('strong'); b.textContent = savedRole; greet.appendChild(b);
+          }
+        }
+        const hari = ['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+        const bln = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'];
+        const timeEl = document.getElementById('mtTime');
+        function tickClock(){
+          if (!timeEl) return;
+          const n = new Date(), p = v => String(v).padStart(2, '0');
+          timeEl.textContent = hari[n.getDay()] + ', ' + n.getDate() + ' ' + bln[n.getMonth()] + ' ' + n.getFullYear() + ' · ' + p(n.getHours()) + '.' + p(n.getMinutes());
+        }
+        tickClock();
+        setInterval(tickClock, 15000);
+
+        // Gear ikut scroll (fixed): di atas topbar gelap pakai gaya transparan, di atas konten terang pakai hijau tipis.
+        const topbar = document.querySelector('.mobile-topbar');
+        const gearWrapEl = document.getElementById('gearWrap');
+        function updateGearTone(){
+          const limit = (topbar ? topbar.offsetHeight : 60) - 44;
+          gearWrapEl.classList.toggle('on-light', mqMobile.matches && window.scrollY > limit);
+        }
+        updateGearTone();
+        window.addEventListener('scroll', updateGearTone, { passive: true });
+        window.addEventListener('resize', updateGearTone);
+      })();
 
       // ================== TOAST (notifikasi kecil di bawah layar) ==================
       let toastTimer = null;
