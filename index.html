@@ -22,7 +22,7 @@
     --paper: #fffdf7;
     --paper-line: rgba(31,59,50,0.08);
     --ink: #202b26;
-    --ink-soft: #5c675f;
+    --ink-soft: #4b564f;
     --success: #3a8b5c;
     --danger: #c1543a;
     --radius: 12px;
@@ -191,6 +191,39 @@
     font-family: 'IBM Plex Sans', sans-serif; font-size: 14px;
   }
   .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--chalk-gold-dim); }
+  /* ===== Polesan UI: fokus, kontras, hover ===== */
+  .form-group input, .form-group textarea { transition: border-color .15s, box-shadow .15s; }
+  .form-group input:focus, .form-group textarea:focus, .dt-field.open input, .tp-field.open input {
+    border-color: var(--chalk-gold-dim); box-shadow: 0 0 0 3px rgba(232,185,78,0.28); outline: none;
+  }
+  .form-group input::placeholder, .form-group textarea::placeholder { color: #7d8881; }
+  .data-table tbody tr { transition: background .12s; }
+  .data-table tbody tr:hover { background: rgba(232,185,78,0.10); }
+  details.more-fields { margin: 4px 0 16px; border: 1px solid var(--paper-line); border-radius: 10px; background: rgba(31,59,50,0.02); }
+  details.more-fields > summary { cursor: pointer; list-style: none; padding: 11px 14px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  details.more-fields > summary::-webkit-details-marker { display: none; }
+  details.more-fields > summary span { font-weight: 400; color: var(--ink-soft); font-size: 12px; }
+  details.more-fields > summary::after { content: ''; width: 7px; height: 7px; margin: 0 2px 3px auto; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg); transition: transform .2s; flex: 0 0 auto; }
+  details.more-fields[open] > summary::after { transform: rotate(-135deg); margin-bottom: -3px; }
+  details.more-fields .inner { padding: 6px 14px 0; }
+  .avail { display: flex; gap: 10px; align-items: flex-start; margin-top: 8px; padding: 10px 12px; border-radius: 8px; font-size: 13px; line-height: 1.45; background: rgba(31,59,50,0.04); color: var(--ink-soft); }
+  .avail svg { flex: 0 0 18px; width: 18px; height: 18px; margin-top: 1px; }
+  .avail-free { background: rgba(58,139,92,0.10); color: #2c6f47; }
+  .avail-busy { background: rgba(193,84,58,0.08); color: var(--ink); }
+  .avail-busy svg { color: var(--danger); }
+  .avail-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 4px; }
+  .avail-chip { font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; padding: 3px 9px; border-radius: 999px; background: #fff; border: 1px solid rgba(193,84,58,0.35); color: var(--danger); }
+  .avail-chip.pending { border-style: dashed; color: #8a6415; border-color: rgba(199,154,58,0.7); }
+  .avail small { color: var(--ink-soft); font-size: 12px; }
+  .tpl-card { display: flex; align-items: center; gap: 12px; padding: 12px 14px; margin: 2px 0 10px; border: 1.5px dashed rgba(199,154,58,0.55); background: rgba(232,185,78,0.07); border-radius: 10px; text-decoration: none; color: var(--ink); transition: background .15s, border-color .15s, box-shadow .15s; }
+  .tpl-card:hover { background: rgba(232,185,78,0.14); border-color: var(--chalk-gold-dim); }
+  .tpl-card:focus-visible { outline: none; box-shadow: 0 0 0 3px rgba(232,185,78,0.35); }
+  .tpl-ico { flex: 0 0 36px; height: 36px; border-radius: 8px; background: #fff; border: 1px solid var(--paper-line); display: grid; place-items: center; color: var(--chalk-gold-dim); }
+  .tpl-ico svg { width: 20px; height: 20px; }
+  .tpl-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; font-size: 13.5px; }
+  .tpl-text small { font-size: 12px; color: var(--ink-soft); line-height: 1.4; }
+  .tpl-dl { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; padding: 6px 12px; border-radius: 999px; background: var(--ink); color: #fff; }
+  .tpl-dl svg { width: 14px; height: 14px; }
   .btn-submit {
     background: var(--ink); color: #fff; border: none; padding: 12px 20px;
     border-radius: 8px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 8px;
@@ -479,7 +512,7 @@
     font-family: 'IBM Plex Sans', sans-serif; font-size: 14px;
     background: #fff; cursor: pointer; color: var(--ink);
   }
-  .dt-display::placeholder, .tp-display::placeholder { color: #9aa39d; }
+  .dt-display::placeholder, .tp-display::placeholder { color: #7d8881; }
   .dt-display:focus, .tp-display:focus { outline: none; border-color: var(--chalk-gold-dim); }
   .dt-icon, .tp-icon {
     position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
@@ -635,7 +668,7 @@
     color: var(--ink);
     min-width: 0;
   }
-  .bubble-input::placeholder { color: #9aa39d; }
+  .bubble-input::placeholder { color: #7d8881; }
   .bubble-input:focus { outline: none; border-color: var(--chalk-gold-dim); }
   .bubble-input-nama { flex: 1 1 auto; }
   .bubble-input-qty { flex: 0 0 78px; text-align: center; }
@@ -1199,16 +1232,6 @@
           <h2>Formulir Peminjaman</h2>
           <form id="reservationForm">
             <div class="form-group">
-              <label>Atas Nama Kegiatan / Organisasi (opsional)</label>
-              <input type="text" id="penyelenggaraInput" placeholder="Contoh: OSIS, Pramuka">
-              <p id="identitasHint" style="font-size:12px; color: var(--ink-soft); margin-top:4px;">Isi hanya jika atas nama kegiatan/organisasi.</p>
-            </div>
-            <div class="form-group">
-              <label>Email Notifikasi Organisasi (opsional)</label>
-              <input type="email" id="emailNotifikasiInput" placeholder="Contoh: osis@sekolah.sch.id">
-              <p style="font-size:12px; color: var(--ink-soft); margin-top:4px;">Notifikasi disetujui/ditolak dikirim ke sini, bukan ke email akunmu.</p>
-            </div>
-            <div class="form-group">
               <label>Penanggung Jawab Kegiatan</label>
               <input type="text" id="penanggungJawabInput" placeholder="Nama lengkap penanggung jawab kegiatan" required>
             </div>
@@ -1234,6 +1257,7 @@
                   </div>
                 </div>
               </div>
+              <div id="ketersediaanInfo" class="avail" style="display:none;"></div>
             </div>
             <div style="display:flex; gap:16px;">
               <div class="form-group" style="flex:1;">
@@ -1280,18 +1304,34 @@
             </div>
             <div class="form-group">
               <label>Lampiran File (opsional)</label>
-              <div style="margin:2px 0 10px; padding:10px 12px; background: rgba(31,59,50,0.04); border-radius:8px; font-size:13px; line-height:1.5;">
-                📄 Butuh surat permohonan? <a href="#" id="downloadTemplateSurat" style="font-weight:600; text-decoration:underline;">Unduh template surat peminjaman (.docx)</a><br>
-                <span style="font-size:12px; color: var(--ink-soft);">Isi bagian yang bertanda kuning, cetak, minta tanda tangan, lalu foto/scan dan unggah kembali di kolom di bawah ini.</span>
-              </div>
+              <a href="#" id="downloadTemplateSurat" class="tpl-card" role="button">
+                <span class="tpl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
+                <span class="tpl-text"><strong>Template surat peminjaman</strong><small>.docx · isi bagian kuning, cetak &amp; tanda tangan, lalu unggah kembali di bawah</small></span>
+                <span class="tpl-dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7.5 11 12 15.5 16.5 11M5 20h14"/></svg>Unduh</span>
+              </a>
               <input type="file" id="fileUploadInput">
               <p style="font-size:12px; color: var(--ink-soft); margin-top:6px;">Boleh file apa saja (PDF, gambar, dokumen proposal, dll). Maksimal 10MB.</p>
               <div id="fileUploadPreview" style="display:none; margin-top:8px; padding:8px 12px; background: rgba(31,59,50,0.04); border-radius:8px; font-size:13px; display:flex; align-items:center; justify-content:space-between; gap:8px;">
                 <span id="fileUploadPreviewName" style="overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"></span>
                 <button type="button" id="fileUploadRemoveBtn" style="background:none; border:none; color: var(--danger); font-weight:600; cursor:pointer; font-size:12px; flex-shrink:0;">Hapus</button>
               </div>
-              <div id="fileUploadProgress" style="display:none; margin-top:8px; font-size:12px; color: var(--chalk-gold-dim);">⏳ Mengunggah file ke Google Drive, mohon tunggu...</div>
+              <div id="fileUploadProgress" style="display:none; margin-top:8px; font-size:12px; color: var(--chalk-gold-dim);">Mengunggah file ke Google Drive, mohon tunggu...</div>
             </div>
+            <details class="more-fields">
+              <summary>Detail tambahan <span>(atas nama organisasi, email notifikasi)</span></summary>
+              <div class="inner">
+            <div class="form-group">
+              <label>Atas Nama Kegiatan / Organisasi (opsional)</label>
+              <input type="text" id="penyelenggaraInput" placeholder="Contoh: OSIS, Pramuka">
+              <p id="identitasHint" style="font-size:12px; color: var(--ink-soft); margin-top:4px;">Isi hanya jika atas nama kegiatan/organisasi.</p>
+            </div>
+            <div class="form-group">
+              <label>Email Notifikasi Organisasi (opsional)</label>
+              <input type="email" id="emailNotifikasiInput" placeholder="Contoh: osis@sekolah.sch.id">
+              <p style="font-size:12px; color: var(--ink-soft); margin-top:4px;">Notifikasi disetujui/ditolak dikirim ke sini, bukan ke email akunmu.</p>
+            </div>
+              </div>
+            </details>
             <button type="submit" class="btn-submit" id="reservationSubmitBtn">Ajukan Reservasi</button>
           </form>
         </div>
@@ -2396,6 +2436,7 @@
             alert("Permohonan reservasi berhasil dikirim ke database! Menunggu persetujuan admin.");
             reservationForm.reset();
             document.getElementById('tanggalInputRaw').value = '';
+            document.getElementById('tanggalInputRaw').dispatchEvent(new Event('change'));
             document.getElementById('emailNotifikasiInput').value = '';
             fileUploadPreview.style.display = 'none';
             initBarangRows();
@@ -3823,6 +3864,7 @@
           raw.value = dateStr;
           display.value = formatReadableDate(dateStr);
           closePanel();
+          raw.dispatchEvent(new Event('change'));
         }
 
         function openPanel(){
@@ -3847,7 +3889,7 @@
         });
         btnPrev.addEventListener('click', () => { viewMonth--; if(viewMonth < 0){ viewMonth = 11; viewYear--; } renderPanel(-1); });
         btnNext.addEventListener('click', () => { viewMonth++; if(viewMonth > 11){ viewMonth = 0; viewYear++; } renderPanel(1); });
-        if(btnClear) btnClear.addEventListener('click', () => { raw.value = ''; display.value = ''; closePanel(); });
+        if(btnClear) btnClear.addEventListener('click', () => { raw.value = ''; display.value = ''; closePanel(); raw.dispatchEvent(new Event('change')); });
         if(btnToday) btnToday.addEventListener('click', () => selectDate(todayStr));
         raw._syncDisplay = function(){ display.value = raw.value ? formatReadableDate(raw.value) : ''; };
       }
@@ -3935,6 +3977,48 @@
       }
 
       setupDatePicker({ fieldId: 'tanggalField', displayId: 'tanggalInput', rawId: 'tanggalInputRaw', panelId: 'tanggalPanel', clearId: 'tanggalClear', todayId: 'tanggalToday' });
+      // ====== KETERSEDIAAN LANGSUNG: tampilkan jam yang sudah terpakai begitu tanggal dipilih ======
+      (function(){
+        const raw = document.getElementById('tanggalInputRaw');
+        const box = document.getElementById('ketersediaanInfo');
+        if(!raw || !box) return;
+        const ICON_CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>';
+        const ICON_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg>';
+        const fmt = t => (t || '').replace(':', '.');
+        let seq = 0;
+        async function tampilkan(){
+          const tgl = raw.value, my = ++seq;
+          if(!tgl){ box.style.display = 'none'; box.innerHTML = ''; return; }
+          box.style.display = 'flex'; box.className = 'avail';
+          box.innerHTML = ICON_CLOCK + '<span>Mengecek jam yang sudah terpakai...</span>';
+          try{
+            const snap = await db.collection('reservasi').where('tanggal', '==', tgl).get();
+            if(my !== seq) return;
+            const items = [];
+            snap.forEach(d => { const x = d.data(); if(x.status === 'approved' || x.status === 'pending') items.push(x); });
+            items.sort((p, q) => (p.jamMulai || '').localeCompare(q.jamMulai || ''));
+            if(!items.length){
+              box.className = 'avail avail-free';
+              box.innerHTML = ICON_OK + '<span>Belum ada jadwal di tanggal ini, semua jam tersedia.</span>';
+              return;
+            }
+            const chips = items.map(x => '<span class="avail-chip' + (x.status === 'pending' ? ' pending' : '') + '">' +
+              escapeHtml(fmt(x.jamMulai)) + '–' + escapeHtml(fmt(x.jamSelesai)) + (x.status === 'pending' ? ' · menunggu' : '') + '</span>').join('');
+            box.className = 'avail avail-busy';
+            box.innerHTML = ICON_CLOCK + '<div><strong>Jam sudah terpakai:</strong><div class="avail-chips">' + chips +
+              '</div><small>Beri jeda minimal ' + MIN_GAP_MINUTES + ' menit dari jadwal lain.</small></div>';
+          }catch(err){
+            if(my !== seq) return;
+            box.className = 'avail'; box.innerHTML = '<span>Ketersediaan jam belum bisa dimuat.</span>';
+          }
+        }
+        raw.addEventListener('change', tampilkan);
+        // Kolom opsional dilipat: kalau isinya tidak valid (mis. format email), buka otomatis supaya pesan error terlihat.
+        document.getElementById('reservationForm').addEventListener('invalid', function(e){
+          const d = e.target.closest && e.target.closest('details'); if(d) d.open = true;
+        }, true);
+      })();
+
       setupTimePicker({ fieldId: 'jamMulaiField', displayId: 'jamMulaiInput', panelId: 'jamMulaiPanel' });
       setupTimePicker({ fieldId: 'jamSelesaiField', displayId: 'jamSelesaiInput', panelId: 'jamSelesaiPanel' });
 
