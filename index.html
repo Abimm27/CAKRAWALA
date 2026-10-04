@@ -312,7 +312,7 @@
 
   .cal-weekdays {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: 6px;
     margin-bottom: 6px;
   }
@@ -327,12 +327,15 @@
 
   .cal-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
+    /* minmax(0,1fr): lebar 7 kolom SELALU sama; teks jadwal panjang dipotong (ellipsis), tidak mendorong kolom lain */
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-auto-rows: 1fr; /* tinggi semua baris minggu sama (mengikuti minggu yang paling padat) */
     gap: 6px;
     min-height: 120px;
   }
   .cal-day {
     position: relative;
+    min-width: 0;
     min-height: 96px;
     border-radius: 10px;
     border: 1.5px solid rgba(31,59,50,0.12);
@@ -782,7 +785,7 @@
 
     /* Kalender: mode agenda/list (satu kolom) supaya nama kegiatan + jam tetap terbaca, bukan dipaksa masuk kotak kecil. */
     .cal-weekdays { display: none; }
-    .cal-grid { grid-template-columns: 1fr; gap: 8px; min-height: unset; }
+    .cal-grid { grid-template-columns: 1fr; grid-auto-rows: auto; gap: 8px; min-height: unset; }
     .cal-day { flex-direction: row; align-items: flex-start; min-height: unset; padding: 10px 12px; }
     .cal-day.empty-cell { display: none; }
     .cal-day-top { width: auto; flex: 0 0 30px; justify-content: flex-start; }
