@@ -4,1038 +4,162 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Masuk — CAKRAWALA | SMA Banua Kalsel</title>
-<link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAA/1BMVEXg2NXZnp6moZ+cnSFlsGGl055oaSNtaWlr32dI4DQ30CLn7BGiY2k73iNIyTc//wfYfoM2vDZn/wB70nBEzjKSjlyVoZXaeXwpKRl/fwB7eYFUrw9izVU9xyv/f//TucJ/f392vWy+wxmF5Hr/AP/RgX/lmfL//wDAy7z///8AfwBANyd1nIl8gYKAZzWff5+He4qCyHy9w8IAAAAs2hIp5Qwa2gDWhIX8+/wA/wCLiIzXeHqSlpQx1RqwuK4d4wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACRBu1LAAAAQHRSTlP+////G/7//xr9m///914E/wMC/qH/Df//Av8NZWQC/wL+//4B/wcB/wEC/w3//wj/L/8A9/79//8B////0f7//DZvIAAAAlJJREFUeNptlImWmzAMRWUDMSGQfZtk1s7evbVsg4Hw/3/VZzJp0zljAnHwlWRZeiF9NqpZeE7m1dk7+jdN8f5pma0xnX0AXOCOx60xnI2/6vTiHfAM6zRj01lrwVxpPf8PAJ9eYpW5KAq2HV/GujoDUh1nzHaYJC8JyWQxtIbHuopPwETHhbGcSC/lzu+kfEnYmkz3Tih8xa2BeflbCYdLym8/CU6y9OihWmNzWJeNmG7qelNvpsI3hxBmed0D161hpsa72jmB4aa180TMpjh60AgA+7Ceq3yT58LVgnxiTXsCuuLQyNpNXf0liga5wCQPQTjWt/Ss12zvpYe9e5x+H41G8OCmQt4srBnrOaV6zzbxcgPA5VEA3KNDEJkwUp3QTI+NOShRY4gc66MVImDuE9MDsU6RwyHs3+WDKPo0ivI+meZQcKpThPjFhrwoD0oNBlH/Wa3KEmkEYE8TvTQmAUDbKIpGgxHyiAZUwoPBJmcArgAoWZYwhn8AUQQPskkYaaa0B2AXN4IoeI8GW+VXpEqSdB/O4ZVQKhSapCi9J0Vyi7tsiAQNu/bhdNS8UDh9KnFtV+GJki7CUVcngKWSAN4GkVcSxeKnYzWXodyNOogjQnRDvunL/aOqjg2TgZCyRxBdKB/aoU1PLYfOWhpr7vxup0Lb+eYOLdfGp5aDHqrXcQizkE3ThKbtmLP4KJ+/wokvubOmKIYFd2j79OFNGScAv+DEQDedCdZa376T3ucZlIf2Ne0Ym5unH4h3j3udBfFW8w/VDfVPevlfnP8l/AHWBJC3+x7utAAAAABJRU5ErkJggg==">
-<link rel="icon" type="image/png" sizes="64x64" href="data:image/png;base64,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">
-<link rel="apple-touch-icon" sizes="180x180" href="data:image/png;base64,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">
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --chalk-bg-1: #1f3b32;
-    --chalk-bg-2: #16281f;
-    --chalk-white: #f4f1e6;
-    --chalk-gold: #e8b94e;
-    --chalk-gold-dim: #c79a3a;
-    --paper: #fffdf7;
-    --paper-line: rgba(31,59,50,0.08);
-    --ink: #202b26;
-    --ink-soft: #5c675f;
-    --danger: #c1543a;
-    --radius: 14px;
-  }
-
-  *{ box-sizing: border-box; margin:0; padding:0; }
-
-  body{
-    font-family: 'IBM Plex Sans', sans-serif;
-    color: var(--ink);
-    background: var(--chalk-bg-2);
-    min-height: 100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding: 32px 16px;
-  }
-
-  .stage{
-    width: 100%;
-    max-width: 1040px;
-    min-height: 620px;
-    display:grid;
-    grid-template-columns: 1fr 1.05fr;
-    border-radius: 22px;
-    overflow: hidden;
-    box-shadow: 0 40px 80px -30px rgba(0,0,0,0.55);
-  }
-
-  /* ---------- LEFT: CHALKBOARD PANEL ---------- */
-  .chalk-panel{
-    position: relative;
-    background:
-      radial-gradient(circle at 15% 15%, rgba(255,255,255,0.05), transparent 45%),
-      repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 42px),
-      repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0px, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 42px),
-      linear-gradient(160deg, var(--chalk-bg-1), var(--chalk-bg-2));
-    color: var(--chalk-white);
-    padding: 48px 44px;
-    display:flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .brand{
-    display:flex;
-    align-items:center;
-    gap: 10px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--chalk-gold);
-  }
-  .brand .dot{ width:6px; height:6px; border-radius:50%; background: var(--chalk-gold); }
-
-  .brand-header{
-    display:flex;
-    align-items:flex-start;
-    gap: 14px;
-    margin-bottom: 22px;
-  }
-  .brand-logo{
-    width: 52px;
-    height: 52px;
-    border-radius: 12px;
-    background: #fff;
-    padding: 6px;
-    object-fit: contain;
-    flex-shrink: 0;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.28);
-  }
-  .brand-title-row{
-    display:flex;
-    align-items:center;
-    gap: 9px;
-    flex-wrap: wrap;
-  }
-  .brand-title{
-    font-family: 'Fraunces', serif;
-    font-weight: 600;
-    font-size: 21px;
-    color: var(--chalk-white);
-    letter-spacing: 0.01em;
-  }
-  .brand-pill{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 9.5px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--chalk-gold);
-    border: 1px solid rgba(232,185,78,0.4);
-    padding: 3px 9px;
-    border-radius: 999px;
-    white-space: nowrap;
-  }
-  .brand-subtitle{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10.5px;
-    color: rgba(244,241,230,0.55);
-    margin-top: 5px;
-    line-height: 1.5;
-  }
-
-  .chalk-art{
-    width: 100%;
-    max-width: 300px;
-    margin: 18px 0;
-  }
-  .chalk-art svg{ width:100%; height:auto; overflow: visible; }
-  .chalk-art path, .chalk-art circle, .chalk-art line{
-    fill:none;
-    stroke: var(--chalk-white);
-    stroke-width: 1.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 400;
-    stroke-dashoffset: 400;
-    animation: draw 1.8s ease forwards;
-  }
-  .chalk-art .accent{ stroke: var(--chalk-gold); }
-  .chalk-art path:nth-child(2){ animation-delay: 0.15s; }
-  .chalk-art path:nth-child(3){ animation-delay: 0.3s; }
-  .chalk-art path:nth-child(4){ animation-delay: 0.45s; }
-  .chalk-art circle{ animation-delay: 0.5s; }
-  @keyframes draw{ to{ stroke-dashoffset: 0; } }
-
-  .chalk-copy h1{
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 34px;
-    line-height: 1.22;
-    max-width: 320px;
-  }
-  .chalk-copy p{
-    margin-top: 14px;
-    font-size: 14.5px;
-    line-height: 1.6;
-    color: rgba(244,241,230,0.68);
-    max-width: 300px;
-  }
-
-  .chalk-footnote{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11.5px;
-    color: rgba(244,241,230,0.45);
-    border-top: 1px dashed rgba(244,241,230,0.2);
-    padding-top: 16px;
-    display:flex;
-    justify-content: space-between;
-  }
-
-  /* ---------- RIGHT: AUTH PANEL ---------- */
-  .auth-panel{
-    background: var(--paper);
-    display:flex;
-    flex-direction: column;
-    padding: 40px 48px 44px;
-  }
-
-  /* Role tabs styled as folder/index tabs */
-  .tabs{
-    position: relative;
-    display:flex;
-    gap: 4px;
-    padding-left: 4px;
-    z-index: 2;
-  }
-  .tab{
-    position: relative;
-    appearance:none;
-    border:none;
-    background: rgba(31,59,50,0.05);
-    color: var(--ink-soft);
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-weight: 600;
-    font-size: 13.5px;
-    letter-spacing: 0.01em;
-    padding: 12px 22px 14px;
-    cursor:pointer;
-    clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
-    transition: color 0.25s ease, background 0.25s ease, transform 0.2s ease;
-    display:flex;
-    align-items:center;
-    gap: 7px;
-  }
-  .tab svg{ width:15px; height:15px; opacity:0.7; }
-  .tab:hover{ color: var(--ink); background: rgba(31,59,50,0.09); }
-  .tab.active{
-    background: var(--paper);
-    color: var(--ink);
-    transform: translateY(2px);
-  }
-  .tab.active svg{ opacity:1; }
-
-  .card{
-    position: relative;
-    background: var(--paper);
-    border: 1px solid var(--paper-line);
-    border-radius: 0 var(--radius) var(--radius) var(--radius);
-    padding: 34px 36px 30px;
-    margin-top: -1px;
-    flex: 1;
-    display:flex;
-    flex-direction: column;
-  }
-  .card::before{
-    /* subtle notebook grid texture */
-    content:"";
-    position:absolute; inset:0;
-    background-image: radial-gradient(circle, rgba(31,59,50,0.06) 1px, transparent 1px);
-    background-size: 18px 18px;
-    border-radius: inherit;
-    opacity: 0.5;
-    pointer-events:none;
-  }
-
-  .card-head{ position:relative; margin-bottom: 24px; }
-  .role-tag{
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--chalk-gold-dim);
-    display:inline-flex;
-    align-items:center;
-    gap: 6px;
-  }
-  .role-tag::before{ content:"▸"; }
-  .card-head h2{
-    font-family: 'Fraunces', serif;
-    font-weight: 500;
-    font-size: 25px;
-    margin-top: 6px;
-  }
-  .card-head p{
-    font-size: 13.5px;
-    color: var(--ink-soft);
-    margin-top: 4px;
-  }
-
-  form{ position:relative; display:flex; flex-direction:column; gap: 16px; margin-top: 4px; }
-
-  .field{ display:flex; flex-direction:column; gap: 6px; }
-  .field label{
-    font-size: 12.5px;
-    font-weight: 600;
-    color: var(--ink);
-  }
-  .field-input{
-    position:relative;
-    display:flex;
-    align-items:center;
-    border: 1.5px solid rgba(31,59,50,0.16);
-    border-radius: 9px;
-    background: #fff;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-  }
-  .field-input:focus-within{
-    border-color: var(--chalk-gold-dim);
-    box-shadow: 0 0 0 3px rgba(232,185,78,0.18);
-  }
-  .field-input input{
-    flex:1;
-    border:none;
-    outline:none;
-    background: transparent;
-    padding: 11px 12px;
-    font-size: 14px;
-    font-family: 'IBM Plex Sans', sans-serif;
-    color: var(--ink);
-  }
-  .field-input input::placeholder{ color: #a3ac9f; }
-  .icon-btn{
-    background:none; border:none; cursor:pointer;
-    display:flex; align-items:center; padding: 0 12px;
-    color: var(--ink-soft);
-  }
-  .icon-btn svg{ width:17px; height:17px; }
-
-  .row-between{
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-    font-size: 12.5px;
-    margin-top: -2px;
-  }
-  .remember{ display:flex; align-items:center; gap: 7px; color: var(--ink-soft); }
-  .remember input{ accent-color: var(--chalk-gold-dim); width:14px; height:14px; }
-  .row-between a{ color: var(--chalk-gold-dim); text-decoration:none; font-weight:600; }
-  .row-between a:hover{ text-decoration: underline; }
-
-  .submit-btn{
-    margin-top: 6px;
-    border:none;
-    border-radius: 9px;
-    padding: 13px 16px;
-    background: var(--ink);
-    color: var(--paper);
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-weight: 600;
-    font-size: 14.5px;
-    cursor:pointer;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap: 8px;
-    transition: background 0.2s ease, transform 0.15s ease;
-  }
-  .submit-btn:hover{ background: #0e1613; }
-  .submit-btn:active{ transform: scale(0.98); }
-  .submit-btn:disabled{ opacity:0.7; cursor:default; }
-  .submit-btn svg{ width:15px; height:15px; transition: transform 0.2s ease; }
-  .submit-btn:hover svg{ transform: translateX(3px); }
-
-  .divider{
-    display:flex; align-items:center; gap:10px;
-    color: var(--ink-soft); font-size: 12px;
-    margin: 16px 0 2px;
-  }
-  .divider::before, .divider::after{
-    content:""; flex:1; height:1px; background: var(--paper-line);
-  }
-
-  .card-foot{
-    margin-top: auto;
-    padding-top: 18px;
-    font-size: 12.5px;
-    color: var(--ink-soft);
-    text-align: center;
-  }
-  .card-foot strong{ color: var(--ink); }
-
-  .error-msg{
-    display:none;
-    font-size: 12.5px;
-    color: var(--danger);
-    background: rgba(193,84,58,0.08);
-    border: 1px solid rgba(193,84,58,0.25);
-    padding: 9px 12px;
-    border-radius: 8px;
-  }
-  .error-msg.show{ display:block; }
-
-  .info-msg{
-    display:none;
-    font-size: 12.5px;
-    color: var(--chalk-gold-dim);
-    background: rgba(232,185,78,0.1);
-    border: 1px solid rgba(232,185,78,0.3);
-    padding: 9px 12px;
-    border-radius: 8px;
-  }
-  .info-msg.show{ display:block; }
-
-  [hidden]{ display:none !important; }
-  .link-btn{
-    background:none; border:none; cursor:pointer; padding:0;
-    font-family:'IBM Plex Sans',sans-serif; font-size:12.5px; font-weight:600;
-    color: var(--chalk-gold-dim);
-  }
-  .link-btn:hover{ text-decoration: underline; }
-  .link-btn:disabled{ color: var(--ink-soft); cursor: default; text-decoration: none; }
-  #resetPanel{ position:relative; flex:1; display:none; flex-direction:column; }
-  #resetPanel .reset-links{ display:flex; justify-content:space-between; margin-top:14px; }
-  #resetPanel .otp-input{ letter-spacing: 0.5em; font-family:'IBM Plex Mono',monospace; font-size:18px; }
-  #resetPanel .error-msg, #resetPanel .info-msg{ margin-bottom:12px; }
-
-  @media (max-width: 860px){
-    .stage{ grid-template-columns: 1fr; }
-    .chalk-panel{ padding: 32px 28px; }
-    .chalk-art{ display:none; }
-    .chalk-copy h1{ font-size: 24px; }
-    .auth-panel{ padding: 28px 24px 32px; }
-  }
-
-  @media (prefers-reduced-motion: reduce){
-    .chalk-art path, .chalk-art circle{ animation: none; stroke-dashoffset: 0; }
-    *{ transition: none !important; }
-  }
-</style>
+<style>:root{--chalk-bg-1: #1f3b32;--chalk-bg-2: #16281f;--chalk-white: #f4f1e6;--chalk-gold: #e8b94e;--chalk-gold-dim: #c79a3a;--paper: #fffdf7;--paper-line: rgba(31,59,50,.08);--ink: #202b26;--ink-soft: #5c675f;--danger: #c1543a;--radius: 14px}*{box-sizing:border-box;margin:0;padding:0}body{font-family:IBM Plex Sans,sans-serif;color:var(--ink);background:var(--chalk-bg-2);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:32px 16px}.stage{width:100%;max-width:1040px;min-height:620px;display:grid;grid-template-columns:1fr 1.05fr;border-radius:22px;overflow:hidden;box-shadow:0 40px 80px -30px #0000008c}.chalk-panel{position:relative;background:radial-gradient(circle at 15% 15%,rgba(255,255,255,.05),transparent 45%),repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0px,rgba(255,255,255,.025) 1px,transparent 1px,transparent 42px),repeating-linear-gradient(90deg,rgba(255,255,255,.02) 0px,rgba(255,255,255,.02) 1px,transparent 1px,transparent 42px),linear-gradient(160deg,var(--chalk-bg-1),var(--chalk-bg-2));color:var(--chalk-white);padding:48px 44px;display:flex;flex-direction:column;justify-content:space-between}.brand{display:flex;align-items:center;gap:10px;font-family:IBM Plex Mono,monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--chalk-gold)}.brand .dot{width:6px;height:6px;border-radius:50%;background:var(--chalk-gold)}.brand-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:22px}.brand-logo{width:52px;height:52px;border-radius:12px;background:#fff;padding:6px;object-fit:contain;flex-shrink:0;box-shadow:0 6px 14px #00000047}.brand-title-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.brand-title{font-family:Fraunces,serif;font-weight:600;font-size:21px;color:var(--chalk-white);letter-spacing:.01em}.brand-pill{font-family:IBM Plex Mono,monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--chalk-gold);border:1px solid rgba(232,185,78,.4);padding:3px 9px;border-radius:999px;white-space:nowrap}.brand-subtitle{font-family:IBM Plex Mono,monospace;font-size:10.5px;color:#f4f1e68c;margin-top:5px;line-height:1.5}.chalk-art{width:100%;max-width:300px;margin:18px 0}.chalk-art svg{width:100%;height:auto;overflow:visible}.chalk-art path,.chalk-art circle,.chalk-art line{fill:none;stroke:var(--chalk-white);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:400;stroke-dashoffset:400;animation:draw 1.8s ease forwards}.chalk-art .accent{stroke:var(--chalk-gold)}.chalk-art path:nth-child(2){animation-delay:.15s}.chalk-art path:nth-child(3){animation-delay:.3s}.chalk-art path:nth-child(4){animation-delay:.45s}.chalk-art circle{animation-delay:.5s}@keyframes draw{to{stroke-dashoffset:0}}.chalk-copy h1{font-family:Fraunces,serif;font-weight:500;font-size:34px;line-height:1.22;max-width:320px}.chalk-copy p{margin-top:14px;font-size:14.5px;line-height:1.6;color:#f4f1e6ad;max-width:300px}.chalk-footnote{font-family:IBM Plex Mono,monospace;font-size:11.5px;color:#f4f1e673;border-top:1px dashed rgba(244,241,230,.2);padding-top:16px;display:flex;justify-content:space-between}.auth-panel{background:var(--paper);display:flex;flex-direction:column;padding:40px 48px 44px}.tabs{position:relative;display:flex;gap:4px;padding-left:4px;z-index:2}.tab{position:relative;appearance:none;border:none;background:#1f3b320d;color:var(--ink-soft);font-family:IBM Plex Sans,sans-serif;font-weight:600;font-size:13.5px;letter-spacing:.01em;padding:12px 22px 14px;cursor:pointer;clip-path:polygon(10% 0%,90% 0%,100% 100%,0% 100%);transition:color .25s ease,background .25s ease,transform .2s ease;display:flex;align-items:center;gap:7px}.tab svg{width:15px;height:15px;opacity:.7}.tab:hover{color:var(--ink);background:#1f3b3217}.tab.active{background:var(--paper);color:var(--ink);transform:translateY(2px)}.tab.active svg{opacity:1}.card{position:relative;background:var(--paper);border:1px solid var(--paper-line);border-radius:0 var(--radius) var(--radius) var(--radius);padding:34px 36px 30px;margin-top:-1px;flex:1;display:flex;flex-direction:column}.card:before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,rgba(31,59,50,.06) 1px,transparent 1px);background-size:18px 18px;border-radius:inherit;opacity:.5;pointer-events:none}.card-head{position:relative;margin-bottom:24px}.role-tag{font-family:IBM Plex Mono,monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--chalk-gold-dim);display:inline-flex;align-items:center;gap:6px}.role-tag:before{content:"\25b8"}.card-head h2{font-family:Fraunces,serif;font-weight:500;font-size:25px;margin-top:6px}.card-head p{font-size:13.5px;color:var(--ink-soft);margin-top:4px}form{position:relative;display:flex;flex-direction:column;gap:16px;margin-top:4px}.field{display:flex;flex-direction:column;gap:6px}.field label{font-size:12.5px;font-weight:600;color:var(--ink)}.field-input{position:relative;display:flex;align-items:center;border:1.5px solid rgba(31,59,50,.16);border-radius:9px;background:#fff;transition:border-color .2s ease,box-shadow .2s ease}.field-input:focus-within{border-color:var(--chalk-gold-dim);box-shadow:0 0 0 3px #e8b94e2e}.field-input input{flex:1;border:none;outline:none;background:transparent;padding:11px 12px;font-size:14px;font-family:IBM Plex Sans,sans-serif;color:var(--ink)}.field-input input::placeholder{color:#a3ac9f}.icon-btn{background:none;border:none;cursor:pointer;display:flex;align-items:center;padding:0 12px;color:var(--ink-soft)}.icon-btn svg{width:17px;height:17px}.row-between{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;margin-top:-2px}.remember{display:flex;align-items:center;gap:7px;color:var(--ink-soft)}.remember input{accent-color:var(--chalk-gold-dim);width:14px;height:14px}.row-between a{color:var(--chalk-gold-dim);text-decoration:none;font-weight:600}.row-between a:hover{text-decoration:underline}.submit-btn{margin-top:6px;border:none;border-radius:9px;padding:13px 16px;background:var(--ink);color:var(--paper);font-family:IBM Plex Sans,sans-serif;font-weight:600;font-size:14.5px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .2s ease,transform .15s ease}.submit-btn:hover{background:#0e1613}.submit-btn:active{transform:scale(.98)}.submit-btn:disabled{opacity:.7;cursor:default}.submit-btn svg{width:15px;height:15px;transition:transform .2s ease}.submit-btn:hover svg{transform:translate(3px)}.divider{display:flex;align-items:center;gap:10px;color:var(--ink-soft);font-size:12px;margin:16px 0 2px}.divider:before,.divider:after{content:"";flex:1;height:1px;background:var(--paper-line)}.card-foot{margin-top:auto;padding-top:18px;font-size:12.5px;color:var(--ink-soft);text-align:center}.card-foot strong{color:var(--ink)}.error-msg{display:none;font-size:12.5px;color:var(--danger);background:#c1543a14;border:1px solid rgba(193,84,58,.25);padding:9px 12px;border-radius:8px}.error-msg.show{display:block}.info-msg{display:none;font-size:12.5px;color:var(--chalk-gold-dim);background:#e8b94e1a;border:1px solid rgba(232,185,78,.3);padding:9px 12px;border-radius:8px}.info-msg.show{display:block}[hidden]{display:none!important}.link-btn{background:none;border:none;cursor:pointer;padding:0;font-family:IBM Plex Sans,sans-serif;font-size:12.5px;font-weight:600;color:var(--chalk-gold-dim)}.link-btn:hover{text-decoration:underline}.link-btn:disabled{color:var(--ink-soft);cursor:default;text-decoration:none}#resetPanel{position:relative;flex:1;display:none;flex-direction:column}#resetPanel .reset-links{display:flex;justify-content:space-between;margin-top:14px}#resetPanel .otp-input{letter-spacing:.5em;font-family:IBM Plex Mono,monospace;font-size:18px}#resetPanel .error-msg,#resetPanel .info-msg{margin-bottom:12px}@media(max-width:860px){.stage{grid-template-columns:1fr}.chalk-panel{padding:32px 28px}.chalk-art{display:none}.chalk-copy h1{font-size:24px}.auth-panel{padding:28px 24px 32px}}@media(prefers-reduced-motion:reduce){.chalk-art path,.chalk-art circle{animation:none;stroke-dashoffset:0}*{transition:none!important}}</style>
 </head>
 <body>
-
 <div class="stage">
-
-  <!-- LEFT: Chalkboard panel -->
-  <aside class="chalk-panel">
-    <div class="brand-header">
-      <img src="data:image/jpeg;base64,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" alt="Logo SMA Banua Kalsel" class="brand-logo">
-      <div>
-        <div class="brand-title-row">
-          <span class="brand-title">SMAN BANUA KALSEL</span>
-          <span class="brand-pill">Bilingual Boarding School</span>
-        </div>
-        <div class="brand-subtitle">CAKRAWALA — Catatan Agenda &amp; Kegiatan Ruang Audio Visual</div>
-      </div>
-    </div>
-
-    <div>
-      <div class="chalk-art">
-        <svg viewBox="0 0 220 140">
-          <!-- open book -->
-          <path d="M20 90 C40 78, 65 78, 85 88 L85 45 C65 35, 40 35, 20 45 Z"></path>
-          <path d="M150 90 C130 78, 105 78, 85 88 L85 45 C105 35, 130 35, 150 45 Z"></path>
-          <!-- pencil -->
-          <path class="accent" d="M120 108 L172 56 L184 68 L132 120 L116 124 Z"></path>
-          <line class="accent" x1="172" y1="56" x2="184" y2="68"></line>
-          <!-- graduation cap dot -->
-          <circle cx="196" cy="30" r="3"></circle>
-          <path d="M172 26 L196 16 L220 26 L196 36 Z"></path>
-        </svg>
-      </div>
-
-      <div class="chalk-copy">
-        <h1 id="chalkHeadline">Selamat datang kembali di ruang kelas digital.</h1>
-        <p id="chalkSub">Satu portal untuk siswa, guru, dan admin — catatan, nilai, dan jadwal dalam satu tempat.</p>
-      </div>
-    </div>
-
-    <div class="chalk-footnote">
-      <span>Tahun Ajaran 2026/2027</span>
-      <span>v2.4</span>
-    </div>
-  </aside>
-
-  <!-- RIGHT: Auth panel -->
-  <main class="auth-panel">
-
-    <div class="tabs" role="tablist" aria-label="Pilih peran">
-      <button class="tab active" data-role="siswa" role="tab" aria-selected="true" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
-        Siswa
-      </button>
-      <button class="tab" data-role="guru" role="tab" aria-selected="false" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8M12 18v2"/></svg>
-        Guru
-      </button>
-      <button class="tab" data-role="admin" role="tab" aria-selected="false" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg>
-        Admin
-      </button>
-    </div>
-
-    <div class="card">
-      <div class="card-head" id="cardHead">
-        <span class="role-tag" id="roleTag">Portal Siswa</span>
-        <h2 id="cardTitle">Masuk ke akun kamu</h2>
-        <p id="cardSub">Masukkan 4 digit terakhir NIS kamu.</p>
-      </div>
-
-      <form id="loginForm" novalidate>
-        <div class="error-msg" id="errorMsg">Kolom belum lengkap. Periksa kembali data yang kamu masukkan.</div>
-        <div class="info-msg" id="infoMsg">Memverifikasi data ke database sekolah...</div>
-
-        <div class="field">
-          <label id="idLabel" for="idInput">NIS</label>
-          <div class="field-input">
-            <input type="text" id="idInput" placeholder="Contoh: 0091234567" autocomplete="username">
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="passInput">Kata sandi</label>
-          <div class="field-input">
-            <input type="password" id="passInput" placeholder="Masukkan kata sandi" autocomplete="current-password">
-            <button type="button" class="icon-btn" id="togglePass" aria-label="Tampilkan kata sandi">
-              <svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
-            </button>
-          </div>
-        </div>
-
-        <div class="row-between">
-          <label class="remember"><input type="checkbox"> Ingat saya</label>
-          <a href="#" id="forgotLink">Lupa kata sandi?</a>
-        </div>
-
-        <button type="button" class="submit-btn" id="submitBtn">
-          <span id="submitLabel">Masuk sebagai Siswa</span>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </button>
-      </form>
-
-      <div id="resetPanel">
-        <div class="card-head">
-          <span class="role-tag" id="resetRoleTag">Reset kata sandi</span>
-          <h2>Lupa kata sandi?</h2>
-          <p id="resetSub">Masukkan ID akunmu. Kami kirim kode 6 digit ke email yang terdaftar.</p>
-        </div>
-        <div class="error-msg" id="resetError"></div>
-        <div class="info-msg" id="resetInfo"></div>
-
-        <form id="resetForm" novalidate>
-          <div class="field" id="resetIdField">
-            <label id="resetIdLabel" for="resetIdInput">NIS</label>
-            <div class="field-input"><input type="text" id="resetIdInput" autocomplete="username"></div>
-          </div>
-
-          <div id="resetStep2" hidden style="display:flex;flex-direction:column;gap:16px">
-            <div class="field">
-              <label for="otpInput">Kode verifikasi (dari email)</label>
-              <div class="field-input"><input type="text" id="otpInput" class="otp-input" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code"></div>
-            </div>
-            <div class="field">
-              <label for="newPassInput">Kata sandi baru</label>
-              <div class="field-input"><input type="password" id="newPassInput" placeholder="Minimal 6 karakter" autocomplete="new-password"></div>
-            </div>
-            <div class="field">
-              <label for="newPassInput2">Ulangi kata sandi baru</label>
-              <div class="field-input"><input type="password" id="newPassInput2" placeholder="Ketik ulang" autocomplete="new-password"></div>
-            </div>
-          </div>
-
-          <button type="button" class="submit-btn" id="resetSubmitBtn"><span id="resetSubmitLabel">Kirim kode verifikasi</span></button>
-        </form>
-
-        <div class="reset-links">
-          <button type="button" class="link-btn" id="backToLogin">← Kembali ke halaman masuk</button>
-          <button type="button" class="link-btn" id="resendBtn" hidden>Kirim ulang kode</button>
-        </div>
-      </div>
-
-      <div id="setupPanel" style="position:relative; flex:1; display:none; flex-direction:column;">
-        <div class="card-head">
-          <span class="role-tag">Lengkapi akun</span>
-          <h2>Satu langkah lagi</h2>
-          <p id="setupSub">Kamu masih pakai kata sandi bawaan dari admin. Sebelum lanjut, amankan akunmu dulu.</p>
-        </div>
-        <div class="error-msg" id="setupError"></div>
-        <div class="info-msg" id="setupInfo"></div>
-
-        <form id="setupForm" novalidate style="display:flex;flex-direction:column;gap:16px">
-          <div class="field" id="setupEmailField">
-            <label for="setupEmailInput">Email kamu (untuk lupa kata sandi nanti)</label>
-            <div class="field-input"><input type="email" id="setupEmailInput" placeholder="nama@email.com" autocomplete="email"></div>
-          </div>
-          <div class="field">
-            <label for="setupNewPass">Kata sandi baru</label>
-            <div class="field-input"><input type="password" id="setupNewPass" placeholder="Minimal 6 karakter, jangan sama dengan bawaan" autocomplete="new-password"></div>
-          </div>
-          <div class="field">
-            <label for="setupNewPass2">Ulangi kata sandi baru</label>
-            <div class="field-input"><input type="password" id="setupNewPass2" placeholder="Ketik ulang" autocomplete="new-password"></div>
-          </div>
-          <button type="button" class="submit-btn" id="setupSubmitBtn">Simpan &amp; lanjut ke dashboard</button>
-        </form>
-      </div>
-
-      <div class="card-foot" id="cardFoot">
-        Bukan siswa? Pilih peran <strong>Guru</strong> atau <strong>Admin</strong> di atas.
-      </div>
-    </div>
-
-  </main>
-
+<aside class="chalk-panel">
+<div class="brand-header">
+<img src="assets/logo.jpg" alt="Logo SMA Banua Kalsel" class="brand-logo">
+<div>
+<div class="brand-title-row">
+<span class="brand-title">SMAN BANUA KALSEL</span>
+<span class="brand-pill">Bilingual Boarding School</span>
 </div>
-
-<!-- Firebase SDK: dibutuhkan untuk signInWithCustomToken() setelah verifikasi Apps Script berhasil -->
+<div class="brand-subtitle">CAKRAWALA — Catatan Agenda &amp; Kegiatan Ruang Audio Visual</div>
+</div>
+</div>
+<div>
+<div class="chalk-art">
+<svg viewBox="0 0 220 140">
+<path d="M20 90 C40 78, 65 78, 85 88 L85 45 C65 35, 40 35, 20 45 Z"></path>
+<path d="M150 90 C130 78, 105 78, 85 88 L85 45 C105 35, 130 35, 150 45 Z"></path>
+<path class="accent" d="M120 108 L172 56 L184 68 L132 120 L116 124 Z"></path>
+<line class="accent" x1="172" y1="56" x2="184" y2="68"></line>
+<circle cx="196" cy="30" r="3"></circle>
+<path d="M172 26 L196 16 L220 26 L196 36 Z"></path>
+</svg>
+</div>
+<div class="chalk-copy">
+<h1 id="chalkHeadline">Selamat datang kembali di ruang kelas digital.</h1>
+<p id="chalkSub">Satu portal untuk siswa, guru, dan admin — catatan, nilai, dan jadwal dalam satu tempat.</p>
+</div>
+</div>
+<div class="chalk-footnote">
+<span>Tahun Ajaran 2026/2027</span>
+<span>v2.4</span>
+</div>
+</aside>
+<main class="auth-panel">
+<div class="tabs" role="tablist" aria-label="Pilih peran">
+<button class="tab active" data-role="siswa" role="tab" aria-selected="true" type="button">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 8l10 5 10-5-10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>
+Siswa
+</button>
+<button class="tab" data-role="guru" role="tab" aria-selected="false" type="button">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 20h8M12 18v2"/></svg>
+Guru
+</button>
+<button class="tab" data-role="admin" role="tab" aria-selected="false" type="button">
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 5v6c0 5 3.5 8.5 8 11 4.5-2.5 8-6 8-11V5l-8-3Z"/></svg>
+Admin
+</button>
+</div>
+<div class="card">
+<div class="card-head" id="cardHead">
+<span class="role-tag" id="roleTag">Portal Siswa</span>
+<h2 id="cardTitle">Masuk ke akun kamu</h2>
+<p id="cardSub">Masukkan 4 digit terakhir NIS kamu.</p>
+</div>
+<form id="loginForm" novalidate>
+<div class="error-msg" id="errorMsg">Kolom belum lengkap. Periksa kembali data yang kamu masukkan.</div>
+<div class="info-msg" id="infoMsg">Memverifikasi data ke database sekolah...</div>
+<div class="field">
+<label id="idLabel" for="idInput">NIS</label>
+<div class="field-input">
+<input type="text" id="idInput" placeholder="Contoh: 0091234567" autocomplete="username">
+</div>
+</div>
+<div class="field">
+<label for="passInput">Kata sandi</label>
+<div class="field-input">
+<input type="password" id="passInput" placeholder="Masukkan kata sandi" autocomplete="current-password">
+<button type="button" class="icon-btn" id="togglePass" aria-label="Tampilkan kata sandi">
+<svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+</button>
+</div>
+</div>
+<div class="row-between">
+<label class="remember"><input type="checkbox"> Ingat saya</label>
+<a href="#" id="forgotLink">Lupa kata sandi?</a>
+</div>
+<button type="button" class="submit-btn" id="submitBtn">
+<span id="submitLabel">Masuk sebagai Siswa</span>
+<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</button>
+</form>
+<div id="resetPanel">
+<div class="card-head">
+<span class="role-tag" id="resetRoleTag">Reset kata sandi</span>
+<h2>Lupa kata sandi?</h2>
+<p id="resetSub">Masukkan ID akunmu. Kami kirim kode 6 digit ke email yang terdaftar.</p>
+</div>
+<div class="error-msg" id="resetError"></div>
+<div class="info-msg" id="resetInfo"></div>
+<form id="resetForm" novalidate>
+<div class="field" id="resetIdField">
+<label id="resetIdLabel" for="resetIdInput">NIS</label>
+<div class="field-input"><input type="text" id="resetIdInput" autocomplete="username"></div>
+</div>
+<div id="resetStep2" hidden style="display:flex;flex-direction:column;gap:16px">
+<div class="field">
+<label for="otpInput">Kode verifikasi (dari email)</label>
+<div class="field-input"><input type="text" id="otpInput" class="otp-input" inputmode="numeric" maxlength="6" placeholder="••••••" autocomplete="one-time-code"></div>
+</div>
+<div class="field">
+<label for="newPassInput">Kata sandi baru</label>
+<div class="field-input"><input type="password" id="newPassInput" placeholder="Minimal 6 karakter" autocomplete="new-password"></div>
+</div>
+<div class="field">
+<label for="newPassInput2">Ulangi kata sandi baru</label>
+<div class="field-input"><input type="password" id="newPassInput2" placeholder="Ketik ulang" autocomplete="new-password"></div>
+</div>
+</div>
+<button type="button" class="submit-btn" id="resetSubmitBtn"><span id="resetSubmitLabel">Kirim kode verifikasi</span></button>
+</form>
+<div class="reset-links">
+<button type="button" class="link-btn" id="backToLogin">← Kembali ke halaman masuk</button>
+<button type="button" class="link-btn" id="resendBtn" hidden>Kirim ulang kode</button>
+</div>
+</div>
+<div id="setupPanel" style="position:relative; flex:1; display:none; flex-direction:column;">
+<div class="card-head">
+<span class="role-tag">Lengkapi akun</span>
+<h2>Satu langkah lagi</h2>
+<p id="setupSub">Kamu masih pakai kata sandi bawaan dari admin. Sebelum lanjut, amankan akunmu dulu.</p>
+</div>
+<div class="error-msg" id="setupError"></div>
+<div class="info-msg" id="setupInfo"></div>
+<form id="setupForm" novalidate style="display:flex;flex-direction:column;gap:16px">
+<div class="field" id="setupEmailField">
+<label for="setupEmailInput">Email kamu (untuk lupa kata sandi nanti)</label>
+<div class="field-input"><input type="email" id="setupEmailInput" placeholder="nama@email.com" autocomplete="email"></div>
+</div>
+<div class="field">
+<label for="setupNewPass">Kata sandi baru</label>
+<div class="field-input"><input type="password" id="setupNewPass" placeholder="Minimal 6 karakter, jangan sama dengan bawaan" autocomplete="new-password"></div>
+</div>
+<div class="field">
+<label for="setupNewPass2">Ulangi kata sandi baru</label>
+<div class="field-input"><input type="password" id="setupNewPass2" placeholder="Ketik ulang" autocomplete="new-password"></div>
+</div>
+<button type="button" class="submit-btn" id="setupSubmitBtn">Simpan &amp; lanjut ke dashboard</button>
+</form>
+</div>
+<div class="card-foot" id="cardFoot">
+Bukan siswa? Pilih peran <strong>Guru</strong> atau <strong>Admin</strong> di atas.
+</div>
+</div>
+</main>
+</div>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-
-<script>
-  // Konfigurasi project Firebase (sama seperti di index.html, project: pendataan-avr)
-  const firebaseConfig = {
-    apiKey: "AIzaSyA6c6CUmLxSbvT47Uk8WO_3UJZ8jq6OCKY",
-    authDomain: "pendataan-avr.firebaseapp.com",
-    projectId: "pendataan-avr",
-    storageBucket: "pendataan-avr.firebasestorage.app",
-    messagingSenderId: "639304352995",
-    appId: "1:639304352995:web:8ce74327f8afe60764b1d6"
-  };
-  if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-  }
-
-  // =======================================================================
-  // KONEKSI DATABASE (Google Apps Script)
-  // Endpoint ini yang memverifikasi NIS/ID Guru/ID Admin ke Google Sheet.
-  // Diambil dari implementasi index.html kamu yang sudah berjalan.
-  // =======================================================================
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwLWDhbNvGNWn-hXsWaEkL0y9DbdAxK7vOdfsf3uuPAqMZx7mQWCo-X4ich5MsluYME/exec";
-
-  const roleData = {
-    siswa: {
-      tag: "Portal Siswa",
-      title: "Masuk ke akun kamu",
-      sub: "Masukkan 4 digit terakhir NIS kamu.",
-      idLabel: "NIS",
-      idPlaceholder: "Contoh: 4 digit terakhir NIS, mis. 4567",
-      submitLabel: "Masuk sebagai Siswa",
-      foot: 'Bukan siswa? Pilih peran <strong>Guru</strong> atau <strong>Admin</strong> di atas.',
-      headline: "Selamat datang kembali di ruang kelas digital.",
-      sub2: "Satu portal untuk siswa, guru, dan admin — catatan, nilai, dan jadwal dalam satu tempat."
-    },
-    guru: {
-      tag: "Portal Guru",
-      title: "Masuk ke ruang kerja guru",
-      sub: "Masukkan ID Guru kamu.",
-      idLabel: "ID Guru",
-      idPlaceholder: "Contoh: 198501012024",
-      submitLabel: "Masuk sebagai Guru",
-      foot: 'Bukan guru? Pilih peran <strong>Siswa</strong> atau <strong>Admin</strong> di atas.',
-      headline: "Kelola kelas, nilai, dan presensi dari satu papan.",
-      sub2: "Semua perangkat mengajar kamu, tersusun rapi seperti buku agenda."
-    },
-    admin: {
-      tag: "Portal Admin",
-      title: "Masuk sebagai administrator",
-      sub: "Akses terbatas untuk pengelola AVR.",
-      idLabel: "ID Admin",
-      idPlaceholder: "Contoh: admin.sekolah",
-      submitLabel: "Masuk sebagai Admin",
-      foot: 'Bukan admin? Pilih peran <strong>Siswa</strong> atau <strong>Guru</strong> di atas.',
-      headline: "Satu ruang kendali untuk seluruh data sekolah.",
-      sub2: "Kelola akun, hak akses, dan pengaturan sistem dengan tenang dan rapi."
-    }
-  };
-
-  const tabs = document.querySelectorAll('.tab');
-  const idLabel = document.getElementById('idLabel');
-  const idInput = document.getElementById('idInput');
-  const roleTag = document.getElementById('roleTag');
-  const cardTitle = document.getElementById('cardTitle');
-  const cardSub = document.getElementById('cardSub');
-  const submitLabel = document.getElementById('submitLabel');
-  const cardFoot = document.getElementById('cardFoot');
-  const chalkHeadline = document.getElementById('chalkHeadline');
-  const chalkSub = document.getElementById('chalkSub');
-  const errorMsg = document.getElementById('errorMsg');
-  const infoMsg = document.getElementById('infoMsg');
-  const passInput = document.getElementById('passInput');
-  const submitBtn = document.getElementById('submitBtn');
-
-  function setRole(role){
-    const data = roleData[role];
-    tabs.forEach(t => {
-      const isActive = t.dataset.role === role;
-      t.classList.toggle('active', isActive);
-      t.setAttribute('aria-selected', isActive);
-    });
-
-    const card = document.querySelector('.card');
-    card.style.opacity = '0';
-    setTimeout(() => {
-      roleTag.textContent = data.tag;
-      cardTitle.textContent = data.title;
-      cardSub.textContent = data.sub;
-      idLabel.textContent = data.idLabel;
-      idInput.placeholder = data.idPlaceholder;
-      submitLabel.textContent = data.submitLabel;
-      cardFoot.innerHTML = data.foot;
-      chalkHeadline.textContent = data.headline;
-      chalkSub.textContent = data.sub2;
-      hideMessages();
-      card.style.opacity = '1';
-    }, 120);
-  }
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => setRole(tab.dataset.role));
-  });
-
-  document.querySelector('.card').style.transition = 'opacity 0.15s ease';
-
-  const togglePass = document.getElementById('togglePass');
-  togglePass.addEventListener('click', () => {
-    const isHidden = passInput.type === 'password';
-    passInput.type = isHidden ? 'text' : 'password';
-    togglePass.setAttribute('aria-label', isHidden ? 'Sembunyikan kata sandi' : 'Tampilkan kata sandi');
-  });
-
-  function hideMessages(){
-    errorMsg.classList.remove('show');
-    infoMsg.classList.remove('show');
-  }
-  function showError(text){
-    infoMsg.classList.remove('show');
-    errorMsg.textContent = text;
-    errorMsg.classList.add('show');
-  }
-  function showInfo(text){
-    errorMsg.classList.remove('show');
-    infoMsg.textContent = text;
-    infoMsg.classList.add('show');
-  }
-
-  // Auto-login jika sesi Firebase Auth asli masih aktif (bukan cuma localStorage).
-  firebase.auth().onAuthStateChanged((user) => {
-    const savedRole = localStorage.getItem('userRole');
-    if(user && savedRole){
-      window.location.replace('index.html');
-    }
-  });
-
-  // Login via Apps Script (cek NIS/ID Guru/ID Admin ke Google Sheet database sekolah).
-  async function handleLogin(){
-    const activeRole = document.querySelector('.tab.active').dataset.role;
-    const enteredId = idInput.value.trim();
-    const enteredPass = passInput.value.trim();
-
-    if(!enteredId || !enteredPass){
-      showError('Kolom belum lengkap. Periksa kembali data yang kamu masukkan.');
-      return;
-    }
-
-    showInfo('Memverifikasi data ke database sekolah...');
-    submitBtn.disabled = true;
-
-    try{
-      // Pakai POST (bukan GET) supaya password tidak ikut nempel di URL --
-      // tidak tersimpan di histori browser maupun log akses server.
-      const response = await fetch(APPS_SCRIPT_URL, {
-        method: 'POST',
-        body: new URLSearchParams({
-          nisn: enteredId,
-          password: enteredPass,
-          role: activeRole
-        })
-      });
-      const result = await response.json();
-
-      if(result.status === 'success'){
-        if(!result.firebaseToken){
-          showError('Login berhasil di database, tapi token Firebase tidak diterima. Cek konfigurasi Apps Script (Service Account key).');
-          return;
-        }
-
-        // Bikin sesi Firebase Auth ASLI (bukan cuma localStorage) supaya Firestore Rules
-        // bisa betulan verifikasi role lewat request.auth.token.role.
-        try {
-          await firebase.auth().signInWithCustomToken(result.firebaseToken);
-        } catch (authErr) {
-          console.error('Gagal sign-in ke Firebase Auth:', authErr);
-          showError('Gagal membuat sesi login yang aman. Coba lagi atau hubungi admin sistem.');
-          return;
-        }
-
-        const roleFromServer = (result.role || activeRole).toString();
-        const formattedRole = roleFromServer.charAt(0).toUpperCase() + roleFromServer.slice(1).toLowerCase();
-
-        localStorage.setItem('userRole', formattedRole);
-        // ID yang DIKETIK saat login (bukan hasil pencarian server) -- dipakai nanti di menu
-        // "Akun Saya" untuk memberi tahu server akun mana yang mau diubah emailnya/passwordnya.
-        localStorage.setItem('userLoginId', enteredId);
-        localStorage.setItem('userName', result.nama || '');
-        localStorage.setItem('userKelas', result.kelas || '');
-        localStorage.setItem('userEmail', result.email || '');
-        if(result.uploadTicket){
-          localStorage.setItem('uploadTicket', result.uploadTicket);
-        }
-
-        idInput.value = '';
-        passInput.value = '';
-
-        if (result.mustCompleteSetup) {
-          // Sesi Firebase & localStorage sudah dibuat di atas, tapi JANGAN masuk dashboard dulu --
-          // paksa isi email (kalau belum ada) + ganti kata sandi bawaan sebelum lanjut.
-          enterSetup(enteredId, roleFromServer.toLowerCase(), result.email || '');
-          return;
-        }
-
-        showInfo('Berhasil masuk. Mengarahkan ke dashboard...');
-        // Pakai replace() supaya login.html TIDAK tersisa di riwayat browser
-        // (tombol Back/Forward tidak bisa lagi memunculkan form terisi ID & password).
-        window.location.replace('index.html');
-      } else if(result.status === 'wrong_password'){
-        showError('Kata sandi salah. Periksa kembali dan coba lagi.');
-      } else if(result.status === 'inactive'){
-        showError('Akun ini sudah tidak aktif / sudah lulus.');
-      } else if(result.status === 'locked' || result.status === 'cooldown'){
-        showError(result.message || 'Terlalu banyak percobaan. Coba lagi sebentar lagi.');
-      } else {
-        showError('NIS/ID Guru/ID tidak terdaftar di database sekolah.');
-      }
-    }catch(err){
-      console.error('Gagal terhubung ke Apps Script:', err);
-      showError('Gagal terhubung ke database. Periksa koneksi internet / URL Apps Script.');
-    }finally{
-      submitBtn.disabled = false;
-    }
-  }
-
-  // ===================== LUPA KATA SANDI (OTP via email) =====================
-  const forgotLink = document.getElementById('forgotLink');
-  const cardHead = document.getElementById('cardHead');
-  const loginFormEl = document.getElementById('loginForm');
-  const resetPanel = document.getElementById('resetPanel');
-  const resetError = document.getElementById('resetError');
-  const resetInfo = document.getElementById('resetInfo');
-  const resetIdField = document.getElementById('resetIdField');
-  const resetIdInput = document.getElementById('resetIdInput');
-  const resetStep2 = document.getElementById('resetStep2');
-  const otpInput = document.getElementById('otpInput');
-  const newPassInput = document.getElementById('newPassInput');
-  const newPassInput2 = document.getElementById('newPassInput2');
-  const resetSubmitBtn = document.getElementById('resetSubmitBtn');
-  const resetSubmitLabel = document.getElementById('resetSubmitLabel');
-  const resendBtn = document.getElementById('resendBtn');
-  let resetStep = 1;
-  let resendTimer = null;
-
-  function resetMsg(type, text){
-    resetError.classList.remove('show'); resetInfo.classList.remove('show');
-    if(!type) return;
-    const el = type === 'error' ? resetError : resetInfo;
-    el.textContent = text; el.classList.add('show');
-  }
-  function activeRoleKey(){ return document.querySelector('.tab.active').dataset.role; }
-
-  function setResetStep(n){
-    resetStep = n;
-    resetIdField.hidden = n === 2;
-    resetStep2.hidden = n !== 2;
-    resendBtn.hidden = n !== 2;
-    resetSubmitLabel.textContent = n === 2 ? 'Simpan kata sandi baru' : 'Kirim kode verifikasi';
-    document.getElementById('resetSub').textContent = n === 2
-      ? 'Masukkan kode 6 digit dari email, lalu buat kata sandi baru.'
-      : 'Masukkan ID akunmu. Kami kirim kode 6 digit ke email yang terdaftar.';
-  }
-
-  function startResendTimer(sec){
-    clearInterval(resendTimer);
-    let left = sec;
-    resendBtn.disabled = true;
-    const tick = () => {
-      if(left <= 0){ clearInterval(resendTimer); resendBtn.disabled = false; resendBtn.textContent = 'Kirim ulang kode'; return; }
-      resendBtn.textContent = 'Kirim ulang kode (' + left + 'd)';
-      left--;
-    };
-    tick();
-    resendTimer = setInterval(tick, 1000);
-  }
-
-  function enterReset(){
-    hideMessages(); resetMsg(null);
-    const key = activeRoleKey();
-    document.getElementById('resetRoleTag').textContent = 'Reset kata sandi · ' + roleData[key].tag.replace('Portal ', '');
-    document.getElementById('resetIdLabel').textContent = roleData[key].idLabel;
-    resetIdInput.placeholder = roleData[key].idPlaceholder;
-    resetIdInput.value = idInput.value.trim();
-    otpInput.value = newPassInput.value = newPassInput2.value = '';
-    setResetStep(1);
-    cardHead.style.display = 'none'; loginFormEl.style.display = 'none'; cardFoot.style.display = 'none';
-    resetPanel.style.display = 'flex';
-    resetIdInput.focus();
-  }
-  function exitReset(){
-    clearInterval(resendTimer);
-    resetPanel.style.display = 'none';
-    cardHead.style.display = ''; loginFormEl.style.display = ''; cardFoot.style.display = '';
-  }
-
-  async function postJson(payload){
-    // Body string -> Content-Type text/plain, dikenali doPost sebagai request JSON (tanpa preflight CORS).
-    const res = await fetch(APPS_SCRIPT_URL, { method: 'POST', body: JSON.stringify(payload) });
-    return res.json();
-  }
-
-  async function sendResetCode(){
-    const id = resetIdInput.value.trim();
-    if(!id){ resetMsg('error', 'ID akun belum diisi.'); return; }
-    resetMsg('info', 'Mengirim kode verifikasi...');
-    resetSubmitBtn.disabled = true; resendBtn.disabled = true;
-    try{
-      const r = await postJson({ action: 'requestPasswordReset', nisn: id, role: activeRoleKey() });
-      if(r.status === 'ok'){
-        resetMsg('info', r.message);
-        setResetStep(2); startResendTimer(60); otpInput.focus();
-      } else if(r.status === 'cooldown'){
-        resetMsg('error', r.message); setResetStep(2); startResendTimer(60);
-      } else {
-        resetMsg('error', r.message || 'Gagal meminta kode. Coba lagi.');
-        if(resetStep === 2) resendBtn.disabled = false;
-      }
-    }catch(err){
-      console.error(err);
-      resetMsg('error', 'Gagal terhubung ke server. Periksa koneksi internet.');
-      if(resetStep === 2) resendBtn.disabled = false;
-    }finally{ resetSubmitBtn.disabled = false; }
-  }
-
-  async function confirmReset(){
-    const otp = otpInput.value.trim(), p1 = newPassInput.value.trim(), p2 = newPassInput2.value.trim();
-    if(!/^\d{6}$/.test(otp)){ resetMsg('error', 'Kode verifikasi harus 6 digit angka.'); return; }
-    if(p1.length < 6){ resetMsg('error', 'Kata sandi baru minimal 6 karakter.'); return; }
-    if(p1 !== p2){ resetMsg('error', 'Kata sandi baru dan ulangannya tidak sama.'); return; }
-    resetMsg('info', 'Menyimpan kata sandi baru...');
-    resetSubmitBtn.disabled = true;
-    try{
-      const id = resetIdInput.value.trim();
-      const r = await postJson({ action: 'confirmPasswordReset', nisn: id, role: activeRoleKey(), otp: otp, newPassword: p1 });
-      if(r.status === 'success'){
-        exitReset();
-        idInput.value = id; passInput.value = '';
-        showInfo('Kata sandi berhasil diubah. Silakan masuk dengan kata sandi baru.');
-        passInput.focus();
-      } else {
-        resetMsg('error', r.message || 'Gagal mengubah kata sandi.');
-      }
-    }catch(err){
-      console.error(err);
-      resetMsg('error', 'Gagal terhubung ke server. Periksa koneksi internet.');
-    }finally{ resetSubmitBtn.disabled = false; }
-  }
-
-
-  // ===================== LENGKAPI AKUN (paksa saat masih password bawaan) =====================
-  const setupPanel = document.getElementById('setupPanel');
-  const setupError = document.getElementById('setupError');
-  const setupInfo = document.getElementById('setupInfo');
-  const setupEmailField = document.getElementById('setupEmailField');
-  const setupEmailInput = document.getElementById('setupEmailInput');
-  const setupNewPass = document.getElementById('setupNewPass');
-  const setupNewPass2 = document.getElementById('setupNewPass2');
-  const setupSubmitBtn = document.getElementById('setupSubmitBtn');
-  let setupCtx = null;
-
-  function setupMsg(type, text){
-    setupError.classList.remove('show'); setupInfo.classList.remove('show');
-    if(!type) return;
-    const el = type === 'error' ? setupError : setupInfo;
-    el.textContent = text; el.classList.add('show');
-  }
-
-  function enterSetup(nisn, role, existingEmail){
-    setupCtx = { nisn: nisn, role: role };
-    setupMsg(null);
-    setupEmailField.style.display = existingEmail ? 'none' : '';
-    setupEmailInput.value = '';
-    setupNewPass.value = ''; setupNewPass2.value = '';
-    document.getElementById('cardHead').style.display = 'none';
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('cardFoot').style.display = 'none';
-    resetPanel.style.display = 'none';
-    setupPanel.style.display = 'flex';
-    (existingEmail ? setupNewPass : setupEmailInput).focus();
-  }
-
-  async function submitSetup(){
-    if(!setupCtx) return;
-    const email = setupEmailInput.value.trim();
-    const p1 = setupNewPass.value.trim(), p2 = setupNewPass2.value.trim();
-    if(setupEmailField.style.display !== 'none' && !email){
-      setupMsg('error', 'Email wajib diisi.'); return;
-    }
-    if(email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-      setupMsg('error', 'Format email tidak valid.'); return;
-    }
-    if(p1.length < 6){ setupMsg('error', 'Kata sandi baru minimal 6 karakter.'); return; }
-    if(p1 !== p2){ setupMsg('error', 'Kata sandi baru dan ulangannya tidak sama.'); return; }
-
-    setupMsg('info', 'Menyimpan...');
-    setupSubmitBtn.disabled = true;
-    try{
-      const r = await postJson({
-        action: 'completeFirstLoginSetup',
-        nisn: setupCtx.nisn,
-        role: setupCtx.role,
-        uploadTicket: localStorage.getItem('uploadTicket') || '',
-        email: email,
-        newPassword: p1
-      });
-      if(r.status === 'success'){
-        if(r.email) localStorage.setItem('userEmail', r.email);
-        setupMsg('info', 'Akun berhasil dilengkapi. Mengarahkan ke dashboard...');
-        window.location.replace('index.html');
-      } else {
-        setupMsg('error', r.message || 'Gagal menyimpan. Coba lagi.');
-      }
-    }catch(err){
-      console.error(err);
-      setupMsg('error', 'Gagal terhubung ke server. Periksa koneksi internet.');
-    }finally{ setupSubmitBtn.disabled = false; }
-  }
-
-  setupSubmitBtn.addEventListener('click', submitSetup);
-  document.getElementById('setupForm').addEventListener('submit', (e) => e.preventDefault());
-  [setupEmailInput, setupNewPass, setupNewPass2].forEach(el => el.addEventListener('keydown', (e) => {
-    if(e.key === 'Enter'){ e.preventDefault(); submitSetup(); }
-  }));
-
-  forgotLink.addEventListener('click', (e) => { e.preventDefault(); enterReset(); });
-  document.getElementById('backToLogin').addEventListener('click', exitReset);
-  resendBtn.addEventListener('click', sendResetCode);
-  resetSubmitBtn.addEventListener('click', () => resetStep === 2 ? confirmReset() : sendResetCode());
-  document.getElementById('resetForm').addEventListener('submit', (e) => e.preventDefault());
-  [resetIdInput, otpInput, newPassInput, newPassInput2].forEach(el => el.addEventListener('keydown', (e) => {
-    if(e.key === 'Enter'){ e.preventDefault(); resetSubmitBtn.click(); }
-  }));
-  otpInput.addEventListener('input', () => { otpInput.value = otpInput.value.replace(/\D/g, ''); });
-  // Ganti tab peran saat mode reset -> kembali ke form masuk agar peran & ID tidak tertukar.
-  tabs.forEach(t => t.addEventListener('click', () => { if(resetPanel.style.display === 'flex') exitReset(); }));
-
-  // Halaman dipulihkan dari bfcache (Back/Forward): bersihkan isian, dan kalau sesi masih aktif langsung ke dashboard.
-  window.addEventListener('pageshow', (e) => {
-    if(e.persisted){
-      document.getElementById('loginForm').reset();
-      idInput.value = ''; passInput.value = ''; passInput.type = 'password';
-      hideMessages();
-      if(firebase.auth().currentUser && localStorage.getItem('userRole')){
-        window.location.replace('index.html');
-      }
-    }
-  });
-
-  submitBtn.addEventListener('click', handleLogin);
-  document.getElementById('loginForm').addEventListener('submit', (e) => e.preventDefault());
-  [idInput, passInput].forEach(input => {
-    input.addEventListener('keydown', (e) => {
-      if(e.key === 'Enter'){
-        e.preventDefault();
-        handleLogin();
-      }
-    });
-  });
-</script>
-
+<script>const firebaseConfig={apiKey:"AIzaSyA6c6CUmLxSbvT47Uk8WO_3UJZ8jq6OCKY",authDomain:"pendataan-avr.firebaseapp.com",projectId:"pendataan-avr",storageBucket:"pendataan-avr.firebasestorage.app",messagingSenderId:"639304352995",appId:"1:639304352995:web:8ce74327f8afe60764b1d6"};firebase.apps.length||firebase.initializeApp(firebaseConfig);const APPS_SCRIPT_URL="https://script.google.com/macros/s/AKfycbwLWDhbNvGNWn-hXsWaEkL0y9DbdAxK7vOdfsf3uuPAqMZx7mQWCo-X4ich5MsluYME/exec",roleData={siswa:{tag:"Portal Siswa",title:"Masuk ke akun kamu",sub:"Masukkan 4 digit terakhir NIS kamu.",idLabel:"NIS",idPlaceholder:"Contoh: 4 digit terakhir NIS, mis. 4567",submitLabel:"Masuk sebagai Siswa",foot:"Bukan siswa? Pilih peran <strong>Guru</strong> atau <strong>Admin</strong> di atas.",headline:"Selamat datang kembali di ruang kelas digital.",sub2:"Satu portal untuk siswa, guru, dan admin \u2014 catatan, nilai, dan jadwal dalam satu tempat."},guru:{tag:"Portal Guru",title:"Masuk ke ruang kerja guru",sub:"Masukkan ID Guru kamu.",idLabel:"ID Guru",idPlaceholder:"Contoh: 198501012024",submitLabel:"Masuk sebagai Guru",foot:"Bukan guru? Pilih peran <strong>Siswa</strong> atau <strong>Admin</strong> di atas.",headline:"Kelola kelas, nilai, dan presensi dari satu papan.",sub2:"Semua perangkat mengajar kamu, tersusun rapi seperti buku agenda."},admin:{tag:"Portal Admin",title:"Masuk sebagai administrator",sub:"Akses terbatas untuk pengelola AVR.",idLabel:"ID Admin",idPlaceholder:"Contoh: admin.sekolah",submitLabel:"Masuk sebagai Admin",foot:"Bukan admin? Pilih peran <strong>Siswa</strong> atau <strong>Guru</strong> di atas.",headline:"Satu ruang kendali untuk seluruh data sekolah.",sub2:"Kelola akun, hak akses, dan pengaturan sistem dengan tenang dan rapi."}},tabs=document.querySelectorAll(".tab"),idLabel=document.getElementById("idLabel"),idInput=document.getElementById("idInput"),roleTag=document.getElementById("roleTag"),cardTitle=document.getElementById("cardTitle"),cardSub=document.getElementById("cardSub"),submitLabel=document.getElementById("submitLabel"),cardFoot=document.getElementById("cardFoot"),chalkHeadline=document.getElementById("chalkHeadline"),chalkSub=document.getElementById("chalkSub"),errorMsg=document.getElementById("errorMsg"),infoMsg=document.getElementById("infoMsg"),passInput=document.getElementById("passInput"),submitBtn=document.getElementById("submitBtn");function setRole(e){const t=roleData[e];tabs.forEach(s=>{const a=s.dataset.role===e;s.classList.toggle("active",a),s.setAttribute("aria-selected",a)});const n=document.querySelector(".card");n.style.opacity="0",setTimeout(()=>{roleTag.textContent=t.tag,cardTitle.textContent=t.title,cardSub.textContent=t.sub,idLabel.textContent=t.idLabel,idInput.placeholder=t.idPlaceholder,submitLabel.textContent=t.submitLabel,cardFoot.innerHTML=t.foot,chalkHeadline.textContent=t.headline,chalkSub.textContent=t.sub2,hideMessages(),n.style.opacity="1"},120)}tabs.forEach(e=>{e.addEventListener("click",()=>setRole(e.dataset.role))}),document.querySelector(".card").style.transition="opacity 0.15s ease";const togglePass=document.getElementById("togglePass");togglePass.addEventListener("click",()=>{const e=passInput.type==="password";passInput.type=e?"text":"password",togglePass.setAttribute("aria-label",e?"Sembunyikan kata sandi":"Tampilkan kata sandi")});function hideMessages(){errorMsg.classList.remove("show"),infoMsg.classList.remove("show")}function showError(e){infoMsg.classList.remove("show"),errorMsg.textContent=e,errorMsg.classList.add("show")}function showInfo(e){errorMsg.classList.remove("show"),infoMsg.textContent=e,infoMsg.classList.add("show")}firebase.auth().onAuthStateChanged(e=>{const t=localStorage.getItem("userRole");e&&t&&window.location.replace("index.html")});async function handleLogin(){const e=document.querySelector(".tab.active").dataset.role,t=idInput.value.trim(),n=passInput.value.trim();if(!t||!n){showError("Kolom belum lengkap. Periksa kembali data yang kamu masukkan.");return}showInfo("Memverifikasi data ke database sekolah..."),submitBtn.disabled=!0;try{const a=await(await fetch(APPS_SCRIPT_URL,{method:"POST",body:new URLSearchParams({nisn:t,password:n,role:e})})).json();if(a.status==="success"){if(!a.firebaseToken){showError("Login berhasil di database, tapi token Firebase tidak diterima. Cek konfigurasi Apps Script (Service Account key).");return}try{await firebase.auth().signInWithCustomToken(a.firebaseToken)}catch(i){console.error("Gagal sign-in ke Firebase Auth:",i),showError("Gagal membuat sesi login yang aman. Coba lagi atau hubungi admin sistem.");return}const r=(a.role||e).toString(),o=r.charAt(0).toUpperCase()+r.slice(1).toLowerCase();if(localStorage.setItem("userRole",o),localStorage.setItem("userLoginId",t),localStorage.setItem("userName",a.nama||""),localStorage.setItem("userKelas",a.kelas||""),localStorage.setItem("userEmail",a.email||""),a.uploadTicket&&localStorage.setItem("uploadTicket",a.uploadTicket),idInput.value="",passInput.value="",a.mustCompleteSetup){enterSetup(t,r.toLowerCase(),a.email||"");return}showInfo("Berhasil masuk. Mengarahkan ke dashboard..."),window.location.replace("index.html")}else a.status==="wrong_password"?showError("Kata sandi salah. Periksa kembali dan coba lagi."):a.status==="inactive"?showError("Akun ini sudah tidak aktif / sudah lulus."):a.status==="locked"||a.status==="cooldown"?showError(a.message||"Terlalu banyak percobaan. Coba lagi sebentar lagi."):showError("NIS/ID Guru/ID tidak terdaftar di database sekolah.")}catch(s){console.error("Gagal terhubung ke Apps Script:",s),showError("Gagal terhubung ke database. Periksa koneksi internet / URL Apps Script.")}finally{submitBtn.disabled=!1}}const forgotLink=document.getElementById("forgotLink"),cardHead=document.getElementById("cardHead"),loginFormEl=document.getElementById("loginForm"),resetPanel=document.getElementById("resetPanel"),resetError=document.getElementById("resetError"),resetInfo=document.getElementById("resetInfo"),resetIdField=document.getElementById("resetIdField"),resetIdInput=document.getElementById("resetIdInput"),resetStep2=document.getElementById("resetStep2"),otpInput=document.getElementById("otpInput"),newPassInput=document.getElementById("newPassInput"),newPassInput2=document.getElementById("newPassInput2"),resetSubmitBtn=document.getElementById("resetSubmitBtn"),resetSubmitLabel=document.getElementById("resetSubmitLabel"),resendBtn=document.getElementById("resendBtn");let resetStep=1,resendTimer=null;function resetMsg(e,t){if(resetError.classList.remove("show"),resetInfo.classList.remove("show"),!e)return;const n=e==="error"?resetError:resetInfo;n.textContent=t,n.classList.add("show")}function activeRoleKey(){return document.querySelector(".tab.active").dataset.role}function setResetStep(e){resetStep=e,resetIdField.hidden=e===2,resetStep2.hidden=e!==2,resendBtn.hidden=e!==2,resetSubmitLabel.textContent=e===2?"Simpan kata sandi baru":"Kirim kode verifikasi",document.getElementById("resetSub").textContent=e===2?"Masukkan kode 6 digit dari email, lalu buat kata sandi baru.":"Masukkan ID akunmu. Kami kirim kode 6 digit ke email yang terdaftar."}function startResendTimer(e){clearInterval(resendTimer);let t=e;resendBtn.disabled=!0;const n=()=>{if(t<=0){clearInterval(resendTimer),resendBtn.disabled=!1,resendBtn.textContent="Kirim ulang kode";return}resendBtn.textContent="Kirim ulang kode ("+t+"d)",t--};n(),resendTimer=setInterval(n,1e3)}function enterReset(){hideMessages(),resetMsg(null);const e=activeRoleKey();document.getElementById("resetRoleTag").textContent="Reset kata sandi \xB7 "+roleData[e].tag.replace("Portal ",""),document.getElementById("resetIdLabel").textContent=roleData[e].idLabel,resetIdInput.placeholder=roleData[e].idPlaceholder,resetIdInput.value=idInput.value.trim(),otpInput.value=newPassInput.value=newPassInput2.value="",setResetStep(1),cardHead.style.display="none",loginFormEl.style.display="none",cardFoot.style.display="none",resetPanel.style.display="flex",resetIdInput.focus()}function exitReset(){clearInterval(resendTimer),resetPanel.style.display="none",cardHead.style.display="",loginFormEl.style.display="",cardFoot.style.display=""}async function postJson(e){return(await fetch(APPS_SCRIPT_URL,{method:"POST",body:JSON.stringify(e)})).json()}async function sendResetCode(){const e=resetIdInput.value.trim();if(!e){resetMsg("error","ID akun belum diisi.");return}resetMsg("info","Mengirim kode verifikasi..."),resetSubmitBtn.disabled=!0,resendBtn.disabled=!0;try{const t=await postJson({action:"requestPasswordReset",nisn:e,role:activeRoleKey()});t.status==="ok"?(resetMsg("info",t.message),setResetStep(2),startResendTimer(60),otpInput.focus()):t.status==="cooldown"?(resetMsg("error",t.message),setResetStep(2),startResendTimer(60)):(resetMsg("error",t.message||"Gagal meminta kode. Coba lagi."),resetStep===2&&(resendBtn.disabled=!1))}catch(t){console.error(t),resetMsg("error","Gagal terhubung ke server. Periksa koneksi internet."),resetStep===2&&(resendBtn.disabled=!1)}finally{resetSubmitBtn.disabled=!1}}async function confirmReset(){const e=otpInput.value.trim(),t=newPassInput.value.trim(),n=newPassInput2.value.trim();if(!/^\d{6}$/.test(e)){resetMsg("error","Kode verifikasi harus 6 digit angka.");return}if(t.length<6){resetMsg("error","Kata sandi baru minimal 6 karakter.");return}if(t!==n){resetMsg("error","Kata sandi baru dan ulangannya tidak sama.");return}resetMsg("info","Menyimpan kata sandi baru..."),resetSubmitBtn.disabled=!0;try{const s=resetIdInput.value.trim(),a=await postJson({action:"confirmPasswordReset",nisn:s,role:activeRoleKey(),otp:e,newPassword:t});a.status==="success"?(exitReset(),idInput.value=s,passInput.value="",showInfo("Kata sandi berhasil diubah. Silakan masuk dengan kata sandi baru."),passInput.focus()):resetMsg("error",a.message||"Gagal mengubah kata sandi.")}catch(s){console.error(s),resetMsg("error","Gagal terhubung ke server. Periksa koneksi internet.")}finally{resetSubmitBtn.disabled=!1}}const setupPanel=document.getElementById("setupPanel"),setupError=document.getElementById("setupError"),setupInfo=document.getElementById("setupInfo"),setupEmailField=document.getElementById("setupEmailField"),setupEmailInput=document.getElementById("setupEmailInput"),setupNewPass=document.getElementById("setupNewPass"),setupNewPass2=document.getElementById("setupNewPass2"),setupSubmitBtn=document.getElementById("setupSubmitBtn");let setupCtx=null;function setupMsg(e,t){if(setupError.classList.remove("show"),setupInfo.classList.remove("show"),!e)return;const n=e==="error"?setupError:setupInfo;n.textContent=t,n.classList.add("show")}function enterSetup(e,t,n){setupCtx={nisn:e,role:t},setupMsg(null),setupEmailField.style.display=n?"none":"",setupEmailInput.value="",setupNewPass.value="",setupNewPass2.value="",document.getElementById("cardHead").style.display="none",document.getElementById("loginForm").style.display="none",document.getElementById("cardFoot").style.display="none",resetPanel.style.display="none",setupPanel.style.display="flex",(n?setupNewPass:setupEmailInput).focus()}async function submitSetup(){if(!setupCtx)return;const e=setupEmailInput.value.trim(),t=setupNewPass.value.trim(),n=setupNewPass2.value.trim();if(setupEmailField.style.display!=="none"&&!e){setupMsg("error","Email wajib diisi.");return}if(e&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)){setupMsg("error","Format email tidak valid.");return}if(t.length<6){setupMsg("error","Kata sandi baru minimal 6 karakter.");return}if(t!==n){setupMsg("error","Kata sandi baru dan ulangannya tidak sama.");return}setupMsg("info","Menyimpan..."),setupSubmitBtn.disabled=!0;try{const s=await postJson({action:"completeFirstLoginSetup",nisn:setupCtx.nisn,role:setupCtx.role,uploadTicket:localStorage.getItem("uploadTicket")||"",email:e,newPassword:t});s.status==="success"?(s.email&&localStorage.setItem("userEmail",s.email),setupMsg("info","Akun berhasil dilengkapi. Mengarahkan ke dashboard..."),window.location.replace("index.html")):setupMsg("error",s.message||"Gagal menyimpan. Coba lagi.")}catch(s){console.error(s),setupMsg("error","Gagal terhubung ke server. Periksa koneksi internet.")}finally{setupSubmitBtn.disabled=!1}}setupSubmitBtn.addEventListener("click",submitSetup),document.getElementById("setupForm").addEventListener("submit",e=>e.preventDefault()),[setupEmailInput,setupNewPass,setupNewPass2].forEach(e=>e.addEventListener("keydown",t=>{t.key==="Enter"&&(t.preventDefault(),submitSetup())})),forgotLink.addEventListener("click",e=>{e.preventDefault(),enterReset()}),document.getElementById("backToLogin").addEventListener("click",exitReset),resendBtn.addEventListener("click",sendResetCode),resetSubmitBtn.addEventListener("click",()=>resetStep===2?confirmReset():sendResetCode()),document.getElementById("resetForm").addEventListener("submit",e=>e.preventDefault()),[resetIdInput,otpInput,newPassInput,newPassInput2].forEach(e=>e.addEventListener("keydown",t=>{t.key==="Enter"&&(t.preventDefault(),resetSubmitBtn.click())})),otpInput.addEventListener("input",()=>{otpInput.value=otpInput.value.replace(/\D/g,"")}),tabs.forEach(e=>e.addEventListener("click",()=>{resetPanel.style.display==="flex"&&exitReset()})),window.addEventListener("pageshow",e=>{e.persisted&&(document.getElementById("loginForm").reset(),idInput.value="",passInput.value="",passInput.type="password",hideMessages(),firebase.auth().currentUser&&localStorage.getItem("userRole")&&window.location.replace("index.html"))}),submitBtn.addEventListener("click",handleLogin),document.getElementById("loginForm").addEventListener("submit",e=>e.preventDefault()),[idInput,passInput].forEach(e=>{e.addEventListener("keydown",t=>{t.key==="Enter"&&(t.preventDefault(),handleLogin())})});</script>
 </body>
 </html>
