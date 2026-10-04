@@ -25,7 +25,7 @@
     --ink-soft: #4b564f;
     --success: #3a8b5c;
     --danger: #c1543a;
-    --weekend: #84908a;
+    --weekend: #c8362f;
     --radius: 12px;
   }
 
@@ -195,12 +195,17 @@
   /* Sabtu & Minggu: hanya warna teks abu-abu (bukan kotak berwarna, supaya tidak tertukar dengan status Ongoing) */
   .cal-weekdays span:nth-child(7n+1), .cal-weekdays span:nth-child(7n),
   .dt-weekdays span:nth-child(7n+1), .dt-weekdays span:nth-child(7n),
-  .cp-weekdays span:nth-child(7n+1), .cp-weekdays span:nth-child(7n) { color: var(--weekend); }
+  .cp-weekdays span:nth-child(7n+1), .cp-weekdays span:nth-child(7n),
+  .cm-wk span:nth-child(7n+1), .cm-wk span:nth-child(7n) { color: var(--weekend); }
   .cal-day.weekend .day-num, .cm-day.weekend .cm-dow, .cm-day.weekend .cm-num,
   .dt-day.weekend:not(.dt-disabled):not(.dt-selected):not(.dt-today),
   .cp-cell.weekend:not(.sel):not(.today) { color: var(--weekend); }
+  .cm-day.weekend.today .cm-num, .cm-day.weekend.sel .cm-num { color: var(--weekend); }
+  .cm-wk { display: none; }
   .dt-weekdays span { font-size: 10.5px; letter-spacing: 0.02em; }
   /* Kartu unggah file: sama bentuknya dengan kartu template, tapi biru-abu agar tidak tertukar */
+  .form-group .tpl-card { display: flex; font-size: 13.5px; font-weight: 400; }
+  .form-group .tpl-card.upl-card { margin: 6px 0 0; }
   .tpl-card.upl-card { cursor: pointer; border-color: rgba(63,111,143,0.5); background: rgba(63,111,143,0.07); margin: 6px 0 0; }
   .tpl-card.upl-card:hover, .tpl-card.upl-card.drag { background: rgba(63,111,143,0.14); border-color: #3f6f8f; }
   .tpl-card.upl-card:focus-within { box-shadow: 0 0 0 3px rgba(63,111,143,0.28); }
@@ -222,7 +227,8 @@
   details.more-fields > summary::after { content: ''; width: 7px; height: 7px; margin: 0 2px 3px auto; border-right: 2px solid var(--ink-soft); border-bottom: 2px solid var(--ink-soft); transform: rotate(45deg); transition: transform .2s; flex: 0 0 auto; }
   details.more-fields[open] > summary::after { transform: rotate(-135deg); margin-bottom: -3px; }
   details.more-fields .inner { padding: 6px 14px 0; }
-  .avail { display: flex; gap: 10px; align-items: flex-start; margin-top: 8px; padding: 10px 12px; border-radius: 8px; font-size: 13px; line-height: 1.45; background: rgba(31,59,50,0.04); color: var(--ink-soft); }
+  .avail { display: flex; gap: 10px; align-items: center; min-height: 78px; transition: opacity .18s ease, background-color .18s ease; margin-top: 8px; padding: 10px 12px; border-radius: 8px; font-size: 13px; line-height: 1.45; background: rgba(31,59,50,0.04); color: var(--ink-soft); }
+  .avail.is-loading { opacity: 0.55; }
   .avail svg { flex: 0 0 18px; width: 18px; height: 18px; margin-top: 1px; }
   .avail-free { background: rgba(58,139,92,0.10); color: #2c6f47; }
   .avail-busy { background: rgba(193,84,58,0.08); color: var(--ink); }
@@ -986,14 +992,14 @@
       -webkit-overflow-scrolling: touch; scrollbar-width: none;
     }
     .cm-strip::-webkit-scrollbar { display: none; }
+    .cm-wk { display: grid; grid-template-columns: repeat(7, 1fr); margin-top: 2px; }
+    .cm-wk span { text-align: center; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; color: var(--ink-soft); }
     .cm-day {
       flex: 0 0 calc(100% / 7); width: calc(100% / 7); padding: 10px 0 9px; border-radius: 16px; border: 1.5px solid transparent;
       background: none; cursor: pointer; font-family: inherit; color: var(--ink);
       display: flex; flex-direction: column; align-items: center; gap: 6px;
     }
     .cm-day:nth-child(7n+1) { scroll-snap-align: start; scroll-snap-stop: always; }
-    .cm-day.other { opacity: 0.5; }
-    .cm-day.other .dot-s { visibility: hidden; }
     .cm-dow { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-soft); }
     .cm-num { font-size: 22px; font-weight: 700; }
     .cm-day .dot-s { width: 8px; height: 8px; }
@@ -1323,7 +1329,7 @@
               <p style="font-size:12px; color: var(--ink-soft); margin-top:8px;">Ketik nama barang, lalu tekan <strong>Enter</strong> di kolom nama untuk menambah baris barang berikutnya. Isi kolom Qty secara manual.</p>
             </div>
             <div class="form-group">
-              <label>Lampiran File (opsional)</label>
+              <label>Lampiran File <span style="font-weight:400; color: var(--ink-soft);">(Wajib di luar jam KBM)</span></label>
               <a href="#" id="downloadTemplateSurat" class="tpl-card" role="button">
                 <span class="tpl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg></span>
                 <span class="tpl-text"><strong>Template surat peminjaman</strong><small>.docx · isi bagian kuning, cetak &amp; tanda tangan, lalu unggah kembali di bawah</small></span>
@@ -1331,7 +1337,7 @@
               </a>
               <label class="tpl-card upl-card" id="uploadCard">
                 <span class="tpl-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7.5 8.5 12 4l4.5 4.5M5 15v3a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3"/></svg></span>
-                <span class="tpl-text"><strong>Unggah surat / lampiran</strong><small>Klik atau seret file ke sini · PDF, gambar, atau dokumen · maks. 10MB</small></span>
+                <span class="tpl-text"><strong>Unggah surat / lampiran</strong><small>Klik atau seret file · PDF, gambar, dokumen · maks. 10MB</small></span>
                 <span class="tpl-dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"/></svg>Pilih</span>
                 <input type="file" id="fileUploadInput">
               </label>
@@ -1503,6 +1509,7 @@
               </button>
             </div>
           </div>
+          <div class="cm-wk"><span>SUN</span><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span></div>
           <div class="cm-strip" id="cmStrip"><div class="cp-loading">Memuat kalender...</div></div>
           <div class="cm-detail-head">
             <h3 id="cmDate">—</h3>
@@ -3656,6 +3663,7 @@
       let currentYear = new Date().getFullYear();
       let currentMonth = new Date().getMonth();
       let currentMonthData = {};
+      var mobCache = {}, mobLoaded = {}, mobSwiping = false, mobScrollT = null, mobNeedsCenter = false; // state strip kalender mobile
 
       // ================== TRANSISI GESER BULAN (kalender desktop & date picker form) ==================
       // dir: +1 = bulan berikutnya (konten baru masuk dari kanan), -1 = sebelumnya (dari kiri).
@@ -4022,31 +4030,40 @@
         const ICON_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.5"/></svg>';
         const fmt = t => (t || '').replace(':', '.');
         let seq = 0;
+        const cache = {}; // tanggal -> { cls, html }: tampil seketika, lalu diperbarui diam-diam bila berubah
+        const paint = v => { box.className = v.cls; box.innerHTML = v.html; };
         async function tampilkan(){
           const tgl = raw.value, my = ++seq;
           if(!tgl){ box.style.display = 'none'; box.innerHTML = ''; return; }
-          box.style.display = 'flex'; box.className = 'avail';
-          box.innerHTML = ICON_CLOCK + '<span>Mengecek jam yang sudah terpakai...</span>';
+          box.style.display = 'flex';
+          if(cache[tgl]) paint(cache[tgl]);                       // sudah pernah dimuat: langsung tampil
+          else if(box.innerHTML) box.classList.add('is-loading'); // isi lama tetap, hanya diredupkan (tinggi tidak berubah)
+          else paint({ cls: 'avail', html: ICON_CLOCK + '<span>Mengecek jam yang sudah terpakai...</span>' });
+          let v;
           try{
             const snap = await db.collection('reservasi').where('tanggal', '==', tgl).get();
-            if(my !== seq) return;
             const items = [];
             snap.forEach(d => { const x = d.data(); if(x.status === 'approved' || x.status === 'pending') items.push(x); });
             items.sort((p, q) => (p.jamMulai || '').localeCompare(q.jamMulai || ''));
             if(!items.length){
-              box.className = 'avail avail-free';
-              box.innerHTML = ICON_OK + '<span>Belum ada jadwal di tanggal ini, semua jam tersedia.</span>';
-              return;
+              v = { cls: 'avail avail-free', html: ICON_OK + '<span>Belum ada jadwal di tanggal ini, semua jam tersedia.</span>' };
+            } else {
+              const chips = items.map(x => '<span class="avail-chip' + (x.status === 'pending' ? ' pending' : '') + '">' +
+                escapeHtml(fmt(x.jamMulai)) + '–' + escapeHtml(fmt(x.jamSelesai)) + (x.status === 'pending' ? ' · menunggu' : '') + '</span>').join('');
+              v = { cls: 'avail avail-busy', html: ICON_CLOCK + '<div><strong>Jam sudah terpakai:</strong><div class="avail-chips">' + chips +
+                '</div><small>Beri jeda minimal ' + MIN_GAP_MINUTES + ' menit dari jadwal lain.</small></div>' };
             }
-            const chips = items.map(x => '<span class="avail-chip' + (x.status === 'pending' ? ' pending' : '') + '">' +
-              escapeHtml(fmt(x.jamMulai)) + '–' + escapeHtml(fmt(x.jamSelesai)) + (x.status === 'pending' ? ' · menunggu' : '') + '</span>').join('');
-            box.className = 'avail avail-busy';
-            box.innerHTML = ICON_CLOCK + '<div><strong>Jam sudah terpakai:</strong><div class="avail-chips">' + chips +
-              '</div><small>Beri jeda minimal ' + MIN_GAP_MINUTES + ' menit dari jadwal lain.</small></div>';
           }catch(err){
             if(my !== seq) return;
-            box.className = 'avail'; box.innerHTML = '<span>Ketersediaan jam belum bisa dimuat.</span>';
+            if(!cache[tgl]) paint({ cls: 'avail', html: '<span>Ketersediaan jam belum bisa dimuat.</span>' });
+            box.classList.remove('is-loading');
+            return;
           }
+          if(my !== seq) return;
+          const old = cache[tgl];
+          cache[tgl] = v;
+          if(!old || old.html !== v.html || old.cls !== v.cls) paint(v);
+          box.classList.remove('is-loading');
         }
         raw.addEventListener('change', tampilkan);
         // Kolom opsional dilipat: kalau isinya tidak valid (mis. format email), buka otomatis supaya pesan error terlihat.
@@ -4165,8 +4182,8 @@
         document.getElementById('calMonthLabel').textContent = `${monthNames[month]} ${year}`;
         document.getElementById('cmMonth').textContent = `${monthNames[month]} ${year}`;
         if (!silent) {
-          if (!mobSwiping) document.getElementById('cmStrip').innerHTML = '<div class="cp-loading">Memuat kalender...</div>';
-          if (!slideDir) grid.innerHTML = '<div class="cal-loading">Memuat kalender dari database...</div>';
+          if (!document.querySelector('#cmStrip .cm-day')) document.getElementById('cmStrip').innerHTML = '<div class="cp-loading">Memuat kalender...</div>';
+          if (!slideDir && !grid.children.length) grid.innerHTML = '<div class="cal-loading">Memuat kalender dari database...</div>';
           watchCalendarMonth(year, month); // pantau perubahan data untuk bulan yang sedang tampil
         }
 
@@ -4174,6 +4191,7 @@
         if (tok !== calRenderTok) return; // sudah ada render yang lebih baru
         if (silent && (year !== currentYear || month !== currentMonth)) return; // user sudah pindah bulan
         currentMonthData = monthData;
+        mobStoreMonth(year, month, monthData);
 
         const firstDay = new Date(year, month, 1).getDay();
         const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -4371,62 +4389,102 @@
         if (!info) return 'empty';
         return isDateOngoingNow(dateStr, info.items) ? 'ongoing' : (info.status || 'empty');
       }
-      // Strip kalender mobile = halaman per minggu (Min-Sab), geser per minggu seperti jam tangan.
-      var mobSwiping = false, mobScrollT = null; // var: dipakai renderCalendar yang bisa terpanggil lebih awal
-      function centerSelectedDay(smooth){
+      // Strip kalender mobile: hari (SUN..SAT) diam di baris tetap; hanya angka yang bergeser, per minggu.
+      // Menggeser TIDAK mengubah tanggal terpilih; hanya label bulan yang mengikuti minggu yang terlihat.
+      function mobKey(y, m){ return `${y}-${String(m + 1).padStart(2, '0')}-`; }
+      function mobInfo(ds){ return mobCache[ds] || currentMonthData[ds]; }
+      function mobStoreMonth(y, m, data){
+        const pre = mobKey(y, m);
+        Object.keys(mobCache).forEach(k => { if (k.startsWith(pre)) delete mobCache[k]; });
+        Object.assign(mobCache, data);
+        mobLoaded[pre] = true;
+      }
+      function paintMobDots(){
+        document.querySelectorAll('#cmStrip .cm-day').forEach(b => {
+          const dot = b.querySelector('.dot-s');
+          if (dot) dot.className = 'dot-s s-' + effStatus(b.dataset.date, mobInfo(b.dataset.date));
+        });
+      }
+      // Muat data bulan tetangga di belakang layar (titik status), tanpa render ulang strip.
+      function ensureMobMonth(y, m){
+        const d = new Date(y, m, 1), yy = d.getFullYear(), mm = d.getMonth(), pre = mobKey(yy, mm);
+        if (mobLoaded[pre]) return;
+        mobLoaded[pre] = 'loading';
+        fetchCalendarDataFromFirestore(yy, mm).then(data => {
+          mobStoreMonth(yy, mm, data);
+          paintMobDots();
+          if (mobSelDate && mobSelDate.startsWith(pre)) renderMobileDay();
+        }).catch(() => { delete mobLoaded[pre]; });
+      }
+      function mobVisiblePage(strip){ return strip.clientWidth ? Math.round(strip.scrollLeft / strip.clientWidth) : 0; }
+      function mobUpdateLabel(){
         const strip = document.getElementById('cmStrip');
-        const sel = strip.querySelector('.cm-day.sel');
+        const mid = strip && strip.children[mobVisiblePage(strip) * 7 + 3];
+        if (!mid || !mid.dataset.date) return null;
+        const [yy, mm] = mid.dataset.date.split('-').map(Number);
+        document.getElementById('cmMonth').textContent = `${monthNames[mm - 1]} ${yy}`;
+        return { y: yy, m: mm - 1 };
+      }
+      function centerSelectedDay(smooth, fallbackDs){
+        const strip = document.getElementById('cmStrip');
+        const sel = strip.querySelector('.cm-day.sel') || (fallbackDs && strip.querySelector(`.cm-day[data-date="${fallbackDs}"]`));
         if (!sel) return;
         const page = Math.floor(Array.prototype.indexOf.call(strip.children, sel) / 7);
         strip.scrollTo({ left: page * strip.clientWidth, behavior: smooth ? 'smooth' : 'auto' });
       }
 
-      // center = true -> loncat ke minggu tanggal terpilih; false -> pertahankan posisi geser (refresh diam-diam)
+      // center = true -> loncat ke minggu tanggal terpilih; false -> pertahankan minggu yang sedang terlihat
       function renderMobileCalendar(center){
         const strip = document.getElementById('cmStrip');
         if (!strip) return;
-        const y = currentYear, m = currentMonth;
-        const prefix = `${y}-${String(m + 1).padStart(2, '0')}-`;
-        const tk = todayKey();
-        if (!mobSelDate || !mobSelDate.startsWith(prefix)) {
-          mobSelDate = tk.startsWith(prefix) ? tk : formatDateKey(y, m, 1);
-        }
-        const keepLeft = strip.scrollLeft;
-        // Dari Minggu sebelum minggu pertama (+1 minggu ekstra) sampai Sabtu minggu terakhir (+1 minggu ekstra),
-        // supaya geser melewati batas bulan otomatis pindah bulan.
-        const first = new Date(y, m, 1), last = new Date(y, m + 1, 0);
-        const start = new Date(y, m, 1 - first.getDay() - 7);
-        const end = new Date(y, m + 1, (6 - last.getDay()) + 7);
+        const y = currentYear, m = currentMonth, tk = todayKey();
+        if (!mobSelDate) mobSelDate = tk.startsWith(mobKey(y, m)) ? tk : formatDateKey(y, m, 1);
+        if (strip.clientWidth === 0) mobNeedsCenter = true;
+        else if (mobNeedsCenter) { center = true; mobNeedsCenter = false; }
+
+        // minggu yang sedang terlihat (dicatat per tanggal, karena rentang strip bisa bergeser)
+        const prevFirst = strip.children[mobVisiblePage(strip) * 7];
+        const anchorDs = prevFirst && prevFirst.dataset ? prevFirst.dataset.date : null;
+
+        // Rentang: bulan sebelumnya s/d bulan berikutnya, utuh per minggu (Min-Sab)
+        const f = new Date(y, m - 1, 1), l = new Date(y, m + 2, 0);
+        const start = new Date(f.getFullYear(), f.getMonth(), 1 - f.getDay());
+        const end = new Date(l.getFullYear(), l.getMonth(), l.getDate() + (6 - l.getDay()));
         let html = '';
         for (const t = new Date(start); t <= end; t.setDate(t.getDate() + 1)) {
-          const yy = t.getFullYear(), mm = t.getMonth(), dd = t.getDate(), dow = t.getDay();
-          const ds = formatDateKey(yy, mm, dd);
-          const inMonth = (yy === y && mm === m);
-          const st = inMonth ? effStatus(ds, currentMonthData[ds]) : 'empty';
-          html += `<button type="button" class="cm-day${ds === mobSelDate ? ' sel' : ''}${ds === tk ? ' today' : ''}${(dow === 0 || dow === 6) ? ' weekend' : ''}${inMonth ? '' : ' other'}" data-date="${ds}">
-            <span class="cm-dow">${dayNamesShort[dow]}</span>
+          const dd = t.getDate(), dow = t.getDay();
+          const ds = formatDateKey(t.getFullYear(), t.getMonth(), dd);
+          html += `<button type="button" class="cm-day${ds === mobSelDate ? ' sel' : ''}${ds === tk ? ' today' : ''}${(dow === 0 || dow === 6) ? ' weekend' : ''}" data-date="${ds}">
             <span class="cm-num">${dd}</span>
-            <span class="dot-s s-${st}"></span>
+            <span class="dot-s s-${effStatus(ds, mobInfo(ds))}"></span>
           </button>`;
         }
         strip.innerHTML = html;
-        if (center) centerSelectedDay(false); else strip.scrollLeft = keepLeft;
+        if (center) {
+          centerSelectedDay(false, tk.startsWith(mobKey(y, m)) ? tk : formatDateKey(y, m, 1));
+        } else if (anchorDs && strip.querySelector(`.cm-day[data-date="${anchorDs}"]`)) {
+          const idx = Array.prototype.indexOf.call(strip.children, strip.querySelector(`.cm-day[data-date="${anchorDs}"]`));
+          strip.scrollLeft = Math.floor(idx / 7) * strip.clientWidth;
+        }
         mobSwiping = false;
+        mobUpdateLabel();
+        ensureMobMonth(y, m - 1); ensureMobMonth(y, m + 1);
         renderMobileDay();
       }
 
-      // Setelah geser berhenti: pilih hari yang sama (mis. Minggu) di minggu yang sedang tampil.
+      // Setelah geser berhenti: perbarui label bulan, muat titik status, dan geser jendela rentang bila sudah dekat tepi.
       function onMobileWeekSettled(){
         const strip = document.getElementById('cmStrip');
-        const w = strip.clientWidth;
-        if (!w) return;
-        const page = Math.round(strip.scrollLeft / w);
-        const week = Array.prototype.slice.call(strip.children, page * 7, page * 7 + 7);
-        if (week.length < 7 || week.some(b => b.dataset.date === mobSelDate)) return;
-        const target = week[new Date(mobSelDate + 'T00:00:00').getDay()];
-        if (!target) return;
-        if (target.classList.contains('other')) { mobSwiping = true; goToMobileDate(target.dataset.date); }
-        else selectMobileDate(target.dataset.date);
+        if (!strip || !strip.clientWidth) return;
+        const vis = mobUpdateLabel();
+        if (!vis) return;
+        ensureMobMonth(vis.y, vis.m);
+        const page = mobVisiblePage(strip), total = Math.round(strip.children.length / 7);
+        if ((page <= 1 || page >= total - 2) && (vis.y !== currentYear || vis.m !== currentMonth)) {
+          mobSwiping = true;
+          currentYear = vis.y; currentMonth = vis.m;
+          renderCalendar(currentYear, currentMonth);
+        }
       }
       document.getElementById('cmStrip').addEventListener('scroll', function(){
         clearTimeout(mobScrollT);
@@ -4435,7 +4493,7 @@
 
       function renderMobileDay(){
         const ds = mobSelDate;
-        const info = currentMonthData[ds] || { status: 'empty', items: [] };
+        const info = mobInfo(ds) || { status: 'empty', items: [] };
         const st = effStatus(ds, info);
         document.getElementById('cmDate').textContent = formatReadableDate(ds);
         const chip = document.getElementById('cmChip');
@@ -4446,10 +4504,10 @@
         document.getElementById('cmToday').classList.toggle('show', ds !== todayKey());
       }
 
-      function selectMobileDate(ds){
+      function selectMobileDate(ds, scroll){
         mobSelDate = ds;
         document.querySelectorAll('#cmStrip .cm-day').forEach(b => b.classList.toggle('sel', b.dataset.date === ds));
-        centerSelectedDay(true);
+        if (scroll) centerSelectedDay(true);
         renderMobileDay();
       }
 
@@ -4457,17 +4515,18 @@
       function goToMobileDate(ds){
         const [y, m] = ds.split('-').map(Number);
         mobSelDate = ds;
+        mobSwiping = false;
         if (y !== currentYear || (m - 1) !== currentMonth) {
           currentYear = y; currentMonth = m - 1;
           renderCalendar(currentYear, currentMonth);   // akan memanggil renderMobileCalendar(true)
         } else {
-          selectMobileDate(ds);
+          selectMobileDate(ds, true);
         }
       }
 
       document.getElementById('cmStrip').addEventListener('click', function(e){
         const b = e.target.closest('.cm-day');
-        if (b) { if (b.classList.contains('other')) goToMobileDate(b.dataset.date); else selectMobileDate(b.dataset.date); }
+        if (b) selectMobileDate(b.dataset.date, false);
       });
       document.getElementById('cmToday').addEventListener('click', function(){ goToMobileDate(todayKey()); });
       document.getElementById('cmAdd').addEventListener('click', function(){
