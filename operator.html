@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Panel Operator — CAKRAWALA</title>
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+<link rel="icon" type="image/png" sizes="64x64" href="assets/favicon-64.png">
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--chalk-bg-1:#1f3b32;--chalk-bg-2:#16281f;--chalk-white:#f4f1e6;--chalk-gold:#e8b94e;--chalk-gold-dim:#c79a3a;--paper:#fffdf7;--paper-line:rgba(31,59,50,.1);--ink:#202b26;--ink-soft:#5c675f;--danger:#c1543a;--radius:14px}
+*{box-sizing:border-box;margin:0;padding:0}
+html.auth-pending body{visibility:hidden}
+body{font-family:"IBM Plex Sans",sans-serif;color:var(--ink);background:var(--chalk-bg-2);min-height:100vh;padding:24px 16px 48px}
+.wrap{max-width:820px;margin:0 auto}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--chalk-white);margin-bottom:20px}
+.tb-left{display:flex;align-items:center;gap:12px}
+.tb-left img{width:44px;height:44px;border-radius:10px;background:#fff;padding:4px;object-fit:contain}
+.tag{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--chalk-gold)}
+.tb-left h1{font-family:Fraunces,serif;font-weight:600;font-size:22px;margin-top:2px}
+.tb-right{display:flex;align-items:center;gap:10px;font-size:13px;color:#f4f1e6b3}
+.btn{border:none;border-radius:9px;padding:10px 16px;font-family:inherit;font-weight:600;font-size:13.5px;cursor:pointer;transition:background .2s,transform .15s}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.6;cursor:default}
+.btn-primary{background:var(--chalk-gold);color:#2a2108}
+.btn-primary:hover:not(:disabled){background:#f0c660}
+.btn-ghost{background:transparent;color:var(--chalk-white);border:1px solid rgba(244,241,230,.3)}
+.btn-ghost:hover{background:rgba(244,241,230,.08)}
+.btn-line{background:#fff;color:var(--ink);border:1.5px solid rgba(31,59,50,.2)}
+.btn-line:hover{background:#f6f3e8}
+.card{background:var(--paper);border:1px solid var(--paper-line);border-radius:var(--radius);padding:24px 26px;margin-bottom:16px}
+.card h2{font-family:Fraunces,serif;font-weight:500;font-size:20px}
+.card .desc{font-size:13px;color:var(--ink-soft);margin:4px 0 18px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field label{font-size:12.5px;font-weight:600}
+.field .hint{font-weight:400;color:var(--ink-soft)}
+input[type=text],select,textarea{width:100%;border:1.5px solid rgba(31,59,50,.16);border-radius:9px;background:#fff;padding:10px 12px;font-family:inherit;font-size:14px;color:var(--ink);outline:none;transition:border-color .2s,box-shadow .2s}
+textarea{resize:vertical;min-height:84px;line-height:1.5}
+input:focus,select:focus,textarea:focus{border-color:var(--chalk-gold-dim);box-shadow:0 0 0 3px #e8b94e2e}
+input::placeholder,textarea::placeholder{color:#a3ac9f}
+.role-block{border-top:1px dashed rgba(31,59,50,.18);padding-top:16px;margin-top:6px}
+.role-block:first-of-type{border-top:none;padding-top:0;margin-top:0}
+.role-name{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--chalk-gold-dim);margin-bottom:10px}
+.switch{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:600;margin-bottom:14px;cursor:pointer}
+.switch input{width:18px;height:18px;accent-color:var(--chalk-gold-dim)}
+.count{font-size:11.5px;color:var(--ink-soft);text-align:right}
+.preview{margin-top:4px;border-radius:9px;padding:10px 14px;font-size:13.5px;line-height:1.5;font-weight:500}
+.preview.info{background:#f3e3b4;color:#6b4f10}
+.preview.warn{background:#f2cdc2;color:#7d311b}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;position:sticky;bottom:12px;background:var(--chalk-bg-1);border:1px solid rgba(244,241,230,.15);border-radius:12px;padding:12px 14px;box-shadow:0 10px 30px #0006}
+.msg{flex:1;min-width:180px;font-size:13px;color:#f4f1e6cc}
+.msg.err{color:#f2a794}.msg.ok{color:var(--chalk-gold)}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}.card{padding:20px 18px}}
+</style>
+<script>document.documentElement.classList.add("auth-pending");</script>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="tb-left">
+      <img src="assets/logo.jpg" alt="Logo">
+      <div>
+        <div class="tag">Panel Operator</div>
+        <h1>Pengaturan tampilan CAKRAWALA</h1>
+      </div>
+    </div>
+    <div class="tb-right">
+      <span id="whoami"></span>
+      <button type="button" class="btn btn-ghost" id="logoutBtn">Keluar</button>
+    </div>
+  </div>
+
+  <form id="cfgForm" autocomplete="off">
+    <section class="card">
+      <h2>Identitas halaman</h2>
+      <p class="desc">Tampil di bagian bawah panel kiri halaman login. Kosongkan untuk memakai teks bawaan.</p>
+      <div class="grid2">
+        <div class="field">
+          <label for="versi">Nomor versi <span class="hint">(bawaan: v2.4)</span></label>
+          <input type="text" id="versi" maxlength="20" placeholder="v2.4">
+        </div>
+        <div class="field">
+          <label for="tahunAjaran">Tahun ajaran <span class="hint">(bawaan: 2026/2027)</span></label>
+          <input type="text" id="tahunAjaran" maxlength="40" placeholder="2026/2027">
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Teks panel login per peran</h2>
+      <p class="desc">Judul besar dan kalimat di bawahnya pada halaman login. Kosongkan untuk memakai teks bawaan.</p>
+      <div id="roleBlocks"></div>
+    </section>
+
+    <section class="card">
+      <h2>Banner pengumuman</h2>
+      <p class="desc">Muncul di halaman login dan dashboard. Dashboard yang sedang terbuka ikut berubah tanpa refresh.</p>
+      <label class="switch"><input type="checkbox" id="bannerAktif"> Tampilkan banner</label>
+      <div class="field">
+        <label for="bannerJenis">Jenis</label>
+        <select id="bannerJenis">
+          <option value="info">Informasi (kuning lembut)</option>
+          <option value="peringatan">Peringatan (merah lembut)</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="bannerPesan">Isi pengumuman</label>
+        <textarea id="bannerPesan" maxlength="300" placeholder="Contoh: Ruang AVR ditutup 12–14 Oktober karena ujian."></textarea>
+        <div class="count"><span id="bannerCount">0</span>/300</div>
+      </div>
+      <div class="hint" style="font-size:12px;color:var(--ink-soft);margin-bottom:6px">Pratinjau</div>
+      <div class="preview info" id="bannerPreview">Isi pengumuman akan tampil di sini.</div>
+    </section>
+
+    <div class="actions">
+      <button type="submit" class="btn btn-primary" id="saveBtn">Simpan perubahan</button>
+      <button type="button" class="btn btn-ghost" id="resetBtn">Kosongkan semua</button>
+      <div class="msg" id="msg" role="status" aria-live="polite"></div>
+    </div>
+  </form>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig={apiKey:"AIzaSyA6c6CUmLxSbvT47Uk8WO_3UJZ8jq6OCKY",authDomain:"pendataan-avr.firebaseapp.com",projectId:"pendataan-avr",storageBucket:"pendataan-avr.firebasestorage.app",messagingSenderId:"639304352995",appId:"1:639304352995:web:8ce74327f8afe60764b1d6"};
+firebase.apps.length||firebase.initializeApp(firebaseConfig);
+const db=firebase.firestore();
+const CFG_PATH="config/situs";
+
+const ROLES=[
+  {key:"siswa",label:"Siswa",headline:"Butuh ruang AVR? Ajukan dari sini.",sub:"Cek jadwal yang masih kosong, ajukan reservasi, dan pantau statusnya tanpa harus datang ke ruang admin."},
+  {key:"guru",label:"Guru",headline:"Jadwalkan ruang AVR untuk kelasmu.",sub:"Pilih tanggal dan jam, ajukan reservasi, lalu lihat apakah sudah disetujui, semuanya tercatat rapi seperti buku agenda."},
+  {key:"admin",label:"Admin",headline:"Setiap pengajuan masuk, langsung terpantau.",sub:"Tinjau, setujui, atau tolak reservasi ruang AVR dan jaga jadwal tetap tertib dan tidak bentrok."}
+];
+
+const $=id=>document.getElementById(id);
+const msgEl=$("msg"),saveBtn=$("saveBtn");
+
+// Bangun blok input per peran (pakai DOM API, bukan innerHTML)
+const roleBlocks=$("roleBlocks");
+ROLES.forEach(r=>{
+  const blk=document.createElement("div");blk.className="role-block";
+  const nm=document.createElement("div");nm.className="role-name";nm.textContent=r.label;blk.appendChild(nm);
+  const f1=document.createElement("div");f1.className="field";
+  const l1=document.createElement("label");l1.setAttribute("for","h_"+r.key);l1.textContent="Judul";
+  const i1=document.createElement("input");i1.type="text";i1.id="h_"+r.key;i1.maxLength=120;i1.placeholder=r.headline;
+  f1.append(l1,i1);
+  const f2=document.createElement("div");f2.className="field";
+  const l2=document.createElement("label");l2.setAttribute("for","s_"+r.key);l2.textContent="Kalimat pendukung";
+  const i2=document.createElement("textarea");i2.id="s_"+r.key;i2.maxLength=260;i2.placeholder=r.sub;
+  f2.append(l2,i2);
+  blk.append(f1,f2);roleBlocks.appendChild(blk);
+});
+
+function setMsg(kind,text){msgEl.className="msg"+(kind?" "+kind:"");msgEl.textContent=text||""}
+
+function updatePreview(){
+  const p=$("bannerPreview");
+  p.className="preview "+($("bannerJenis").value==="peringatan"?"warn":"info");
+  p.textContent=$("bannerPesan").value.trim()||"Isi pengumuman akan tampil di sini.";
+  $("bannerCount").textContent=$("bannerPesan").value.length;
+}
+["bannerJenis","bannerPesan"].forEach(id=>$(id).addEventListener("input",updatePreview));
+
+function fillForm(c){
+  c=c||{};
+  $("versi").value=c.versi||"";
+  $("tahunAjaran").value=c.tahunAjaran||"";
+  ROLES.forEach(r=>{
+    const o=(c.role&&c.role[r.key])||{};
+    $("h_"+r.key).value=o.headline||"";
+    $("s_"+r.key).value=o.sub||"";
+  });
+  const b=c.banner||{};
+  $("bannerAktif").checked=!!b.aktif;
+  $("bannerJenis").value=b.jenis==="peringatan"?"peringatan":"info";
+  $("bannerPesan").value=b.pesan||"";
+  updatePreview();
+}
+
+function readForm(){
+  const role={};
+  ROLES.forEach(r=>{role[r.key]={headline:$("h_"+r.key).value.trim().slice(0,120),sub:$("s_"+r.key).value.trim().slice(0,260)}});
+  return {
+    versi:$("versi").value.trim().slice(0,20),
+    tahunAjaran:$("tahunAjaran").value.trim().slice(0,40),
+    role:role,
+    banner:{
+      aktif:$("bannerAktif").checked,
+      jenis:$("bannerJenis").value==="peringatan"?"peringatan":"info",
+      pesan:$("bannerPesan").value.trim().slice(0,300)
+    }
+  };
+}
+
+function clearSession(){
+  ["userRole","userLoginId","userName","userKelas","userEmail","uploadTicket"].forEach(k=>localStorage.removeItem(k));
+}
+
+$("cfgForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const data=readForm();
+  if(data.banner.aktif&&!data.banner.pesan){setMsg("err","Banner aktif tapi isinya kosong. Isi pengumumannya atau matikan banner.");return}
+  data.updatedAt=firebase.firestore.FieldValue.serverTimestamp();
+  data.updatedBy=localStorage.getItem("userName")||localStorage.getItem("userLoginId")||"operator";
+  saveBtn.disabled=true;setMsg("","Menyimpan...");
+  try{
+    await db.doc(CFG_PATH).set(data);
+    try{const copy=Object.assign({},data);delete copy.updatedAt;localStorage.setItem("siteCfg",JSON.stringify(copy))}catch(_){}
+    setMsg("ok","Tersimpan. Halaman login dan dashboard akan memakai pengaturan baru.");
+  }catch(err){
+    console.error(err);
+    if(err&&err.code==="permission-denied") setMsg("err","Ditolak server. Pastikan aturan Firestore untuk dokumen config sudah dipasang dan akunmu berperan operator.");
+    else setMsg("err","Gagal menyimpan. Periksa koneksi internet lalu coba lagi.");
+  }finally{saveBtn.disabled=false}
+});
+
+$("resetBtn").addEventListener("click",()=>{
+  if(!confirm("Kosongkan semua isian? Setelah disimpan, halaman akan kembali ke teks bawaan dan banner mati.")) return;
+  fillForm(null);setMsg("","Isian dikosongkan. Tekan Simpan perubahan untuk menerapkannya.");
+});
+
+$("logoutBtn").addEventListener("click",()=>{
+  clearSession();
+  firebase.auth().signOut().finally(()=>window.location.replace("login.html"));
+});
+
+window.addEventListener("pageshow",e=>{
+  if(e.persisted&&!firebase.auth().currentUser){document.documentElement.classList.add("auth-pending");window.location.replace("login.html")}
+});
+
+// Penjaga akses: yang menentukan adalah klaim role di token Firebase (diterbitkan server), bukan localStorage.
+firebase.auth().onAuthStateChanged(async u=>{
+  if(!u){clearSession();window.location.replace("login.html");return}
+  let claims;
+  try{claims=(await u.getIdTokenResult()).claims}catch(_){window.location.replace("login.html");return}
+  if(claims.role!=="operator"){window.location.replace(localStorage.getItem("userRole")?"index.html":"login.html");return}
+  $("whoami").textContent=localStorage.getItem("userName")||"Operator";
+  document.documentElement.classList.remove("auth-pending");
+  try{
+    const snap=await db.doc(CFG_PATH).get();
+    fillForm(snap.exists?snap.data():null);
+  }catch(err){
+    console.error(err);setMsg("err","Gagal memuat pengaturan saat ini. Isian di bawah masih kosong.");fillForm(null);
+  }
+});
+</script>
+</body>
+</html>
