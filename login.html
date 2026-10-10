@@ -298,8 +298,8 @@ Bukan siswa? Pilih peran <strong>Guru</strong> atau <strong>Admin</strong> di at
      Bawaan: 3 ketukan cepat, jeda, 2 ketukan cepat, jeda, 1 ketukan  ->  ["S","S","L","S","L"]
      Ketuk beruntun cepat tidak akan berhasil karena pola menuntut dua jeda.
      Untuk mengganti pola, ubah array PATTERN. Batas total satu percobaan: 12 detik. */
-  var PATTERN=["S","S","L","S","L"];
-  var S_MAX=450,L_MIN=700,L_MAX=1800,TOTAL_MAX=12000;
+  var PATTERN=["L","S","S","S","L","S'];
+  var S_MAX=450,L_MIN=450,L_MAX=1800,TOTAL_MAX=12000;
   var idx=0,last=0,start=0;
   logo.addEventListener("click",function(){
     var n=Date.now();
