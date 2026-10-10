@@ -264,7 +264,9 @@ Bukan siswa? Pilih peran <strong>Guru</strong> atau <strong>Admin</strong> di at
     });
     var active=document.querySelector(".tab.active").dataset.role;
     if(roleData[active]){chalkHeadline.textContent=roleData[active].headline;chalkSub.textContent=roleData[active].sub2}
-    var b=cfg.banner||{},msg=clean(b.pesan,300);
+  }
+  function applyBanner(b){
+    b=b||{};var msg=clean(b.pesan,300);
     if(b.aktif&&msg){banner.textContent=msg;banner.className="site-banner "+(b.jenis==="peringatan"?"warn":"info");banner.hidden=false;stage.classList.add("has-banner")}
     else{banner.hidden=true;stage.classList.remove("has-banner")}
   }
@@ -274,7 +276,7 @@ Bukan siswa? Pilih peran <strong>Guru</strong> atau <strong>Admin</strong> di at
   }
   fnVer.addEventListener("click",function(){UpdModal.open(entries,curVer)});
   function load(key,fn){try{var c=localStorage.getItem(key);if(c)fn(JSON.parse(c))}catch(e){}}
-  load("siteCfg",applySitus);load("siteAkd",applyAkademik);
+  load("siteCfg",applySitus);load("siteAkd",applyAkademik);load("siteBnr",applyBanner);
   function fetchDoc(path,key,fn){
     firebase.firestore().doc(path).get().then(function(snap){
       var d=snap.exists?snap.data():null;
@@ -282,7 +284,7 @@ Bukan siswa? Pilih peran <strong>Guru</strong> atau <strong>Admin</strong> di at
       fn(d);
     }).catch(function(){});
   }
-  function fetchAll(){try{fetchDoc("config/situs","siteCfg",applySitus);fetchDoc("config/akademik","siteAkd",applyAkademik)}catch(e){}}
+  function fetchAll(){try{fetchDoc("config/situs","siteCfg",applySitus);fetchDoc("config/akademik","siteAkd",applyAkademik);fetchDoc("config/banner","siteBnr",applyBanner)}catch(e){}}
   function loadFirestore(){
     if(firebase.firestore){fetchAll();return}
     var sc=document.createElement("script");
@@ -297,7 +299,7 @@ Bukan siswa? Pilih peran <strong>Guru</strong> atau <strong>Admin</strong> di at
      Ketuk beruntun cepat tidak akan berhasil karena pola menuntut dua jeda.
      Untuk mengganti pola, ubah array PATTERN. Batas total satu percobaan: 12 detik. */
   var PATTERN=["S","S","L","S","L"];
-  var S_MAX=650,L_MIN=700,L_MAX=1800,TOTAL_MAX=12000;
+  var S_MAX=450,L_MIN=700,L_MAX=1800,TOTAL_MAX=12000;
   var idx=0,last=0,start=0;
   logo.addEventListener("click",function(){
     var n=Date.now();

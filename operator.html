@@ -92,7 +92,7 @@ textarea:disabled{background:#f1efe6;color:#9aa397;cursor:not-allowed}
   <form id="cfgForm" autocomplete="off">
     <section class="card">
       <h2>Versi &amp; catatan pembaruan</h2>
-      <p class="desc">Nomor versi tampil di halaman login dan di dashboard. Pengguna bisa mengeklik label versi untuk membaca apa yang diperbarui. Tahun ajaran diatur oleh admin dari dashboard admin.</p>
+      <p class="desc">Nomor versi tampil di halaman login dan di dashboard. Pengguna bisa mengeklik label versi untuk membaca apa yang diperbarui. Tahun ajaran dan banner pengumuman diatur oleh admin dari dashboard admin.</p>
       <div class="field">
         <label for="versi">Nomor versi <span class="hint">(kosong = bawaan v2.4)</span></label>
         <input type="text" id="versi" maxlength="20" placeholder="v2.4">
@@ -111,26 +111,6 @@ textarea:disabled{background:#f1efe6;color:#9aa397;cursor:not-allowed}
       <h2>Teks panel login per peran</h2>
       <p class="desc">Judul besar dan kalimat di bawahnya pada halaman login. Kosongkan untuk memakai teks bawaan.</p>
       <div id="roleBlocks"></div>
-    </section>
-
-    <section class="card">
-      <h2>Banner pengumuman</h2>
-      <p class="desc">Muncul di halaman login dan dashboard. Dashboard yang sedang terbuka ikut berubah tanpa refresh.</p>
-      <label class="switch"><input type="checkbox" id="bannerAktif"> Tampilkan banner</label>
-      <div class="field">
-        <label for="bannerJenis">Jenis</label>
-        <select id="bannerJenis">
-          <option value="info">Informasi (kuning lembut)</option>
-          <option value="peringatan">Peringatan (merah lembut)</option>
-        </select>
-      </div>
-      <div class="field">
-        <label for="bannerPesan">Isi pengumuman</label>
-        <textarea id="bannerPesan" maxlength="300" placeholder="Contoh: Ruang AVR ditutup 12–14 Oktober karena ujian."></textarea>
-        <div class="count"><span id="bannerCount">0</span>/300</div>
-      </div>
-      <div class="hint" style="font-size:12px;color:var(--ink-soft);margin-bottom:6px">Pratinjau</div>
-      <div class="preview info" id="bannerPreview">Isi pengumuman akan tampil di sini.</div>
     </section>
 
     <div class="actions">
@@ -181,14 +161,6 @@ ROLES.forEach(r=>{
 function setMsg(kind,text){msgEl.className="msg"+(kind?" "+kind:"");msgEl.textContent=text||""}
 function todayISO(){const d=new Date(),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())}
 function fmtDate(s){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||"");return m?new Date(+m[1],+m[2]-1,+m[3]).toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"}):""}
-
-function updatePreview(){
-  const p=$("bannerPreview");
-  p.className="preview "+($("bannerJenis").value==="peringatan"?"warn":"info");
-  p.textContent=$("bannerPesan").value.trim()||"Isi pengumuman akan tampil di sini.";
-  $("bannerCount").textContent=$("bannerPesan").value.length;
-}
-["bannerJenis","bannerPesan"].forEach(id=>$(id).addEventListener("input",updatePreview));
 
 // ---- Catatan pembaruan ----
 function updateCat(forceFill){
@@ -251,11 +223,7 @@ function fillForm(c,keepRiwayat){
     $("h_"+r.key).value=o.headline||"";
     $("s_"+r.key).value=o.sub||"";
   });
-  const b=c.banner||{};
-  $("bannerAktif").checked=!!b.aktif;
-  $("bannerJenis").value=b.jenis==="peringatan"?"peringatan":"info";
-  $("bannerPesan").value=b.pesan||"";
-  updatePreview();renderHist();
+  renderHist();
 }
 
 // Susun data yang akan disimpan. Mengembalikan {data} atau {error}.
@@ -275,9 +243,7 @@ function buildData(){
   rw=rw.slice(0,MAX_RIWAYAT);
   const role={};
   ROLES.forEach(r=>{role[r.key]={headline:$("h_"+r.key).value.trim().slice(0,120),sub:$("s_"+r.key).value.trim().slice(0,260)}});
-  const banner={aktif:$("bannerAktif").checked,jenis:$("bannerJenis").value==="peringatan"?"peringatan":"info",pesan:$("bannerPesan").value.trim().slice(0,300)};
-  if(banner.aktif&&!banner.pesan)return {error:"Banner aktif tapi isinya kosong. Isi pengumumannya atau matikan banner."};
-  return {data:{versi:versi,role:role,banner:banner,riwayat:rw}};
+  return {data:{versi:versi,role:role,riwayat:rw}};
 }
 
 function clearSession(){
@@ -311,7 +277,7 @@ $("cfgForm").addEventListener("submit",async e=>{
 });
 
 $("resetBtn").addEventListener("click",()=>{
-  if(!confirm("Kosongkan semua isian? Riwayat pembaruan tidak ikut terhapus. Setelah disimpan, halaman kembali ke teks bawaan dan banner mati."))return;
+  if(!confirm("Kosongkan semua isian? Riwayat pembaruan tidak ikut terhapus. Setelah disimpan, halaman kembali ke teks bawaan."))return;
   fillForm(null,true);setMsg("","Isian dikosongkan. Tekan Simpan perubahan untuk menerapkannya.");
 });
 
