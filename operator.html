@@ -300,8 +300,13 @@ $("cfgForm").addEventListener("submit",async e=>{
     setMsg("ok","Tersimpan. Halaman login dan dashboard akan memakai pengaturan baru.");
   }catch(err){
     console.error(err);
-    if(err&&err.code==="permission-denied") setMsg("err","Ditolak server. Pastikan aturan Firestore untuk config/situs sudah dipasang dan akunmu berperan operator.");
-    else setMsg("err","Gagal menyimpan. Periksa koneksi internet lalu coba lagi.");
+    if(err&&err.code==="permission-denied"){
+      let r="(tidak terbaca)";
+      try{r=(await firebase.auth().currentUser.getIdTokenResult(true)).claims.role||"(kosong)"}catch(_){}
+      setMsg("err","Ditolak server. Role di token: "+r+". "+(r==="operator"
+        ?"Akunmu sudah benar, jadi aturan Firestore config/situs belum cocok dengan data ini. Pastikan blok config versi terbaru sudah menggantikan yang lama dan sudah di-Publish."
+        :"Akun ini bukan operator di token. Keluar lalu masuk lagi, atau periksa kolom role di sheet."));
+    }else setMsg("err","Gagal menyimpan. Periksa koneksi internet lalu coba lagi.");
   }finally{saveBtn.disabled=false}
 });
 
