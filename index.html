@@ -49,7 +49,7 @@
 <style>
 /* ===== Ruang napas: konten dibatasi lebarnya dan diletakkan di tengah ===== */
 @media(min-width:901px){
-.main-content>.page-header,.main-content>.panel,.main-content>.site-banner{max-width:1360px}
+.main-content>.panel,.main-content>.site-banner{max-width:1240px;margin-left:auto;margin-right:auto}
 }
 /* Siswa / Guru */
 #userPanel .grid-layout{align-items:start}
@@ -1095,7 +1095,7 @@ Sebagai Admin, kamu tetap bisa melanjutkan. Lanjutkan simpan jadwal ini?`)))try{
       if(!ov)build();
       body.textContent="";
       if(!entries.length){body.appendChild(el("p","upd-empty","Belum ada catatan pembaruan untuk versi "+ver+"."))}
-      else entries.forEach(function(e,i){
+      else entries.slice(0,1).forEach(function(e,i){
         var it=el("div","upd-item"),top=el("div","upd-top");
         top.appendChild(el("span","upd-ver",e.versi||"-"));
         if(i===0)top.appendChild(el("span","upd-new","Terbaru"));

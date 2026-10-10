@@ -233,7 +233,7 @@ Bukan siswa? Pilih peran <strong>Guru</strong> atau <strong>Admin</strong> di at
       if(!ov)build();
       body.textContent="";
       if(!entries.length){body.appendChild(el("p","upd-empty","Belum ada catatan pembaruan untuk versi "+ver+"."))}
-      else entries.forEach(function(e,i){
+      else entries.slice(0,1).forEach(function(e,i){
         var it=el("div","upd-item"),top=el("div","upd-top");
         top.appendChild(el("span","upd-ver",e.versi||"-"));
         if(i===0)top.appendChild(el("span","upd-new","Terbaru"));

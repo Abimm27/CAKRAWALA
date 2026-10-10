@@ -60,13 +60,18 @@ input::placeholder,textarea::placeholder{color:#a3ac9f}
 textarea:disabled{background:#f1efe6;color:#9aa397;cursor:not-allowed}
 .hist-title{font-size:12.5px;font-weight:600;margin:18px 0 8px}
 .hist{list-style:none;border:1px solid var(--paper-line);border-radius:10px;overflow:hidden;background:#fff}
-.hist li{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border-bottom:1px dashed rgba(31,59,50,.14)}
+.hist li{border-bottom:1px dashed rgba(31,59,50,.14)}
 .hist li:last-child{border-bottom:none}
+.hist .hrow{display:flex;align-items:center;gap:10px;width:100%;padding:11px 14px;background:none;border:none;cursor:pointer;font:inherit;text-align:left;color:inherit}
+.hist .hrow:hover{background:#faf8ee}
 .hist .hv{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;background:#f3e3b4;color:#6b4f10;padding:2px 9px;border-radius:999px;white-space:nowrap}
-.hist .hb{flex:1;min-width:0;font-size:13px;line-height:1.55}
-.hist .hd{font-size:11.5px;color:var(--ink-soft)}
-.hist .hn{white-space:pre-line;overflow-wrap:anywhere;margin-top:2px}
-.hist .hx{appearance:none;border:none;background:transparent;color:var(--danger);font-size:12px;font-weight:600;cursor:pointer;padding:2px 4px}
+.hist .hd{font-size:12px;color:var(--ink-soft)}
+.hist .chev{margin-left:auto;color:var(--ink-soft);font-size:12px;transition:transform .2s}
+.hist li.open .chev{transform:rotate(180deg)}
+.hist .hbody{display:none;padding:2px 14px 14px}
+.hist li.open .hbody{display:block}
+.hist .hn{white-space:pre-line;overflow-wrap:anywhere;font-size:13px;line-height:1.6}
+.hist .hx{appearance:none;border:none;background:transparent;color:var(--danger);font-size:12px;font-weight:600;cursor:pointer;padding:6px 0 0}
 .hist .hx:hover{text-decoration:underline}
 .hist-empty{font-size:12.5px;color:var(--ink-soft);padding:12px 14px;background:#fff;border:1px dashed rgba(31,59,50,.18);border-radius:10px}
 @media(max-width:640px){.grid2{grid-template-columns:1fr}.card{padding:20px 18px}}
@@ -103,7 +108,7 @@ textarea:disabled{background:#f1efe6;color:#9aa397;cursor:not-allowed}
         <div class="mode-hint" id="catHint"></div>
         <div class="count"><span id="catCount">0</span>/600</div>
       </div>
-      <div class="hist-title">Riwayat pembaruan</div>
+      <div class="hist-title">Riwayat pembaruan <span class="hint" style="font-weight:400;color:var(--ink-soft)">(klik nomor versi untuk melihat isinya)</span></div>
       <div id="histWrap"></div>
     </section>
 
@@ -193,17 +198,21 @@ function renderHist(){
   const ul=document.createElement("ul");ul.className="hist";
   riwayat.forEach((r,i)=>{
     const li=document.createElement("li");
+    const row=document.createElement("button");row.type="button";row.className="hrow";row.setAttribute("aria-expanded","false");
     const hv=document.createElement("span");hv.className="hv";hv.textContent=r.versi||"-";
-    const hb=document.createElement("div");hb.className="hb";
-    const hd=document.createElement("div");hd.className="hd";hd.textContent=(i===0?"Terbaru \u00b7 ":"")+(fmtDate(r.tanggal)||"tanpa tanggal");
-    const hn=document.createElement("div");hn.className="hn";hn.textContent=r.catatan||"";
-    hb.append(hd,hn);
-    const x=document.createElement("button");x.type="button";x.className="hx";x.textContent="Hapus";
+    const hd=document.createElement("span");hd.className="hd";hd.textContent=(i===0?"Terbaru \u00b7 ":"")+(fmtDate(r.tanggal)||"tanpa tanggal");
+    const chev=document.createElement("span");chev.className="chev";chev.textContent="\u25be";
+    row.append(hv,hd,chev);
+    const body=document.createElement("div");body.className="hbody";
+    const hn=document.createElement("div");hn.className="hn";hn.textContent=r.catatan||"(tanpa catatan)";
+    const x=document.createElement("button");x.type="button";x.className="hx";x.textContent="Hapus dari riwayat";
     x.addEventListener("click",()=>{
       if(!confirm("Hapus catatan "+(r.versi||"ini")+" dari riwayat? Perubahan berlaku setelah kamu menekan Simpan perubahan."))return;
       riwayat.splice(i,1);renderHist();updateCat(false);setMsg("","Riwayat diubah. Tekan Simpan perubahan untuk menerapkannya.");
     });
-    li.append(hv,hb,x);ul.appendChild(li);
+    body.append(hn,x);
+    row.addEventListener("click",()=>{const o=li.classList.toggle("open");row.setAttribute("aria-expanded",o?"true":"false")});
+    li.append(row,body);ul.appendChild(li);
   });
   w.appendChild(ul);
 }
