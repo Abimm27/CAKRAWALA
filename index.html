@@ -49,17 +49,23 @@
 <style>
 /* ===== Ruang napas: konten dibatasi lebarnya dan diletakkan di tengah ===== */
 @media(min-width:901px){
-.main-content>.page-header,.main-content>.panel,.main-content>.site-banner{max-width:1100px;margin-left:auto;margin-right:auto}
-.main-content{padding:44px 56px 64px}
-.page-header{margin-bottom:36px}
+.main-content>.page-header,.main-content>.panel,.main-content>.site-banner{max-width:1360px}
 }
 /* Siswa / Guru */
-#userPanel .grid-layout{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:44px;align-items:start}
-#userPanel .card{padding:34px 36px;box-shadow:0 2px 16px #1f3b3209}
+#userPanel .grid-layout{align-items:start}
+@media(min-width:901px){#userPanel .grid-layout{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:36px}}
+#userPanel .card{padding:32px 34px;box-shadow:0 2px 16px #1f3b3209}
 #userPanel .form-group{margin-bottom:22px}
 #userPanel .card h2{margin-bottom:24px}
 @media(min-width:901px){#userPanel .grid-layout>.card:last-child{position:sticky;top:24px}}
-@media(max-width:900px){#userPanel .grid-layout{gap:28px}#userPanel .card{padding:24px 20px}}
+.adm-tabs.usr-tabs{display:none}
+@media(max-width:900px){
+#userPanel .grid-layout{grid-template-columns:minmax(0,1fr);gap:0}
+#userPanel .card{padding:24px 20px}
+.adm-tabs.usr-tabs{display:flex}
+#userPanel [data-upane]{display:none}
+#userPanel [data-upane].usr-on{display:block}
+}
 /* Admin: tab, bukan blok bertumpuk */
 .adm-tabs{display:flex;gap:4px;margin:0 0 26px;border-bottom:1px solid var(--paper-line);overflow-x:auto;-webkit-overflow-scrolling:touch}
 .adm-tab{appearance:none;border:none;background:none;font-family:IBM Plex Sans,sans-serif;font-weight:600;font-size:14px;color:var(--ink-soft);padding:12px 18px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;display:inline-flex;align-items:center;gap:8px;transition:color .2s,border-color .2s}
@@ -227,8 +233,12 @@ Log Aktivitas
 </div>
 </div>
 <div id="userPanel" class="panel">
+<div class="adm-tabs usr-tabs" id="usrTabs" role="tablist" aria-label="Bagian reservasi">
+<button type="button" class="adm-tab active" data-usr="form" role="tab" aria-selected="true">Ajukan Reservasi</button>
+<button type="button" class="adm-tab" data-usr="jadwal" role="tab" aria-selected="false">Jadwal Mendatang</button>
+</div>
 <div class="grid-layout">
-<div class="card">
+<div class="card usr-on" data-upane="form">
 <h2>Formulir Peminjaman</h2>
 <form id="reservationForm">
 <div class="form-group">
@@ -339,7 +349,7 @@ Log Aktivitas
 <button type="submit" class="btn-submit" id="reservationSubmitBtn">Ajukan Reservasi</button>
 </form>
 </div>
-<div class="card">
+<div class="card" data-upane="jadwal">
 <h2 style="margin-bottom:0; border-bottom:none; padding-bottom:0;">Jadwal Mendatang</h2>
 <div class="subtabs" style="margin-top:14px;">
 <button type="button" class="subtab active" id="subtabUmum">Umum</button>
@@ -1158,10 +1168,16 @@ Sebagai Admin, kamu tetap bisa melanjutkan. Lanjutkan simpan jadwal ini?`)))try{
 (function(){
   var $=function(id){return document.getElementById(id)};
   /* ---- Tab dashboard admin ---- */
-  var tabs=document.querySelectorAll(".adm-tab"),panes=document.querySelectorAll(".adm-pane");
+  var tabs=document.querySelectorAll("#adminPanel .adm-tab"),panes=document.querySelectorAll(".adm-pane");
   tabs.forEach(function(t){t.addEventListener("click",function(){
     tabs.forEach(function(x){var on=x===t;x.classList.toggle("active",on);x.setAttribute("aria-selected",on?"true":"false")});
     panes.forEach(function(p){p.classList.toggle("active",p.getAttribute("data-pane")===t.getAttribute("data-adm"))});
+  })});
+  /* ---- Tab siswa/guru (dipakai di HP) ---- */
+  var ut=document.querySelectorAll("#usrTabs .adm-tab"),up=document.querySelectorAll("#userPanel [data-upane]");
+  ut.forEach(function(t){t.addEventListener("click",function(){
+    ut.forEach(function(x){var on=x===t;x.classList.toggle("active",on);x.setAttribute("aria-selected",on?"true":"false")});
+    up.forEach(function(p){p.classList.toggle("usr-on",p.getAttribute("data-upane")===t.getAttribute("data-usr"))});
   })});
   /* ---- Jumlah baris pada tab ---- */
   function countRows(id){
