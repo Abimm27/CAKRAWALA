@@ -55,6 +55,20 @@ input::placeholder,textarea::placeholder{color:#a3ac9f}
 .actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;position:sticky;bottom:12px;background:var(--chalk-bg-1);border:1px solid rgba(244,241,230,.15);border-radius:12px;padding:12px 14px;box-shadow:0 10px 30px #0006}
 .msg{flex:1;min-width:180px;font-size:13px;color:#f4f1e6cc}
 .msg.err{color:#f2a794}.msg.ok{color:var(--chalk-gold)}
+.mode-hint{font-size:12px;color:var(--ink-soft);line-height:1.5}
+.mode-hint.new{color:#7a5a12}
+textarea:disabled{background:#f1efe6;color:#9aa397;cursor:not-allowed}
+.hist-title{font-size:12.5px;font-weight:600;margin:18px 0 8px}
+.hist{list-style:none;border:1px solid var(--paper-line);border-radius:10px;overflow:hidden;background:#fff}
+.hist li{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border-bottom:1px dashed rgba(31,59,50,.14)}
+.hist li:last-child{border-bottom:none}
+.hist .hv{font-family:"IBM Plex Mono",monospace;font-size:12px;font-weight:600;background:#f3e3b4;color:#6b4f10;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.hist .hb{flex:1;min-width:0;font-size:13px;line-height:1.55}
+.hist .hd{font-size:11.5px;color:var(--ink-soft)}
+.hist .hn{white-space:pre-line;overflow-wrap:anywhere;margin-top:2px}
+.hist .hx{appearance:none;border:none;background:transparent;color:var(--danger);font-size:12px;font-weight:600;cursor:pointer;padding:2px 4px}
+.hist .hx:hover{text-decoration:underline}
+.hist-empty{font-size:12.5px;color:var(--ink-soft);padding:12px 14px;background:#fff;border:1px dashed rgba(31,59,50,.18);border-radius:10px}
 @media(max-width:640px){.grid2{grid-template-columns:1fr}.card{padding:20px 18px}}
 </style>
 <script>document.documentElement.classList.add("auth-pending");</script>
@@ -77,18 +91,20 @@ input::placeholder,textarea::placeholder{color:#a3ac9f}
 
   <form id="cfgForm" autocomplete="off">
     <section class="card">
-      <h2>Identitas halaman</h2>
-      <p class="desc">Tampil di bagian bawah panel kiri halaman login. Kosongkan untuk memakai teks bawaan.</p>
-      <div class="grid2">
-        <div class="field">
-          <label for="versi">Nomor versi <span class="hint">(bawaan: v2.4)</span></label>
-          <input type="text" id="versi" maxlength="20" placeholder="v2.4">
-        </div>
-        <div class="field">
-          <label for="tahunAjaran">Tahun ajaran <span class="hint">(bawaan: 2026/2027)</span></label>
-          <input type="text" id="tahunAjaran" maxlength="40" placeholder="2026/2027">
-        </div>
+      <h2>Versi &amp; catatan pembaruan</h2>
+      <p class="desc">Nomor versi tampil di halaman login dan di dashboard. Pengguna bisa mengeklik label versi untuk membaca apa yang diperbarui. Tahun ajaran diatur oleh admin dari dashboard admin.</p>
+      <div class="field">
+        <label for="versi">Nomor versi <span class="hint">(kosong = bawaan v2.4)</span></label>
+        <input type="text" id="versi" maxlength="20" placeholder="v2.4">
       </div>
+      <div class="field">
+        <label for="catatan">Apa yang diperbarui di versi ini?</label>
+        <textarea id="catatan" maxlength="600" placeholder="Contoh:&#10;- Tampilan login di HP dirapikan&#10;- Label versi bisa diklik untuk melihat pembaruan"></textarea>
+        <div class="mode-hint" id="catHint"></div>
+        <div class="count"><span id="catCount">0</span>/600</div>
+      </div>
+      <div class="hist-title">Riwayat pembaruan</div>
+      <div id="histWrap"></div>
     </section>
 
     <section class="card">
@@ -139,11 +155,14 @@ const ROLES=[
   {key:"guru",label:"Guru",headline:"Jadwalkan ruang AVR untuk kelasmu.",sub:"Pilih tanggal dan jam, ajukan reservasi, lalu lihat apakah sudah disetujui, semuanya tercatat rapi seperti buku agenda."},
   {key:"admin",label:"Admin",headline:"Setiap pengajuan masuk, langsung terpantau.",sub:"Tinjau, setujui, atau tolak reservasi ruang AVR dan jaga jadwal tetap tertib dan tidak bentrok."}
 ];
+const MAX_RIWAYAT=15;
 
 const $=id=>document.getElementById(id);
 const msgEl=$("msg"),saveBtn=$("saveBtn");
+let riwayat=[];      // [{versi,tanggal,catatan}] terbaru di indeks 0
+let catMode="";      // "off" | "edit" | "new"
 
-// Bangun blok input per peran (pakai DOM API, bukan innerHTML)
+// Blok input per peran (DOM API, bukan innerHTML)
 const roleBlocks=$("roleBlocks");
 ROLES.forEach(r=>{
   const blk=document.createElement("div");blk.className="role-block";
@@ -160,6 +179,8 @@ ROLES.forEach(r=>{
 });
 
 function setMsg(kind,text){msgEl.className="msg"+(kind?" "+kind:"");msgEl.textContent=text||""}
+function todayISO(){const d=new Date(),p=n=>String(n).padStart(2,"0");return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate())}
+function fmtDate(s){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(s||"");return m?new Date(+m[1],+m[2]-1,+m[3]).toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"}):""}
 
 function updatePreview(){
   const p=$("bannerPreview");
@@ -169,10 +190,62 @@ function updatePreview(){
 }
 ["bannerJenis","bannerPesan"].forEach(id=>$(id).addEventListener("input",updatePreview));
 
-function fillForm(c){
+// ---- Catatan pembaruan ----
+function updateCat(forceFill){
+  const v=$("versi").value.trim(),ta=$("catatan"),hint=$("catHint"),latest=riwayat[0];
+  let mode;
+  if(!v) mode="off";
+  else if(latest&&latest.versi===v) mode="edit";
+  else mode="new";
+  const changed=mode!==catMode;
+  ta.disabled=(mode==="off");
+  if(mode==="off"){
+    if(changed)ta.value="";
+    hint.className="mode-hint";hint.textContent="Isi nomor versi dulu kalau ingin mencatat pembaruan.";
+  }else if(mode==="edit"){
+    if(changed||forceFill)ta.value=latest.catatan||"";
+    hint.className="mode-hint";hint.textContent="Mengedit catatan untuk "+v+(latest.tanggal?" ("+fmtDate(latest.tanggal)+")":"")+".";
+  }else{
+    if(changed||forceFill)ta.value="";
+    hint.className="mode-hint new";hint.textContent="Versi baru. Wajib tulis apa saja yang diperbarui; catatan ini tampil ke pengguna saat label versi diklik.";
+  }
+  catMode=mode;
+  $("catCount").textContent=ta.value.length;
+}
+$("versi").addEventListener("input",()=>updateCat(false));
+$("catatan").addEventListener("input",()=>{$("catCount").textContent=$("catatan").value.length});
+
+function renderHist(){
+  const w=$("histWrap");w.textContent="";
+  if(!riwayat.length){const e=document.createElement("div");e.className="hist-empty";e.textContent="Belum ada riwayat. Riwayat terbentuk otomatis setiap kali kamu menyimpan versi baru beserta catatannya.";w.appendChild(e);return}
+  const ul=document.createElement("ul");ul.className="hist";
+  riwayat.forEach((r,i)=>{
+    const li=document.createElement("li");
+    const hv=document.createElement("span");hv.className="hv";hv.textContent=r.versi||"-";
+    const hb=document.createElement("div");hb.className="hb";
+    const hd=document.createElement("div");hd.className="hd";hd.textContent=(i===0?"Terbaru \u00b7 ":"")+(fmtDate(r.tanggal)||"tanpa tanggal");
+    const hn=document.createElement("div");hn.className="hn";hn.textContent=r.catatan||"";
+    hb.append(hd,hn);
+    const x=document.createElement("button");x.type="button";x.className="hx";x.textContent="Hapus";
+    x.addEventListener("click",()=>{
+      if(!confirm("Hapus catatan "+(r.versi||"ini")+" dari riwayat? Perubahan berlaku setelah kamu menekan Simpan perubahan."))return;
+      riwayat.splice(i,1);renderHist();updateCat(false);setMsg("","Riwayat diubah. Tekan Simpan perubahan untuk menerapkannya.");
+    });
+    li.append(hv,hb,x);ul.appendChild(li);
+  });
+  w.appendChild(ul);
+}
+
+function normRiwayat(a){
+  if(!Array.isArray(a))return [];
+  return a.slice(0,MAX_RIWAYAT).map(e=>({versi:String((e&&e.versi)||"").slice(0,20),tanggal:String((e&&e.tanggal)||"").slice(0,10),catatan:String((e&&e.catatan)||"").slice(0,600)})).filter(e=>e.versi||e.catatan);
+}
+
+function fillForm(c,keepRiwayat){
   c=c||{};
+  if(!keepRiwayat)riwayat=normRiwayat(c.riwayat);
   $("versi").value=c.versi||"";
-  $("tahunAjaran").value=c.tahunAjaran||"";
+  catMode="";updateCat(true);
   ROLES.forEach(r=>{
     const o=(c.role&&c.role[r.key])||{};
     $("h_"+r.key).value=o.headline||"";
@@ -182,22 +255,29 @@ function fillForm(c){
   $("bannerAktif").checked=!!b.aktif;
   $("bannerJenis").value=b.jenis==="peringatan"?"peringatan":"info";
   $("bannerPesan").value=b.pesan||"";
-  updatePreview();
+  updatePreview();renderHist();
 }
 
-function readForm(){
+// Susun data yang akan disimpan. Mengembalikan {data} atau {error}.
+function buildData(){
+  const versi=$("versi").value.trim().slice(0,20);
+  const catatan=$("catatan").value.trim().slice(0,600);
+  let rw=riwayat.map(e=>Object.assign({},e));
+  if(versi){
+    if(rw[0]&&rw[0].versi===versi){
+      if(!catatan)return {error:"Catatan untuk "+versi+" tidak boleh kosong. Isi catatannya, atau hapus entri ini dari riwayat."};
+      rw[0].catatan=catatan;
+    }else{
+      if(catatan.length<3)return {error:"Versi diubah ke "+versi+". Tulis dulu apa yang diperbarui di kolom catatan."};
+      rw.unshift({versi:versi,tanggal:todayISO(),catatan:catatan});
+    }
+  }
+  rw=rw.slice(0,MAX_RIWAYAT);
   const role={};
   ROLES.forEach(r=>{role[r.key]={headline:$("h_"+r.key).value.trim().slice(0,120),sub:$("s_"+r.key).value.trim().slice(0,260)}});
-  return {
-    versi:$("versi").value.trim().slice(0,20),
-    tahunAjaran:$("tahunAjaran").value.trim().slice(0,40),
-    role:role,
-    banner:{
-      aktif:$("bannerAktif").checked,
-      jenis:$("bannerJenis").value==="peringatan"?"peringatan":"info",
-      pesan:$("bannerPesan").value.trim().slice(0,300)
-    }
-  };
+  const banner={aktif:$("bannerAktif").checked,jenis:$("bannerJenis").value==="peringatan"?"peringatan":"info",pesan:$("bannerPesan").value.trim().slice(0,300)};
+  if(banner.aktif&&!banner.pesan)return {error:"Banner aktif tapi isinya kosong. Isi pengumumannya atau matikan banner."};
+  return {data:{versi:versi,role:role,banner:banner,riwayat:rw}};
 }
 
 function clearSession(){
@@ -206,25 +286,28 @@ function clearSession(){
 
 $("cfgForm").addEventListener("submit",async e=>{
   e.preventDefault();
-  const data=readForm();
-  if(data.banner.aktif&&!data.banner.pesan){setMsg("err","Banner aktif tapi isinya kosong. Isi pengumumannya atau matikan banner.");return}
+  const built=buildData();
+  if(built.error){setMsg("err",built.error);return}
+  const data=built.data;
+  const toCache=JSON.parse(JSON.stringify(data));
   data.updatedAt=firebase.firestore.FieldValue.serverTimestamp();
-  data.updatedBy=localStorage.getItem("userName")||localStorage.getItem("userLoginId")||"operator";
+  data.updatedBy=(localStorage.getItem("userName")||localStorage.getItem("userLoginId")||"operator").slice(0,100);
   saveBtn.disabled=true;setMsg("","Menyimpan...");
   try{
     await db.doc(CFG_PATH).set(data);
-    try{const copy=Object.assign({},data);delete copy.updatedAt;localStorage.setItem("siteCfg",JSON.stringify(copy))}catch(_){}
+    try{localStorage.setItem("siteCfg",JSON.stringify(toCache))}catch(_){}
+    riwayat=normRiwayat(toCache.riwayat);catMode="";updateCat(true);renderHist();
     setMsg("ok","Tersimpan. Halaman login dan dashboard akan memakai pengaturan baru.");
   }catch(err){
     console.error(err);
-    if(err&&err.code==="permission-denied") setMsg("err","Ditolak server. Pastikan aturan Firestore untuk dokumen config sudah dipasang dan akunmu berperan operator.");
+    if(err&&err.code==="permission-denied") setMsg("err","Ditolak server. Pastikan aturan Firestore untuk config/situs sudah dipasang dan akunmu berperan operator.");
     else setMsg("err","Gagal menyimpan. Periksa koneksi internet lalu coba lagi.");
   }finally{saveBtn.disabled=false}
 });
 
 $("resetBtn").addEventListener("click",()=>{
-  if(!confirm("Kosongkan semua isian? Setelah disimpan, halaman akan kembali ke teks bawaan dan banner mati.")) return;
-  fillForm(null);setMsg("","Isian dikosongkan. Tekan Simpan perubahan untuk menerapkannya.");
+  if(!confirm("Kosongkan semua isian? Riwayat pembaruan tidak ikut terhapus. Setelah disimpan, halaman kembali ke teks bawaan dan banner mati."))return;
+  fillForm(null,true);setMsg("","Isian dikosongkan. Tekan Simpan perubahan untuk menerapkannya.");
 });
 
 $("logoutBtn").addEventListener("click",()=>{
