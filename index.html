@@ -922,6 +922,22 @@ Admin mengusulkan pemindahan jadwal ini karena ada jadwal lain yang lebih priori
 .btn-sm.lg{padding:11px 18px;font-size:13.5px}
 .seg{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.seg .btn-sm{padding:9px 18px;font-size:13px}
 .adm-sec{margin-top:28px;padding-top:20px;border-top:1px solid var(--paper-line)}
+.adm-flat{max-height:none!important;overflow-x:auto;overflow-y:visible}
+.adm-flat .data-table th{position:static!important}
+.adm-t{table-layout:fixed;width:100%;min-width:0!important}
+.adm-t th:nth-child(2),.adm-t td:nth-child(2){width:112px}
+.adm-t th:last-child,.adm-t td:last-child{width:142px;text-align:center}
+.adm-t td small{display:block;color:var(--ink-soft);margin-top:2px;font-size:12px}
+.adm-t .action-btns{flex-direction:row!important;justify-content:center}
+.adm-t .btn-sm{width:auto!important;min-width:108px;display:inline-flex;justify-content:center;align-items:center;text-align:center}
+.adm-grp td{background:#1f3b3208;font-family:Fraunces,serif;font-size:15px;cursor:pointer;user-select:none}
+.adm-grp:hover td{background:#1f3b3212}
+.adm-dd{position:relative;flex:0 0 170px}
+.adm-dd-btn{display:flex;justify-content:space-between;align-items:center;gap:8px;cursor:pointer;text-align:left}
+.adm-dd-list{position:absolute;z-index:20;top:calc(100% + 6px);left:0;right:0;max-height:260px;overflow:auto;background:#fff;border:1.5px solid rgba(31,59,50,.16);border-radius:10px;box-shadow:0 10px 30px rgba(31,59,50,.14);padding:6px}
+.adm-dd-list[hidden]{display:none}
+.adm-dd-list button{display:block;width:100%;text-align:left;padding:9px 12px;border:0;background:none;border-radius:6px;font:inherit;font-size:14px;color:var(--ink);cursor:pointer}
+.adm-dd-list button:hover,.adm-dd-list button.on{background:rgba(31,59,50,.08)}
 </style>
 <script>(function(){
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return"&#"+c.charCodeAt(0)+";"})}
@@ -1051,29 +1067,34 @@ b.addEventListener("click",function(){document.querySelectorAll("#adminPanel .ad
 function load(){return api("adm_list").then(function(r){data=r;draw()}).catch(function(e){var m=e&&e.message||"Gagal memuat.";["guru","siswa"].forEach(function(k){document.getElementById("box-"+k).textContent=m})})}
 function chip(st){var c=st==="aktif"?"#2f734b":st==="lulus"?"#5c675f":"#a5452f";return'<span class="status" style="background:'+c+'22;color:'+c+'">'+E(st)+'</span>'}
 function btn(act,id,t,cls,x){return'<button type="button" class="btn-sm '+cls+'" data-act="'+act+'"'+(id!=null?' data-id="'+E(id)+'"':'')+(x||"")+'>'+t+'</button>'}
-function tbl(h,rows){return'<div class="table-scroll"><table class="data-table"><thead><tr>'+h.map(function(c){return"<th>"+c+"</th>"}).join("")+'</tr></thead><tbody>'+(rows||'<tr><td colspan="'+h.length+'" style="text-align:center;color:#5c675f">Belum ada data.</td></tr>')+'</tbody></table></div>'}
-function row(x){var a=x.status==="aktif";return"<tr><td><strong>"+E(x.nama)+"</strong></td><td>"+E(x.id)+"</td><td>"+chip(x.status)+'</td><td><div class="action-btns">'+btn(a?"off":"on",x.id,a?"Nonaktifkan":"Aktifkan",a?"btn-reject":"btn-approve")+"</div></td></tr>"}
+function tbl(h,rows){return'<div class="table-scroll adm-flat"><table class="data-table adm-t"><thead><tr>'+h.map(function(c){return"<th>"+c+"</th>"}).join("")+'</tr></thead><tbody>'+(rows||'<tr><td colspan="'+h.length+'" style="text-align:center;color:#5c675f">Belum ada data.</td></tr>')+'</tbody></table></div>'}
+function row(x){var a=x.status==="aktif";return"<tr><td><strong>"+E(x.nama)+"</strong><small>"+E(x.id)+"</small></td><td>"+chip(x.status)+'</td><td><div class="action-btns">'+btn(a?"off":"on",x.id,a?"Nonaktifkan":"Aktifkan",a?"btn-reject":"btn-approve")+"</div></td></tr>"}
 function v(id){var e=document.getElementById(id);return e?e.value:""}
-function listSiswa(){var q=v("cariS").toLowerCase(),f=v("filK"),h="",any=false;
-KL.forEach(function(k){if(f&&f!==k)return;var L=data.users.filter(function(x){return x.role==="siswa"&&x.status!=="lulus"&&x.kelas.toUpperCase().replace(/[^A-Z]/g,"")===k&&(!q||(x.nama+" "+x.id).toLowerCase().indexOf(q)>=0)});if(!L.length)return;any=true;
-h+='<h3 class="adm-sub">Kelas '+k+' <span style="color:#5c675f;font-size:13px;font-family:IBM Plex Sans,sans-serif">· '+L.length+' siswa</span></h3>'+tbl(["Nama","NIS","Status","Aksi"],L.map(row).join(""))});
-document.getElementById("listS").innerHTML=any?h:'<p style="text-align:center;color:#5c675f;padding:20px 0">Tidak ada siswa yang cocok.</p>'}
-function draw(){var keep={q:v("cariS"),f:v("filK"),t:v("xT"),a:v("xTA")},g=data.users.filter(function(x){return x.role==="guru"});
-document.getElementById("box-guru").innerHTML=tbl(["Nama","ID","Status","Aksi"],g.map(row).join(""))+'<div class="adm-sec"><h3 class="adm-sub" style="margin-top:0">Tambah Guru</h3><div class="adm-bar"><input id="gId" class="adm-in" placeholder="ID / NIP guru"><input id="gNama" class="adm-in" placeholder="Nama guru">'+btn("addG",null,"Tambah Guru","btn-ink lg")+'</div><p style="font-size:13px;color:#5c675f">Password awal sama dengan ID, dan wajib diganti saat login pertama.</p></div>';
+var open={},filK="";
+function ddHtml(){return'<div class="adm-dd"><button type="button" class="adm-in adm-dd-btn" data-act="ddT"><span id="ddLbl">'+(filK?"Kelas "+filK:"Semua kelas")+'</span><span>&#9662;</span></button><div class="adm-dd-list" id="ddL" hidden>'+[""].concat(KL).map(function(k){return'<button type="button" data-act="ddP" data-k="'+k+'"'+(k===filK?' class="on"':"")+'>'+(k?"Kelas "+k:"Semua kelas")+'</button>'}).join("")+'</div></div>'}
+function listSiswa(){var q=v("cariS").toLowerCase(),rows="",n=0;
+KL.forEach(function(k){if(filK&&filK!==k)return;var L=data.users.filter(function(x){return x.role==="siswa"&&x.status!=="lulus"&&x.kelas.toUpperCase().replace(/[^A-Z]/g,"")===k&&(!q||(x.nama+" "+x.id).toLowerCase().indexOf(q)>=0)});if(!L.length)return;n++;var o=open[k]||q||filK;
+rows+='<tr class="adm-grp" data-act="grp" data-k="'+k+'"><td colspan="3">'+(o?"&#9662; ":"&#9656; ")+"Kelas "+k+' <span style="color:#5c675f;font-size:13px;font-family:IBM Plex Sans,sans-serif">&middot; '+L.length+" siswa</span></td></tr>"+(o?L.map(row).join(""):"")});
+document.getElementById("listS").innerHTML=n?tbl(["Nama","Status","Aksi"],rows):'<p style="text-align:center;color:#5c675f;padding:20px 0">Tidak ada siswa yang cocok.</p>'}
+function draw(){var keep={q:v("cariS"),t:v("xT"),a:v("xTA")},g=data.users.filter(function(x){return x.role==="guru"});
+document.getElementById("box-guru").innerHTML=tbl(["Nama","Status","Aksi"],g.map(row).join(""))+'<div class="adm-sec"><h3 class="adm-sub" style="margin-top:0">Tambah Guru</h3><div class="adm-bar"><input id="gId" class="adm-in" placeholder="ID / NIP guru"><input id="gNama" class="adm-in" placeholder="Nama guru">'+btn("addG",null,"Tambah Guru","btn-ink lg")+'</div><p style="font-size:13px;color:#5c675f">Password awal sama dengan ID, dan wajib diganti saat login pertama.</p></div>';
 var bek=data.fase!=="aktif",h='<div class="adm-note">'+(bek?"<strong>Tahun pelajaran sudah dibekukan.</strong> Masukkan daftar siswa kelas X baru di bawah untuk melanjutkan. Kelas X dan XI yang sekarang akan naik otomatis setelah diproses.":"<strong>Tahun ajaran berjalan.</strong> Siswa baru baru bisa ditambahkan setelah tahun pelajaran dibekukan.")+'</div>'+
-'<div class="adm-bar"><input id="cariS" class="adm-in" placeholder="Cari nama atau NIS"><select id="filK" class="adm-in" style="flex:0 0 150px"><option value="">Semua kelas</option>'+KL.map(function(k){return"<option>"+k+"</option>"}).join("")+'</select></div><div id="listS"></div>';
+'<div class="adm-bar"><input id="cariS" class="adm-in" placeholder="Cari nama atau NIS">'+ddHtml()+'</div><div id="listS"></div>';
 if(!bek)h+='<div class="adm-sec"><h3 class="adm-sub" style="margin-top:0">Akhir Tahun Pelajaran</h3><p style="font-size:13.5px;margin-bottom:14px">Semua siswa kelas XII dinyatakan lulus dan tidak bisa lagi memakai portal.</p>'+btn("freeze",null,"Bekukan Tahun Pelajaran","btn-reject lg")+'</div>';
 else{var c={A:0,B:0,C:0,D:0};staged.forEach(function(x){c[x.huruf]++});
 h+='<div class="adm-sec"><h3 class="adm-sub" style="margin-top:0">Input Siswa Kelas X Baru</h3><div class="seg">'+["A","B","C","D"].map(function(k){return btn("pilK",null,"X"+k+" ("+c[k]+")",k===curK?"btn-ink":"btn-soft",' data-h="'+k+'"')}).join("")+'</div><div class="form-group"><label>Kelas X'+curK+': tempel NIS dan nama, satu siswa per baris</label><textarea id="xT" class="adm-in" rows="6" placeholder="2025001 Nama Siswa&#10;2025002 Nama Siswa Lain"></textarea></div><div style="margin-bottom:18px">'+btn("stage",null,"Tambahkan ke Daftar","btn-ink lg")+'</div>'+
-(staged.length?tbl(["NIS","Nama","Kelas","Aksi"],staged.map(function(x){return"<tr><td>"+E(x.id)+"</td><td><strong>"+E(x.nama)+"</strong></td><td>X"+x.huruf+'</td><td><div class="action-btns">'+btn("unstage",x.id,"Hapus","btn-soft")+"</div></td></tr>"}).join("")):"")+
+(staged.length?tbl(["Nama","Kelas","Aksi"],staged.map(function(x){return"<tr><td><strong>"+E(x.nama)+"</strong><small>"+E(x.id)+"</small></td><td>X"+x.huruf+'</td><td><div class="action-btns">'+btn("unstage",x.id,"Hapus","btn-soft")+"</div></td></tr>"}).join("")):"")+
 '<div class="form-group" style="margin-top:18px"><label>Tahun ajaran baru (opsional)</label><input id="xTA" class="adm-in" placeholder="Contoh: 2027/2028"></div><div class="action-btns" style="flex-wrap:wrap">'+btn("reset",null,"Kosongkan Daftar","btn-soft lg")+btn("commit",null,"Proses &amp; Naikkan Kelas","btn-approve lg")+'</div></div>'}
 document.getElementById("box-siswa").innerHTML=h;
-["cariS","filK","xT","xTA"].forEach(function(id){var e=document.getElementById(id),k={cariS:"q",filK:"f",xT:"t",xTA:"a"}[id];if(e&&keep[k])e.value=keep[k]});listSiswa()}
+["cariS","xT","xTA"].forEach(function(id){var e=document.getElementById(id),k={cariS:"q",xT:"t",xTA:"a"}[id];if(e&&keep[k])e.value=keep[k]});listSiswa()}
 function run(p){return p.catch(fail)}
 document.getElementById("adminPanel").addEventListener("input",function(e){if(e.target.id==="cariS")listSiswa()});
-document.getElementById("adminPanel").addEventListener("change",function(e){if(e.target.id==="filK")listSiswa()});
+document.addEventListener("click",function(e){var L=document.getElementById("ddL");if(L&&!e.target.closest(".adm-dd"))L.hidden=true});
 document.getElementById("adminPanel").addEventListener("click",function(ev){var b=ev.target.closest("[data-act]");if(!b)return;var a=b.dataset.act,id=b.dataset.id;
-if(a==="off"||a==="on"){run(UI.confirm((a==="off"?"Nonaktifkan akun ":"Aktifkan kembali akun ")+id+"?"+(a==="off"?"\nAkun ini langsung tidak bisa login dan reservasinya tidak bisa diajukan.":""),{title:a==="off"?"Nonaktifkan Akun":"Aktifkan Akun",ok:a==="off"?"Nonaktifkan":"Aktifkan",danger:a==="off"}).then(function(o){if(o)return api("adm_setStatus",{id:id,status:a==="on"?"aktif":"nonaktif"}).then(load)}))}
+if(a==="ddT"){var L=document.getElementById("ddL");L.hidden=!L.hidden}
+else if(a==="ddP"){filK=b.dataset.k;document.getElementById("ddL").hidden=true;document.getElementById("ddLbl").textContent=filK?"Kelas "+filK:"Semua kelas";document.querySelectorAll("#ddL button").forEach(function(x){x.classList.toggle("on",x.dataset.k===filK)});listSiswa()}
+else if(a==="grp"){open[b.dataset.k]=!open[b.dataset.k];listSiswa()}
+else if(a==="off"||a==="on"){run(UI.confirm((a==="off"?"Nonaktifkan akun ":"Aktifkan kembali akun ")+id+"?"+(a==="off"?"\nAkun ini langsung tidak bisa login dan reservasinya tidak bisa diajukan.":""),{title:a==="off"?"Nonaktifkan Akun":"Aktifkan Akun",ok:a==="off"?"Nonaktifkan":"Aktifkan",danger:a==="off"}).then(function(o){if(o)return api("adm_setStatus",{id:id,status:a==="on"?"aktif":"nonaktif"}).then(load)}))}
 else if(a==="addG")run(api("adm_addGuru",{id:v("gId"),nama:v("gNama")}).then(function(){UI.alert("Guru berhasil ditambahkan. Password awalnya sama dengan ID.","Berhasil");return load()}));
 else if(a==="freeze")run(UI.confirm("Semua siswa kelas XII akan dinyatakan lulus dan tidak bisa lagi mengajukan reservasi. Sistem membuat cadangan Sheet otomatis.",{title:"Bekukan Tahun Pelajaran",ok:"Lanjut",danger:1}).then(function(o){if(o)return api("adm_bekukan",{},"Masukkan password admin untuk membekukan tahun pelajaran.").then(function(r){UI.alert(r.lulus+" siswa kelas XII dinyatakan lulus.","Berhasil");return load()})}));
 else if(a==="pilK"){curK=b.dataset.h;draw()}
